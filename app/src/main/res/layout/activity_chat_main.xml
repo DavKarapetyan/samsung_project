@@ -1,0 +1,288 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ChatMainActivity">
+
+    <!-- Your non-scrolling element 1 -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/chat_header"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/goBack"
+            android:layout_width="13dp"
+            android:layout_height="22dp"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/arrow_back"
+            app:layout_constraintBottom_toBottomOf="@+id/view2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/image1"
+            android:layout_marginLeft="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/goBack"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:text="Davit Karapetyan"
+            android:textColor="#fff"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/avatar"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/baseline_phone_24"
+            android:layout_marginRight="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/imageView2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/baseline_videocam_24"
+            android:layout_marginRight="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <!-- ScrollView -->
+    <ScrollView
+        android:id="@+id/scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="96dp"
+        android:layout_below="@id/constraint_layout"
+        android:paddingHorizontal="20dp">
+
+        <!-- Scrollable elements go here -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Your scrollable elements go here -->
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="100dp"
+                android:background="@drawable/massage_bg"
+                android:fontFamily="@font/nunito_regular"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="20dp"
+                android:text="Hello this is Davit Karapetyan how are you if you are not okay I can help you"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/view2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginRight="100dp"
+                android:background="@drawable/message_bg_secondary"
+                android:fontFamily="@font/nunito_regular"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="20dp"
+                android:text="Hello, I am okay how I can help you?"
+                android:textColor="@color/primary__color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/view2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="100dp"
+                android:background="@drawable/massage_bg"
+                android:fontFamily="@font/nunito_regular"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="20dp"
+                android:text="Hello this is Davit Karapetyan how are you if you are not okay I can help you"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/view2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginRight="100dp"
+                android:background="@drawable/message_bg_secondary"
+                android:fontFamily="@font/nunito_regular"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="20dp"
+                android:text="Hello, I am okay how I can help you?"
+                android:textColor="@color/primary__color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/view2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginLeft="100dp"
+                android:background="@drawable/massage_bg"
+                android:fontFamily="@font/nunito_regular"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="20dp"
+                android:text="Hello this is Davit Karapetyan how are you if you are not okay I can help you"
+                android:textColor="#fff"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/view2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginRight="100dp"
+                android:background="@drawable/message_bg_secondary"
+                android:fontFamily="@font/nunito_regular"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="20dp"
+                android:text="Hello, I am okay how I can help you?"
+                android:textColor="@color/primary__color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/view2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:layout_marginRight="100dp"
+                android:background="@drawable/message_bg_secondary"
+                android:fontFamily="@font/nunito_regular"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="20dp"
+                android:text="Hello, I am okay how I can help you?"
+                android:textColor="@color/primary__color"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/view2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="20dp" />
+
+            <!-- Add more scrollable elements as needed -->
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Your non-scrolling element 2 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:padding="20dp"
+        android:background="@drawable/send_message_bottom_bg"
+        android:clipToPadding="false">
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:background="@drawable/edit__input"
+            android:elevation="10dp"
+            android:fontFamily="@font/nunito_regular"
+            android:hint="Message"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="15dp"
+            android:textColorHint="@color/primary__color"
+            android:textSize="16dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="2"
+            />
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:backgroundTint="@color/white"
+            app:tint="@color/primary__color"
+            android:contentDescription="a"
+            android:clipToOutline="true"
+            android:elevation="10dp"
+            android:src="@drawable/baseline_send_24"
+            app:shapeAppearanceOverlay="@style/fab_3_rounded" />
+    </LinearLayout>
+</RelativeLayout>
