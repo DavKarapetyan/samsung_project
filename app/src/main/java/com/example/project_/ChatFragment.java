@@ -63,6 +63,7 @@ public class ChatFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         // Inflate the layout for this fragment
+        //new change
         Button b1 = view.findViewById(R.id.myButton);
         homeActivity = (HomeActivity) getActivity();
         b1.setOnClickListener(view1 -> {
