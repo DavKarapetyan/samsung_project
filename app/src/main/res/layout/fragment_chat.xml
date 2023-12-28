@@ -22,7 +22,6 @@
             android:background="@drawable/edit__input"
             android:clipToPadding="false"
             android:drawableEnd="@drawable/baseline_search_24"
-            android:elevation="10dp"
             android:fontFamily="@font/nunito_regular"
             android:hint="Search"
             android:inputType="textEmailAddress"
@@ -52,7 +51,8 @@
                     android:layout_height="wrap_content"
                     android:elevation="5dp"
                     android:paddingHorizontal="15dp"
-                    android:paddingVertical="10dp">
+                    android:paddingVertical="10dp"
+                    android:onClick="navigateToChatMain">
 
                     <ImageView
                         android:id="@+id/imageView"
@@ -66,8 +66,8 @@
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
                         android:layout_marginLeft="5dp"
+                        android:orientation="vertical"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/imageView"
                         app:layout_constraintTop_toTopOf="parent">
@@ -90,16 +90,18 @@
                             android:textSize="14sp" />
                     </LinearLayout>
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
                 <com.google.android.material.divider.MaterialDivider
                     android:layout_width="match_parent"
-                    android:layout_height="2dp"
+                    android:layout_height="1dp"
                     app:dividerColor="#94BFFF"/>
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="5dp"
                     android:paddingHorizontal="15dp"
-                    android:paddingVertical="10dp">
+                    android:paddingVertical="10dp"
+                    android:onClick="navigateToChatMain">
 
                     <ImageView
                         android:id="@+id/imageView1"
@@ -146,7 +148,8 @@
                     android:layout_height="wrap_content"
                     android:elevation="5dp"
                     android:paddingHorizontal="15dp"
-                    android:paddingVertical="10dp">
+                    android:paddingVertical="10dp"
+                    android:onClick="navigateToChatMain">
 
                     <ImageView
                         android:id="@id/imageView2"
@@ -191,12 +194,6 @@
                 <!-- Add more scrollable elements as needed -->
             </LinearLayout>
         </ScrollView>
-        <Button
-            android:id="@+id/myButton"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:text="Button"
-            android:layout_below="@id/scroll_view"/>
     </RelativeLayout>
 
 </FrameLayout>
