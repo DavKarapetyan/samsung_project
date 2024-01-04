@@ -3,6 +3,7 @@
     <style name="Base.Theme.Project_Ճ" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">@color/primary__color</item>
         <item name="android:statusBarColor">@color/primary__color</item>
     </style>
 
@@ -11,4 +12,12 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+    <style name="active_bg"><item name="android:background">@color/active_bg</item></style>
+    <style name="page_bg"><item name="android:background">@color/white</item></style>
+    <style name="text__color"><item name="android:textColor">@color/black</item></style>
+    <style name="input__bg"><item name="android:background">@drawable/edit__input</item></style>
+    <style name="chat__header"><item name="android:background">@drawable/chat_header</item></style>
+    <style name="chat_message"><item name="android:textColor">@color/white</item></style>
+    <style name="fab_bg"><item name="android:backgroundTint">@color/white</item></style>
+    <style name="card_bg"><item name="android:backgroundTint">@color/secondary__color</item></style>
 </resources>

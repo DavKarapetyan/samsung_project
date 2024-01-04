@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/page_bg"
     tools:context=".ProfileFragment">
 
     <ScrollView
@@ -100,6 +101,10 @@
                     android:text="DavKarapetyan"
                     android:textColor="#7A7A7A"
                     android:textSize="14sp" />
+                <androidx.appcompat.widget.SwitchCompat
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/switch_mode"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -121,7 +126,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
                         android:text="9"
-                        android:textColor="@color/black"
+                        style="@style/text__color"
                         android:textSize="14sp" />
 
                     <TextView
@@ -129,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
                         android:text="Posts"
-                        android:textColor="@color/black"
+                        style="@style/text__color"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -144,7 +149,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
                         android:text="128"
-                        android:textColor="@color/black"
+                        style="@style/text__color"
                         android:textSize="14sp" />
 
                     <TextView
@@ -152,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
                         android:text="Following"
-                        android:textColor="@color/black"
+                        style="@style/text__color"
                         android:textSize="14sp" />
                 </LinearLayout>
 
@@ -167,7 +172,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
                         android:text="128"
-                        android:textColor="@color/black"
+                        style="@style/text__color"
                         android:textSize="14sp" />
 
                     <TextView
@@ -175,7 +180,7 @@
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
                         android:text="Followers"
-                        android:textColor="@color/black"
+                        style="@style/text__color"
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
@@ -187,7 +192,7 @@
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/nunito_bold"
                 android:text="Posts"
-                android:textColor="@color/black"
+                style="@style/text__color"
                 android:textSize="22dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

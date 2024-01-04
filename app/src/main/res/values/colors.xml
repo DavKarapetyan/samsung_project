@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
+    <color name="black">#0D0D0D</color>
     <color name="white">#FFFFFFFF</color>
     <color name="active_bg">#94BFFF</color>
     <color name="primary__color">#2D61AD</color>
+    <color name="secondary__color">#ECF3FA</color>
     <color name="ic_launcher_background">#007FFF</color>
 </resources>

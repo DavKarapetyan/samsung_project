@@ -3,6 +3,7 @@ package com.example.project_;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -26,6 +27,7 @@ public class ChatFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     HomeActivity homeActivity;
+    ConstraintLayout constraintLayout;
 
     public ChatFragment() {
         // Required empty public constructor
@@ -64,12 +66,11 @@ public class ChatFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         // Inflate the layout for this fragment
         homeActivity = (HomeActivity) getActivity();
+        constraintLayout = (ConstraintLayout) view.findViewById(R.id.constraint1);
+        constraintLayout.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), ChatMainActivity.class);
+            startActivity(intent);
+        });
         return view;
-    }
-    public void navigateToChatMain(View v)
-    {
-        homeActivity = (HomeActivity) getActivity();
-        Intent intent = new Intent(getActivity(), ChatMainActivity.class);
-        startActivity(intent);
     }
 }

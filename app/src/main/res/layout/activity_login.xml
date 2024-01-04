@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    style="@style/page_bg"
     tools:context=".LoginActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +48,7 @@
             android:text="Log In"
             android:textSize="30dp"
             android:textStyle="bold"
-            android:textColor="@color/black"
+            style="@style/text__color"
             android:layout_marginTop="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -60,7 +60,7 @@
             android:layout_height="44dp"
             android:layout_marginHorizontal="25dp"
             android:layout_marginTop="30dp"
-            android:background="@drawable/edit__input"
+            style="@style/input__bg"
             android:clipToPadding="false"
             android:hint="Email"
             android:inputType="textEmailAddress"
@@ -79,7 +79,7 @@
             android:layout_height="44dp"
             android:layout_marginHorizontal="25dp"
             android:layout_marginTop="20dp"
-            android:background="@drawable/edit__input"
+            style="@style/input__bg"
             android:clipToPadding="false"
             android:fontFamily="@font/nunito_regular"
             android:hint="Password"
@@ -136,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_bold"
                 android:text=" Sign up"
-                android:textColor="#000000"
+                style="@style/text__color"
                 android:textSize="16dp"
                 android:textStyle="bold" />
         </LinearLayout>
