@@ -162,7 +162,7 @@
                         app:dividerColor="@color/primary__color" />
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="230dp"
+                        android:layout_height="@dimen/_200sdp"
                         android:src="@drawable/image2"
                         android:background="@drawable/rounded_corner"
                         android:clipToOutline="true"

@@ -48,13 +48,14 @@
                     app:shapeAppearanceOverlay="@style/fab_3_rounded"
                     app:tint="@color/white" />
 
-                <ImageView
-                    android:id="@+id/imageView3"
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/imageProfile"
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="150dp"
                     android:src="@drawable/img7"
+                    android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -68,7 +69,7 @@
                     android:clipToOutline="true"
                     android:fontFamily="@font/nunito_medium"
                     android:paddingVertical="0dp"
-                    android:text="Follow"
+                    android:text="Log Out"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="16dp"
@@ -87,6 +88,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView4">
 
                 <TextView
+                    android:id="@+id/textName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_semibold"
@@ -95,6 +97,7 @@
                     android:textSize="22dp" />
 
                 <TextView
+                    android:id="@+id/textNickName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_regular"

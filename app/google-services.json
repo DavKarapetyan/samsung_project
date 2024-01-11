@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "381356882618",
+    "project_id": "twaddle-afb6f",
+    "storage_bucket": "twaddle-afb6f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:381356882618:android:85ede07e123282529ce083",
+        "android_client_info": {
+          "package_name": "com.example.project_"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCUQQMWX6tfuO7f1ysgQeI4x971LO9nRkc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,4 +1,4 @@
-package com.example.project_;
+package com.example.project_.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -7,9 +7,14 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 
+import com.example.project_.ChatFragment;
+import com.example.project_.HomeFragment;
+import com.example.project_.NotificationsFragment;
+import com.example.project_.ProfileFragment;
+import com.example.project_.R;
 import com.example.project_.databinding.ActivityHomeBinding;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends BaseActivity {
 
     ActivityHomeBinding binding;
 
