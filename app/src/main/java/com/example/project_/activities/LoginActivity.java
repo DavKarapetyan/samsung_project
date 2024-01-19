@@ -6,15 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.project_.R;
 import com.example.project_.databinding.ActivityLoginBinding;
 import com.example.project_.utilities.Constants;
 import com.example.project_.utilities.PreferenceManager;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 

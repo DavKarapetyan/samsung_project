@@ -2,9 +2,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/page_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/page_bg"
     tools:context=".ProfileFragment">
 
     <ScrollView
@@ -23,7 +23,7 @@
                 <ImageView
                     android:id="@+id/imageView4"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="@dimen/_180sdp"
                     android:clipToOutline="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/img6"
@@ -33,8 +33,8 @@
 
                 <com.google.android.material.floatingactionbutton.FloatingActionButton
                     android:id="@+id/fab"
-                    android:layout_width="63dp"
-                    android:layout_height="62dp"
+                    android:layout_width="@dimen/_48sdp"
+                    android:layout_height="@dimen/_48sdp"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="20dp"
                     android:backgroundTint="@color/primary__color"
@@ -42,7 +42,7 @@
                     android:contentDescription="a"
                     android:elevation="10dp"
                     android:src="@drawable/filter"
-                    app:fabCustomSize="63dp"
+                    app:fabCustomSize="@dimen/_48sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:shapeAppearanceOverlay="@style/fab_3_rounded"
@@ -53,10 +53,9 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:layout_marginLeft="20dp"
-                    android:layout_marginTop="150dp"
-                    android:src="@drawable/img7"
+                    android:layout_marginTop="@dimen/_140sdp"
                     android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/img7"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -94,7 +93,7 @@
                     android:fontFamily="@font/nunito_semibold"
                     android:text="Davit Karapetyan"
                     android:textColor="@color/primary__color"
-                    android:textSize="22dp" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <TextView
                     android:id="@+id/textNickName"
@@ -103,12 +102,14 @@
                     android:fontFamily="@font/nunito_regular"
                     android:text="DavKarapetyan"
                     android:textColor="#7A7A7A"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/_11ssp" />
+
                 <androidx.appcompat.widget.SwitchCompat
+                    android:id="@+id/switch_mode"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/switch_mode"/>
+                    android:layout_height="wrap_content" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -125,20 +126,20 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/text__color"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
                         android:text="9"
-                        style="@style/text__color"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/_11ssp" />
 
                     <TextView
+                        style="@style/text__color"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
                         android:text="Posts"
-                        style="@style/text__color"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/_11ssp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -148,20 +149,20 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/text__color"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
                         android:text="128"
-                        style="@style/text__color"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/_11ssp" />
 
                     <TextView
+                        style="@style/text__color"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
                         android:text="Following"
-                        style="@style/text__color"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/_11ssp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -171,47 +172,111 @@
                     android:orientation="vertical">
 
                     <TextView
+                        style="@style/text__color"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
                         android:text="128"
-                        style="@style/text__color"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/_11ssp" />
 
                     <TextView
+                        style="@style/text__color"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_regular"
                         android:text="Followers"
-                        style="@style/text__color"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/_11ssp" />
                 </LinearLayout>
             </LinearLayout>
 
             <TextView
+                style="@style/text__color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="20dp"
                 android:layout_marginTop="15dp"
                 android:fontFamily="@font/nunito_bold"
                 android:text="Posts"
-                style="@style/text__color"
-                android:textSize="22dp"
+                android:textSize="@dimen/_14ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <GridLayout
+            <!--            <GridLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:columnCount="3"-->
+            <!--                android:gravity="center"-->
+            <!--                android:paddingHorizontal="20dp"-->
+            <!--                android:useDefaultMargins="true">-->
+
+            <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="@dimen/_90sdp"-->
+            <!--                    android:layout_columnWeight="1"-->
+            <!--                    android:layout_gravity="fill_horizontal"-->
+            <!--                    android:background="@drawable/rounded_corner"-->
+            <!--                    android:backgroundTint="@color/active_bg">-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:fontFamily="@font/nunito_medium"-->
+            <!--                        android:text="+"-->
+            <!--                        android:textColor="@color/primary__color"-->
+            <!--                        android:textSize="40dp"-->
+            <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                        app:layout_constraintStart_toStartOf="parent"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+            <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+            <!--                <ImageView-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="@dimen/_90sdp"-->
+            <!--                    android:background="@drawable/rounded_corner"-->
+            <!--                    android:clipToOutline="true"-->
+            <!--                    android:layout_columnWeight="1"-->
+            <!--                    android:layout_gravity="fill_horizontal"-->
+            <!--                    android:scaleType="centerCrop"-->
+            <!--                    android:src="@drawable/image2" />-->
+
+            <!--                <ImageView-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="@dimen/_90sdp"-->
+            <!--                    android:background="@drawable/rounded_corner"-->
+            <!--                    android:clipToOutline="true"-->
+            <!--                    android:layout_columnWeight="1"-->
+            <!--                    android:layout_gravity="fill_horizontal"-->
+            <!--                    android:scaleType="centerCrop"-->
+            <!--                    android:src="@drawable/image2" />-->
+
+            <!--                <ImageView-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="@dimen/_90sdp"-->
+            <!--                    android:background="@drawable/rounded_corner"-->
+            <!--                    android:clipToOutline="true"-->
+            <!--                    android:layout_columnWeight="1"-->
+            <!--                    android:scaleType="centerCrop"-->
+            <!--                    android:src="@drawable/image2" />-->
+
+            <!--            </GridLayout>-->
+            <com.google.android.flexbox.FlexboxLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:columnCount="3"
-                android:paddingHorizontal="20dp"
-                android:useDefaultMargins="true">
+                android:layout_height="match_parent"
+                app:flexWrap="wrap"
+                android:padding="@dimen/_12ssp"
+                app:dividerDrawable="@drawable/empty_divider"
+                app:showDivider="middle"
+                app:alignItems="stretch"
+                app:alignContent="stretch">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="115dp"
-                    android:layout_height="115dp"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    app:layout_flexGrow="1"
+                    android:layout_gravity="fill_horizontal"
                     android:background="@drawable/rounded_corner"
                     android:backgroundTint="@color/active_bg">
 
@@ -229,77 +294,35 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <ImageView
-                    android:layout_width="115dp"
-                    android:layout_height="115dp"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    app:layout_flexGrow="1"
+                    android:layout_gravity="fill_horizontal"
+                    android:background="@drawable/rounded_corner"
+                    android:clipToOutline="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/image2" />
+                <ImageView
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    app:layout_flexGrow="1"
+                    android:layout_gravity="fill_horizontal"
+                    android:background="@drawable/rounded_corner"
+                    android:clipToOutline="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/image2" />
+                <ImageView
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
+                    app:layout_flexGrow="1"
+                    android:layout_gravity="fill_horizontal"
                     android:background="@drawable/rounded_corner"
                     android:clipToOutline="true"
                     android:scaleType="centerCrop"
                     android:src="@drawable/image2" />
 
-                <ImageView
-                    android:layout_width="115dp"
-                    android:layout_height="115dp"
-                    android:background="@drawable/rounded_corner"
-                    android:clipToOutline="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image2" />
 
-                <ImageView
-                    android:layout_width="115dp"
-                    android:layout_height="115dp"
-                    android:background="@drawable/rounded_corner"
-                    android:clipToOutline="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image2" />
-
-                <ImageView
-                    android:layout_width="115dp"
-                    android:layout_height="115dp"
-                    android:background="@drawable/rounded_corner"
-                    android:clipToOutline="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image2" />
-
-                <ImageView
-                    android:layout_width="115dp"
-                    android:layout_height="115dp"
-                    android:background="@drawable/rounded_corner"
-                    android:clipToOutline="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image2" />
-
-                <ImageView
-                    android:layout_width="115dp"
-                    android:layout_height="115dp"
-                    android:background="@drawable/rounded_corner"
-                    android:clipToOutline="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image2" />
-
-                <ImageView
-                    android:layout_width="115dp"
-                    android:layout_height="115dp"
-                    android:background="@drawable/rounded_corner"
-                    android:clipToOutline="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image2" />
-
-                <ImageView
-                    android:layout_width="115dp"
-                    android:layout_height="115dp"
-                    android:background="@drawable/rounded_corner"
-                    android:clipToOutline="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image2" />
-
-                <ImageView
-                    android:layout_width="115dp"
-                    android:layout_height="115dp"
-                    android:background="@drawable/rounded_corner"
-                    android:clipToOutline="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image2" />
-            </GridLayout>
+            </com.google.android.flexbox.FlexboxLayout>
         </LinearLayout>
     </ScrollView>
 

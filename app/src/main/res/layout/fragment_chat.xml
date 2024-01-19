@@ -35,8 +35,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabNewChat"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="@dimen/_48sdp"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginLeft="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_12sdp"
@@ -46,7 +46,7 @@
         android:clipToOutline="true"
         android:elevation="10dp"
         android:src="@drawable/baseline_add_24"
-        app:fabCustomSize="@dimen/_40sdp"
+        app:fabCustomSize="@dimen/_48sdp"
         app:shapeAppearanceOverlay="@style/fab_3_rounded"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

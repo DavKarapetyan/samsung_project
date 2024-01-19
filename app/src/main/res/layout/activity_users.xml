@@ -10,8 +10,8 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/imageBack"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
+        android:layout_width="@dimen/_48sdp"
+        android:layout_height="@dimen/_48sdp"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginLeft="@dimen/_16sdp"
         android:layout_marginTop="@dimen/_12sdp"
@@ -21,7 +21,7 @@
         android:clipToOutline="true"
         android:elevation="10dp"
         android:src="@drawable/arrow_back"
-        app:fabCustomSize="@dimen/_40sdp"
+        app:fabCustomSize="@dimen/_48sdp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/fab_3_rounded" />
@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:text="Select User"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp"
+        android:textSize="@dimen/_14ssp"
         android:textStyle="bold"
         android:fontFamily="@font/nunito_bold"
         app:layout_constraintBottom_toBottomOf="@id/imageBack"

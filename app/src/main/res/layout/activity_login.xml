@@ -16,7 +16,7 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/header_lottie"
             android:layout_width="0dp"
-            android:layout_height="323dp"
+            android:layout_height="@dimen/_280sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -25,8 +25,8 @@
             app:lottie_loop="true"/>
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fab"
-            android:layout_width="63dp"
-            android:layout_height="62dp"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
             android:layout_marginStart="25dp"
             android:layout_marginTop="20dp"
             android:backgroundTint="@color/primary__color"
@@ -34,7 +34,7 @@
             android:contentDescription="a"
             android:clipToOutline="true"
             android:elevation="10dp"
-            app:fabCustomSize="60dp"
+            app:fabCustomSize="@dimen/_48sdp"
             android:src="@drawable/arrow_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/nunito_bold"
             android:text="Log In"
-            android:textSize="30dp"
+            android:textSize="@dimen/_20sdp"
             android:textStyle="bold"
             style="@style/text__color"
             android:layout_marginTop="0dp"
@@ -65,33 +65,33 @@
                 android:id="@+id/email"
                 style="@style/input__bg"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginHorizontal="25dp"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
                 android:layout_marginTop="30dp"
                 android:clipToPadding="false"
                 android:fontFamily="@font/nunito_regular"
                 android:hint="Email"
                 android:inputType="textEmailAddress"
-                android:paddingHorizontal="24.5dp"
+                android:paddingHorizontal="@dimen/_12ssp"
                 android:paddingVertical="12.5dp"
                 android:textColorHint="@color/primary__color"
-                android:textSize="16dp" />
+                android:textSize="@dimen/_11ssp" />
 
             <EditText
                 android:id="@+id/password"
                 style="@style/input__bg"
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_marginHorizontal="25dp"
+                android:layout_height="@dimen/_36sdp"
+                android:layout_marginHorizontal="@dimen/_18sdp"
                 android:layout_marginTop="20dp"
                 android:clipToPadding="false"
                 android:fontFamily="@font/nunito_regular"
                 android:hint="Password"
                 android:inputType="textPassword"
-                android:paddingHorizontal="24.5dp"
+                android:paddingHorizontal="@dimen/_12ssp"
                 android:paddingVertical="12.5dp"
                 android:textColorHint="@color/primary__color"
-                android:textSize="16dp" />
+                android:textSize="@dimen/_11ssp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -100,8 +100,8 @@
                 <Button
                     android:id="@+id/log_in"
                     android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginHorizontal="25dp"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginHorizontal="@dimen/_18sdp"
                     android:layout_marginTop="20dp"
                     android:backgroundTint="@color/primary__color"
                     android:clipToOutline="true"
@@ -111,7 +111,7 @@
                     android:text="Log In"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="16dp" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <ProgressBar
                     android:id="@+id/progressBar"
@@ -140,7 +140,7 @@
                 android:fontFamily="@font/nunito_regular"
                 android:text="Don’t have an account?"
                 android:textColor="#7A7A7A"
-                android:textSize="16dp" />
+                android:textSize="@dimen/_12ssp" />
 
             <TextView
                 android:id="@+id/sign_up"
@@ -149,7 +149,7 @@
                 android:fontFamily="@font/nunito_bold"
                 android:text=" Sign up"
                 style="@style/text__color"
-                android:textSize="16dp"
+                android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -160,7 +160,7 @@
             android:layout_marginTop="32dp"
             android:fontFamily="@font/nunito_bold"
             android:text="Forgot password"
-            android:textSize="16dp"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
