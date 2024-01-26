@@ -3,6 +3,7 @@ package com.example.project_.activities;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
@@ -27,13 +28,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
 
+import org.apache.commons.net.ntp.NTPUDPClient;
+import org.apache.commons.net.ntp.TimeInfo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.InetAddress;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +58,8 @@ public class ChatActivity extends BaseActivity {
     private FirebaseFirestore database;
     private String conversionId = null;
     private Boolean isReceiverAvailable = false;
+    private static final String NTP_SERVER = "pool.ntp.org";
+    private Date messageTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +70,7 @@ public class ChatActivity extends BaseActivity {
         loadReceiverDetails();
         init();
         listenMessages();
+        new NtpTask().execute();
     }
 
     private void init() {
@@ -79,10 +87,11 @@ public class ChatActivity extends BaseActivity {
 
     private void sendMessage() {
         HashMap<String, Object> message = new HashMap<>();
+        new NtpTask().execute();
         message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
         message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
         message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
-        message.put(Constants.KEY_TIMESTAMP, new Date());
+        message.put(Constants.KEY_TIMESTAMP, messageTime);
         database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
         if (conversionId != null) {
             updateConversion(binding.inputMessage.getText().toString());
@@ -95,7 +104,7 @@ public class ChatActivity extends BaseActivity {
             conversion.put(Constants.KEY_RECEIVER_NAME, receiverUser.name);
             conversion.put(Constants.KEY_RECEIVER_IMAGE, receiverUser.image);
             conversion.put(Constants.KEY_LAST_MESSAGE, binding.inputMessage.getText().toString());
-            conversion.put(Constants.KEY_TIMESTAMP, new Date());
+            conversion.put(Constants.KEY_TIMESTAMP, messageTime);
             addConversion(conversion);
         }
         if (!isReceiverAvailable) {
@@ -216,7 +225,14 @@ public class ChatActivity extends BaseActivity {
                     chatMessages.add(chatMessage);
                 }
             }
-            Collections.sort(chatMessages, (obj1, obj2) -> obj1.dateObject.compareTo(obj2.dateObject));
+//            Collections.sort(chatMessages, (obj1, obj2) -> obj1.dateObject.compareTo(obj2.dateObject));
+
+            chatMessages.sort(new Comparator<ChatMessage>() {
+                @Override
+                public int compare(ChatMessage e1, ChatMessage e2) {
+                    return e1.dateObject.compareTo(e2.dateObject);
+                }
+            });
             if (count == 0) {
                 chatAdapter.notifyDataSetChanged();
             } else {
@@ -275,12 +291,12 @@ public class ChatActivity extends BaseActivity {
                 database.collection(Constants.KEY_COLLECTION_CONVERSATIONS).document(conversionId);
         documentReference.update(
                 Constants.KEY_LAST_MESSAGE, message,
-                Constants.KEY_TIMESTAMP, new Date()
+                Constants.KEY_TIMESTAMP, messageTime
         );
     }
 
     private String getReadableDateTime(Date date) {
-        return new SimpleDateFormat("dd MMMM, yyyy - hh:mm a", Locale.getDefault()).format(date);
+        return new SimpleDateFormat("dd MMMM, yyyy - hh:mm:ss a", Locale.getDefault()).format(date);
     }
 
     private void checkForConversionRemotely(String senderId, String receiverId) {
@@ -297,6 +313,37 @@ public class ChatActivity extends BaseActivity {
             conversionId = documentSnapshot.getId();
         }
     };
+
+    private class NtpTask extends AsyncTask<Void, Void, Long> {
+        @Override
+        protected Long doInBackground(Void... voids) {
+            // Perform NTP operation in the background
+            return getTimeFromNtpServer();
+        }
+
+        @Override
+        protected void onPostExecute(Long result) {
+            // Create a Date object using the obtained time
+            Date ntpDate = new Date(result);
+
+            messageTime = ntpDate;
+        }
+
+        private Long getTimeFromNtpServer() {
+            try {
+                NTPUDPClient client = new NTPUDPClient();
+                client.setDefaultTimeout(5000); // Set timeout in milliseconds
+
+                InetAddress inetAddress = InetAddress.getByName("pool.ntp.org");
+                TimeInfo timeInfo = client.getTime(inetAddress);
+
+                return timeInfo.getMessage().getTransmitTimeStamp().getTime();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+    }
 
     @Override
     protected void onResume() {
