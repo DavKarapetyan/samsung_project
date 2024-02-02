@@ -24,6 +24,7 @@ import com.example.project_.utilities.PreferenceManager;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
@@ -69,26 +70,15 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void signUp() {
         loading(true);
+        FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseFirestore database = FirebaseFirestore.getInstance();
-        HashMap<String, Object> user = new HashMap<>();
-        user.put(Constants.KEY_NAME, binding.fullName.getText().toString());
-        user.put(Constants.KEY_NICKNAME, binding.nickName.getText().toString());
-        user.put(Constants.KEY_PHONENUMBER, binding.phoneNumber.getText().toString());
-        user.put(Constants.KEY_EMAIL, binding.email.getText().toString());
-        user.put(Constants.KEY_PASSWORD, binding.password.getText().toString());
-        user.put(Constants.KEY_IMAGE, encodedImage);
-        database.collection(Constants.KEY_COLLECTION_USERS)
-                .add(user)
-                .addOnSuccessListener(documentReference -> {
-                    loading(false);
-                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                    preferenceManager.putString(Constants.KEY_USER_ID, documentReference.getId());
-                    preferenceManager.putString(Constants.KEY_NAME, binding.fullName.getText().toString());
-                    preferenceManager.putString(Constants.KEY_NICKNAME, binding.nickName.getText().toString());
-                    preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
-                    Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+
+        String email = binding.email.getText().toString();
+        String password = binding.password.getText().toString();
+
+        auth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener(authResult -> {
+                    sendVerificationEmail(authResult.getUser());
                 })
                 .addOnFailureListener(exception -> {
                     loading(false);
@@ -96,7 +86,48 @@ public class RegisterActivity extends AppCompatActivity {
                 });
 
     }
+    private void sendVerificationEmail(FirebaseUser user) {
+        user.sendEmailVerification()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        showToast("Verification email sent. Please check your email.");
+                        saveUserDataToFirestore(user);
+                    } else {
+                        loading(false);
+                        showToast("Failed to send verification email. Please try again.");
+                    }
+                });
+    }
+    private void saveUserDataToFirestore(FirebaseUser user) {
+        FirebaseFirestore database = FirebaseFirestore.getInstance();
 
+        HashMap<String, Object> userData = new HashMap<>();
+        userData.put(Constants.KEY_NAME, binding.fullName.getText().toString());
+        userData.put(Constants.KEY_NICKNAME, binding.nickName.getText().toString());
+        userData.put(Constants.KEY_PHONENUMBER, binding.phoneNumber.getText().toString());
+        userData.put(Constants.KEY_EMAIL, user.getEmail());
+        userData.put(Constants.KEY_PASSWORD, binding.password.getText().toString());
+        userData.put(Constants.KEY_IMAGE, encodedImage);
+        database.collection(Constants.KEY_COLLECTION_USERS)
+                .document(user.getUid())
+                .set(userData)
+                .addOnSuccessListener(documentReference -> {
+                    loading(false);
+                    preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                    preferenceManager.putString(Constants.KEY_USER_ID, user.getUid());
+                    preferenceManager.putString(Constants.KEY_NAME, binding.fullName.getText().toString());
+                    preferenceManager.putString(Constants.KEY_NICKNAME, binding.nickName.getText().toString());
+                    preferenceManager.putString(Constants.KEY_IMAGE, encodedImage);
+                    Intent intent = new Intent(getApplicationContext(), EmailConfirmationActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("name", binding.fullName.getText().toString());
+                    startActivity(intent);
+                })
+                .addOnFailureListener(exception -> {
+                    loading(false);
+                    showToast(exception.getMessage());
+                });
+    }
     private String encodeImage(Bitmap bitmap) {
         int previewWidth = 150;
         int previewHeight = bitmap.getHeight() * previewWidth / bitmap.getWidth();

@@ -153,6 +153,11 @@ public class ChatFragment extends BaseFragment implements ConversionListener {
             binding.conversationsRecyclerView.smoothScrollToPosition(0);
             binding.conversationsRecyclerView.setVisibility(View.VISIBLE);
             binding.progressBar.setVisibility(View.GONE);
+            if (conversations.isEmpty()) {
+                binding.noMessages.setVisibility(View.VISIBLE);
+            } else {
+                binding.noMessages.setVisibility(View.GONE);
+            }
         }
     };
 

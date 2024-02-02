@@ -7,8 +7,8 @@
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/imageProfile"
-        android:layout_width="@dimen/_35sdp"
-        android:layout_height="@dimen/_35sdp"
+        android:layout_width="@dimen/_37sdp"
+        android:layout_height="@dimen/_37sdp"
         android:background="@drawable/background_image"
         android:scaleType="centerCrop"
         app:layout_constraintStart_toStartOf="parent"
@@ -31,8 +31,8 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="@color/black"
-        android:textSize="13sp"
-        android:fontFamily="@font/nunito_regular"
+        android:textSize="16sp"
+        android:fontFamily="@font/nunito_bold"
         app:layout_constraintBottom_toTopOf="@id/viewSuporter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageProfile"/>
@@ -45,7 +45,8 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="@color/black"
-        android:textSize="12sp"
+        android:textSize="14sp"
+        android:fontFamily="@font/nunito_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/imageProfile"
         app:layout_constraintTop_toBottomOf="@id/viewSuporter"/>

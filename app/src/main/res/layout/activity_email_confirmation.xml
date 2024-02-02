@@ -2,10 +2,10 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/page_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/page_bg"
-    tools:context=".activities.MainActivity">
+    tools:context=".activities.EmailConfirmationActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -21,15 +21,15 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:lottie_rawRes="@raw/animation_lohbc14t"
             app:lottie_autoPlay="true"
-            app:lottie_loop="true"/>
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/animation_1706549444205" />
 
         <View
             android:id="@+id/view"
+            style="@style/page_bg"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            style="@style/page_bg"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -39,28 +39,27 @@
 
         <TextView
             android:id="@+id/heading_text"
+            style="@style/text__color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
             android:fontFamily="@font/nunito_bold"
-            android:text="Welcome to Twaddle"
+            android:text="Email Confirmation"
             android:textSize="@dimen/_20sdp"
             android:textStyle="bold"
-            style="@style/text__color"
-            android:layout_marginTop="40dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/header_lottie" />
 
         <TextView
             android:id="@+id/textView"
+            style="@style/text__color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/nunito_regular"
             android:paddingHorizontal="@dimen/_18sdp"
-            android:text="Welcome to Twaddle, your vibrant social haven for meaningful connections and engaging conversations! Dive into a world where tweets turn into meaningful dialogues, and connections flourish with every post. Twaddle is not just a platform; it's a community where your voice matters. Join us in shaping the social narrative, one tweet at a time.\n Let's twaddle together! "
             android:textAlignment="center"
-            style="@style/text__color"
             android:textSize="@dimen/_12ssp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
@@ -68,19 +67,19 @@
             app:layout_constraintTop_toBottomOf="@+id/heading_text" />
 
         <Button
-            android:id="@+id/start"
+            android:id="@+id/continues"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:text="Start"
-            android:fontFamily="@font/nunito_medium"
-            android:textSize="@dimen/_12ssp"
-            android:textColor="@color/white"
-            android:textAllCaps="false"
+            android:layout_marginHorizontal="@dimen/_18sdp"
+            android:layout_marginTop="80dp"
             android:backgroundTint="@color/primary__color"
             android:clipToOutline="true"
             android:elevation="10dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginHorizontal="@dimen/_18sdp"
+            android:fontFamily="@font/nunito_medium"
+            android:text="Continue"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
