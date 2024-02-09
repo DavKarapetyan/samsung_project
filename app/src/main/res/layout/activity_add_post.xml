@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.AddPostActivity"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:fontFamily="@font/nunito_regular"
+        android:text="Add Post"
+        android:textColor="@color/black"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"/>
+
+    <EditText
+        android:id="@+id/content"
+        style="@style/input__bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_75sdp"
+        android:layout_marginHorizontal="@dimen/_18sdp"
+        android:layout_marginTop="25dp"
+        android:clipToPadding="false"
+        android:fontFamily="@font/nunito_regular"
+        android:hint="Content"
+        android:gravity="top"
+        android:inputType="textEmailAddress"
+        android:paddingHorizontal="@dimen/_12ssp"
+        android:paddingVertical="12.5dp"
+        android:textColorHint="@color/primary__color"
+        android:textSize="@dimen/_11ssp" />
+
+    <EditText
+        android:id="@+id/hashTag"
+        style="@style/input__bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginHorizontal="@dimen/_18sdp"
+        android:layout_marginTop="25dp"
+        android:clipToPadding="false"
+        android:fontFamily="@font/nunito_regular"
+        android:hint="HashTag"
+        android:inputType="textEmailAddress"
+        android:paddingHorizontal="@dimen/_12ssp"
+        android:paddingVertical="12.5dp"
+        android:textColorHint="@color/primary__color"
+        android:textSize="@dimen/_11ssp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:fontFamily="@font/nunito_regular"
+        android:text="Images"
+        android:layout_marginHorizontal="@dimen/_18sdp"
+        android:textColor="@color/black"
+        android:layout_marginTop="25dp"/>
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:flexWrap="wrap"
+        android:padding="@dimen/_12ssp"
+        app:dividerDrawable="@drawable/empty_divider"
+        app:showDivider="middle"
+        app:alignItems="stretch"
+        app:alignContent="stretch">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/uploadImage1"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            app:layout_flexGrow="1"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/active_bg">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_medium"
+                android:text="+"
+                android:textColor="@color/primary__color"
+                android:textSize="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/uploadedImage2"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            app:layout_flexGrow="1"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/rounded_corner"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:src="@drawable/image2" />
+        <ImageView
+            android:id="@+id/uploadedImage3"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            app:layout_flexGrow="1"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/rounded_corner"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:src="@drawable/image2" />
+        <ImageView
+            android:id="@+id/uploadedImage4"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            app:layout_flexGrow="1"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/rounded_corner"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:src="@drawable/image2" />
+        <ImageView
+            android:id="@+id/uploadedImage5"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            app:layout_flexGrow="1"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/rounded_corner"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            android:src="@drawable/image2" />
+
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true">
+        <Button
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginHorizontal="@dimen/_18sdp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/primary__color"
+            android:clipToOutline="true"
+            android:elevation="10dp"
+            android:fontFamily="@font/nunito_medium"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="center"
+            android:visibility="invisible"/>
+    </FrameLayout>
+</LinearLayout>

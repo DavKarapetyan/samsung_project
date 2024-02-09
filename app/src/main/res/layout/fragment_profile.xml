@@ -263,6 +263,7 @@
 
             <!--            </GridLayout>-->
             <com.google.android.flexbox.FlexboxLayout
+                android:id="@+id/profilePosts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:flexWrap="wrap"
@@ -273,6 +274,7 @@
                 app:alignContent="stretch">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/addPost"
                     android:layout_width="@dimen/_90sdp"
                     android:layout_height="@dimen/_90sdp"
                     app:layout_flexGrow="1"
@@ -292,35 +294,6 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
-
-                <ImageView
-                    android:layout_width="@dimen/_90sdp"
-                    android:layout_height="@dimen/_90sdp"
-                    app:layout_flexGrow="1"
-                    android:layout_gravity="fill_horizontal"
-                    android:background="@drawable/rounded_corner"
-                    android:clipToOutline="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image2" />
-                <ImageView
-                    android:layout_width="@dimen/_90sdp"
-                    android:layout_height="@dimen/_90sdp"
-                    app:layout_flexGrow="1"
-                    android:layout_gravity="fill_horizontal"
-                    android:background="@drawable/rounded_corner"
-                    android:clipToOutline="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image2" />
-                <ImageView
-                    android:layout_width="@dimen/_90sdp"
-                    android:layout_height="@dimen/_90sdp"
-                    app:layout_flexGrow="1"
-                    android:layout_gravity="fill_horizontal"
-                    android:background="@drawable/rounded_corner"
-                    android:clipToOutline="true"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/image2" />
-
 
             </com.google.android.flexbox.FlexboxLayout>
         </LinearLayout>

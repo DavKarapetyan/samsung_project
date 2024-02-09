@@ -7,26 +7,43 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.project_.activities.AddPostActivity;
 import com.example.project_.activities.MainActivity;
+import com.example.project_.adapters.PostAdapter;
+import com.example.project_.adapters.ProfilePostsAdapter;
 import com.example.project_.databinding.FragmentProfileBinding;
+import com.example.project_.models.Post;
 import com.example.project_.utilities.Constants;
 import com.example.project_.utilities.PreferenceManager;
+import com.google.android.flexbox.FlexboxLayout;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.android.flexbox.FlexboxLayoutManager;
+
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +65,7 @@ public class ProfileFragment extends Fragment {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
     private PreferenceManager preferenceManager;
+    private FirebaseFirestore firebaseFirestore;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -87,6 +105,7 @@ public class ProfileFragment extends Fragment {
 
         sharedPreferences = getActivity().getSharedPreferences("MODE", Context.MODE_PRIVATE);
         nightMode = sharedPreferences.getBoolean("nightMode", false);
+        firebaseFirestore = FirebaseFirestore.getInstance();
 
         if (nightMode) {
             binding.switchMode.setChecked(true);
@@ -109,6 +128,12 @@ public class ProfileFragment extends Fragment {
         binding.start.setOnClickListener(v -> {
             signOut();
         });
+        binding.addPost.setOnClickListener(v -> {
+            //addPost(post);
+            Intent intent = new Intent(getContext(), AddPostActivity.class);
+            startActivity(intent);
+        });
+
 
         preferenceManager = new PreferenceManager(getContext());
 
@@ -117,7 +142,6 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
         return binding.getRoot();
     }
-
     private void loadUserDetails() {
         binding.textName.setText(preferenceManager.getString(Constants.KEY_NAME));
         binding.textNickName.setText(preferenceManager.getString(Constants.KEY_NICKNAME));
@@ -127,7 +151,13 @@ public class ProfileFragment extends Fragment {
     }
 
     private void showToast(String message) {
-        Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        if (getContext() != null) {
+            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+        } else {
+            Log.e("ProfileAct", "getContext() returned null");
+        }
+
     }
 
     private void getToken() {

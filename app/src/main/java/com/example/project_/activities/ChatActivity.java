@@ -296,8 +296,12 @@ public class ChatActivity extends BaseActivity {
     }
 
     private String getReadableDateTime(Date date) {
-        return new SimpleDateFormat("dd MMMM, yyyy - hh:mm:ss a", Locale.getDefault()).format(date);
-    }
+        if (date != null) {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            return sdf.format(date);
+        } else {
+            return ""; // or any default value you want to return for null dates
+        }    }
 
     private void checkForConversionRemotely(String senderId, String receiverId) {
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
@@ -337,7 +341,11 @@ public class ChatActivity extends BaseActivity {
                 InetAddress inetAddress = InetAddress.getByName("pool.ntp.org");
                 TimeInfo timeInfo = client.getTime(inetAddress);
 
-                return timeInfo.getMessage().getTransmitTimeStamp().getTime();
+                if (!Objects.isNull(timeInfo.getMessage().getTransmitTimeStamp().getTime())) {
+                    return timeInfo.getMessage().getTransmitTimeStamp().getTime();
+                } else {
+                   return new Date().getTime();
+                }
             } catch (Exception e) {
                 e.printStackTrace();
                 return null;
