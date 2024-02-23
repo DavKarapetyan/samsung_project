@@ -76,6 +76,7 @@
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp" />
                 <ImageView
+                    android:id="@+id/showComments"
                     android:layout_width="@dimen/_18sdp"
                     android:layout_height="@dimen/_18sdp"
                     android:layout_marginLeft="15dp"

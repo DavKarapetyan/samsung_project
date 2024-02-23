@@ -1,8 +1,10 @@
 package com.example.project_.activities;
 
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.project_.adapters.ChatAdapter;
 import com.example.project_.databinding.ActivityChatBinding;
@@ -26,6 +29,9 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 
 import org.apache.commons.net.ntp.NTPUDPClient;
@@ -50,6 +56,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ChatActivity extends BaseActivity {
+    private static final int PICK_IMAGE_REQUEST = 1;
     private ActivityChatBinding binding;
     private User receiverUser;
     private List<ChatMessage> chatMessages;
@@ -60,17 +67,44 @@ public class ChatActivity extends BaseActivity {
     private Boolean isReceiverAvailable = false;
     private static final String NTP_SERVER = "pool.ntp.org";
     private Date messageTime;
+    private StorageReference storageReference;
+    private Uri imageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityChatBinding.inflate(getLayoutInflater());
+        storageReference = FirebaseStorage.getInstance().getReference("uploadsChat");
         setContentView(binding.getRoot());
         setListeners();
         loadReceiverDetails();
         init();
         listenMessages();
         new NtpTask().execute();
+    }
+    private void openFileChooser() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/*");
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true); // Allow multiple image selection
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        // Check if there are any activities available to handle the intent
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(intent, PICK_IMAGE_REQUEST);
+        } else {
+            Toast.makeText(this, "No app available to pick images", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            imageUri = data.getData();
+            Picasso.get().load(imageUri).into(binding.image);
+            binding.image.setVisibility(View.VISIBLE);
+            binding.viewImage.setVisibility(View.VISIBLE);
+        }
     }
 
     private void init() {
@@ -88,11 +122,34 @@ public class ChatActivity extends BaseActivity {
     private void sendMessage() {
         HashMap<String, Object> message = new HashMap<>();
         new NtpTask().execute();
-        message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
-        message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
-        message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
-        message.put(Constants.KEY_TIMESTAMP, messageTime);
-        database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+        String messageText = binding.inputMessage.getText().toString();
+        if(imageUri != null) {
+            StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ".jpg");
+
+            fileReference.putFile(imageUri)
+                    .addOnSuccessListener(taskSnapshot -> {
+                        fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                            message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                            message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
+                            message.put(Constants.KEY_TIMESTAMP, messageTime);
+                            message.put(Constants.KEY_SEND_IMAGE, uri.toString());
+
+                            // Add message text only after image upload is completed
+                            message.put(Constants.KEY_MESSAGE, messageText);
+
+                            database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+                        });
+                    });
+        } else {
+            message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+            message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
+            message.put(Constants.KEY_TIMESTAMP, messageTime);
+            // Add message text directly if no image is selected
+            message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
+
+            database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+        }
+        imageUri = null;
         if (conversionId != null) {
             updateConversion(binding.inputMessage.getText().toString());
         } else {
@@ -117,7 +174,9 @@ public class ChatActivity extends BaseActivity {
                 data.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME));
                 data.put(Constants.KEY_FCM_TOKEN, preferenceManager.getString(Constants.KEY_FCM_TOKEN));
                 data.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
-
+                if(imageUri != null) {
+                    data.put(Constants.KEY_SEND_IMAGE, imageUri.toString());
+                }
                 JSONObject body = new JSONObject();
                 body.put(Constants.REMOTE_MSG_DATA, data);
                 body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
@@ -127,6 +186,8 @@ public class ChatActivity extends BaseActivity {
                 showToast(exception.getMessage());
             }
         }
+        binding.image.setVisibility(View.GONE);
+        binding.viewImage.setVisibility(View.GONE);
         binding.inputMessage.setText(null);
     }
 
@@ -135,6 +196,8 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void sendNotification(String messageBody) {
+        HashMap<String, Object> message = new HashMap<>();
+        new NtpTask().execute();
         ApiClient.getClient().create(ApiService.class).sendMessage(
                 Constants.getRemoteMsgHeaders(),
                 messageBody
@@ -166,6 +229,23 @@ public class ChatActivity extends BaseActivity {
                 showToast(t.getMessage());
             }
         });
+        try {
+            JSONObject jsonObject = new JSONObject(messageBody);
+            JSONObject dataObject = jsonObject.getJSONObject("data");
+
+            String name = dataObject.getString("name");
+
+            HashMap<String, Object> notification = new HashMap<>();
+            notification.put("name", "New message");
+            notification.put("receiverId", receiverUser.id);
+            notification.put("senderImage", preferenceManager.getString(Constants.KEY_IMAGE));
+            notification.put("timestamp", messageTime);
+            notification.put("message", name + " sent you a message");
+
+            database.collection("notifications").add(notification);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     private void listenAvailabilityOfReceiver() {
@@ -220,13 +300,13 @@ public class ChatActivity extends BaseActivity {
                     chatMessage.senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
                     chatMessage.receiverId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
                     chatMessage.message = documentChange.getDocument().getString(Constants.KEY_MESSAGE);
+                    chatMessage.image = documentChange.getDocument().getString(Constants.KEY_SEND_IMAGE);
                     chatMessage.dateTime = getReadableDateTime(documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP));
                     chatMessage.dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);
                     chatMessages.add(chatMessage);
                 }
             }
 //            Collections.sort(chatMessages, (obj1, obj2) -> obj1.dateObject.compareTo(obj2.dateObject));
-
             chatMessages.sort(new Comparator<ChatMessage>() {
                 @Override
                 public int compare(ChatMessage e1, ChatMessage e2) {
@@ -265,6 +345,8 @@ public class ChatActivity extends BaseActivity {
     private void setListeners() {
         binding.imageBack.setOnClickListener(v -> onBackPressed());
         binding.layoutSend.setOnClickListener(v -> sendMessage());
+        binding.video.setOnClickListener(v -> startVideoCall());
+        binding.uploadImage.setOnClickListener(v -> openFileChooser());
     }
 
     private void checkForConversion() {
@@ -300,8 +382,14 @@ public class ChatActivity extends BaseActivity {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
             return sdf.format(date);
         } else {
-            return ""; // or any default value you want to return for null dates
-        }    }
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            return sdf.format(new Date());
+        }
+    }
+    private void startVideoCall() {
+        Intent intent = new Intent(ChatActivity.this, VideoCallActivity.class);
+        startActivity(intent);
+    }
 
     private void checkForConversionRemotely(String senderId, String receiverId) {
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)

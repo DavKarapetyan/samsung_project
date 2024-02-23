@@ -2,4 +2,7 @@
     <string name="app_name">Twaddle</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="token">007eJxTYPh5sP6dM/PBpa8tisInhQr8rW/bq1aQ/SxHjE25ooYjcL8CQ0qSqUWSsWWyRWKimUlKmpFFoqGFcYqBpYlBmrmFiZmRbvnp1IZARgaeVfwsjAwQCOJzM5SkFpc4ZyTm5aXmMDAAAAv+ILg=</string>
+    <string name="appId">db58b39c8aa64df28a183d0940f78462</string>
+    <string name="channel">testChannel</string>
 </resources>

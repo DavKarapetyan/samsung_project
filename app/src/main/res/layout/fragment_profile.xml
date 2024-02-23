@@ -50,8 +50,8 @@
 
                 <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/imageProfile"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="@dimen/_80ssp"
+                    android:layout_height="@dimen/_80ssp"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="@dimen/_140sdp"
                     android:scaleType="centerCrop"
@@ -61,8 +61,8 @@
 
                 <Button
                     android:id="@+id/start"
-                    android:layout_width="150dp"
-                    android:layout_height="48dp"
+                    android:layout_width="@dimen/_100ssp"
+                    android:layout_height="@dimen/_25ssp"
                     android:layout_marginRight="20dp"
                     android:backgroundTint="@color/primary__color"
                     android:clipToOutline="true"
@@ -71,7 +71,7 @@
                     android:text="Log Out"
                     android:textAllCaps="false"
                     android:textColor="@color/white"
-                    android:textSize="16dp"
+                    android:textSize="@dimen/_11ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>

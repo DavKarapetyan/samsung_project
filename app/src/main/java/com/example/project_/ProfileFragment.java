@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.example.project_.activities.AddPostActivity;
 import com.example.project_.activities.MainActivity;
+import com.example.project_.activities.SettingsActivity;
 import com.example.project_.adapters.PostAdapter;
 import com.example.project_.adapters.ProfilePostsAdapter;
 import com.example.project_.databinding.FragmentProfileBinding;
@@ -132,6 +133,9 @@ public class ProfileFragment extends Fragment {
             //addPost(post);
             Intent intent = new Intent(getContext(), AddPostActivity.class);
             startActivity(intent);
+        });
+        binding.fab.setOnClickListener(v -> {
+            startActivity(new Intent(getContext(), SettingsActivity.class));
         });
 
 

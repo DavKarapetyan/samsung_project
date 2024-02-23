@@ -7,7 +7,6 @@
     android:animateLayoutChanges="true"
     android:background="@color/primary__color"
     tools:context=".activities.ChatActivity">
-
     <View
         android:id="@+id/viewBackground"
         android:layout_width="match_parent"
@@ -112,7 +111,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="@id/viewBackground"
         app:layout_constraintTop_toBottomOf="@id/viewSupporter"/>
-    
+
     <ProgressBar
         android:id="@+id/progressBar"
         android:layout_width="@dimen/_25sdp"
@@ -121,7 +120,7 @@
         app:layout_constraintEnd_toEndOf="@id/viewBackground"
         app:layout_constraintStart_toStartOf="@id/viewBackground"
         app:layout_constraintTop_toTopOf="@id/viewBackground"/>
-    
+
     <FrameLayout
         android:id="@+id/layoutSend"
         android:layout_width="@dimen/_40sdp"
@@ -143,29 +142,48 @@
             android:tint="@color/white"/>
     </FrameLayout>
 
-    <EditText
-        android:id="@+id/inputMessage"
+    <RelativeLayout
+        android:id="@+id/relative"
         android:layout_width="0dp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginLeft="@dimen/_16sdp"
-        android:layout_marginEnd="@dimen/_8sdp"
-        android:layout_marginRight="@dimen/_8sdp"
-        android:layout_marginBottom="@dimen/_12sdp"
-        android:background="@drawable/background_chat_input"
-        android:hint="Type a message"
-        android:imeOptions="actionDone"
-        android:importantForAutofill="no"
-        android:inputType="text"
-        android:paddingStart="@dimen/_16sdp"
-        android:paddingEnd="@dimen/_16sdp"
-        android:textSize="@dimen/_12sdp"
-        android:textColor="@color/white"
-        android:textColorHint="@color/white"
-        android:fontFamily="@font/nunito_regular"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/layoutSend"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent">
+        <EditText
+            android:id="@+id/inputMessage"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:layout_marginRight="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_12sdp"
+            android:background="@drawable/background_chat_input"
+            android:hint="Type a message"
+            android:imeOptions="actionDone"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingStart="@dimen/_16sdp"
+            android:paddingEnd="@dimen/_35sdp"
+            android:textSize="@dimen/_12sdp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:fontFamily="@font/nunito_regular"
+            />
+        <ImageView
+            android:id="@+id/uploadImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/inputMessage"
+            android:layout_alignEnd="@id/inputMessage"
+            android:paddingBottom="@dimen/_12sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:src="@drawable/attachment"
+            android:clickable="true"
+            android:focusable="true"/>
+
+    </RelativeLayout>
+
 
     <TextView
         android:id="@+id/textAvailability"
@@ -179,5 +197,24 @@
         android:gravity="center"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/viewSupporter"/>
+    <View
+        android:id="@+id/viewImage"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="@color/secondary__color"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/viewBackground" />
 
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginHorizontal="15dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/image2"
+        android:visibility="gone"
+        android:background="@drawable/rounded_corner"
+        app:layout_constraintBottom_toBottomOf="@+id/viewBackground"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/viewImage" />
 </androidx.constraintlayout.widget.ConstraintLayout>

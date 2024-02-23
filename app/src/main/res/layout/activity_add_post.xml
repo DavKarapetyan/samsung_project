@@ -9,7 +9,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
+        android:textSize="@dimen/_13ssp"
         android:fontFamily="@font/nunito_regular"
         android:text="Add Post"
         android:textColor="@color/black"
@@ -43,7 +43,7 @@
         android:clipToPadding="false"
         android:fontFamily="@font/nunito_regular"
         android:hint="HashTag"
-        android:inputType="textEmailAddress"
+        android:inputType="text"
         android:paddingHorizontal="@dimen/_12ssp"
         android:paddingVertical="12.5dp"
         android:textColorHint="@color/primary__color"
@@ -52,7 +52,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18dp"
+        android:textSize="@dimen/_13ssp"
         android:fontFamily="@font/nunito_regular"
         android:text="Images"
         android:layout_marginHorizontal="@dimen/_18sdp"

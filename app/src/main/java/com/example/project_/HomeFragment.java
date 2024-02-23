@@ -12,6 +12,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.project_.adapters.PostAdapter;
 import com.example.project_.databinding.FragmentHomeBinding;
 import com.example.project_.models.Post;
+import com.example.project_.utilities.PreferenceManager;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
@@ -36,12 +37,13 @@ public class HomeFragment extends Fragment {
 
         // Initialize posts list and adapter
         posts = new ArrayList<>();
-        postAdapter = new PostAdapter(posts);
+        postAdapter = new PostAdapter(posts, getParentFragmentManager(), new PreferenceManager(getActivity()));
         binding.postsRecyclerView.setAdapter(postAdapter);
 
         // Retrieve initial posts
         retrievePosts();
         binding.postsRecyclerView.setVisibility(View.VISIBLE);
+
 
         return binding.getRoot();
     }
@@ -53,6 +55,7 @@ public class HomeFragment extends Fragment {
                     posts.clear(); // Clear previous posts
                     for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                         Post post = createPostFromDocument(documentSnapshot);
+                        post.id = documentSnapshot.getId();
                         posts.add(post);
                     }
                     postAdapter.notifyDataSetChanged();

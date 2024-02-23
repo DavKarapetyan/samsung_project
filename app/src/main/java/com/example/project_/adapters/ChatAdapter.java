@@ -2,6 +2,7 @@ package com.example.project_.adapters;
 
 import android.graphics.Bitmap;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.project_.databinding.ItemContainerReceivedMessageBinding;
 import com.example.project_.databinding.ItemContainerSentMessageBinding;
 import com.example.project_.models.ChatMessage;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -85,9 +87,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             binding = itemContainerSentMessageBinding;
         }
 
-        void  setData(ChatMessage chatMessage) {
+        void setData(ChatMessage chatMessage) {
             binding.textMessage.setText(chatMessage.message);
             binding.textDateTime.setText(chatMessage.dateTime);
+            if (chatMessage.image != null) {
+                Picasso.get().load(chatMessage.image).into(binding.sendImage);
+                binding.sendImage.setVisibility(View.VISIBLE);
+            }
         }
     }
 
@@ -104,6 +110,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             binding.textDateTime.setText(chatMessage.dateTime);
             if (receiverProfileImage != null) {
                 binding.imageProfile.setImageBitmap(receiverProfileImage);
+            }
+            if (chatMessage.image != null) {
+                Picasso.get().load(chatMessage.image).into(binding.sendImage);
+                binding.sendImage.setVisibility(View.VISIBLE);
             }
         }
     }
