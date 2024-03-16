@@ -35,6 +35,7 @@
         android:paddingTop="@dimen/_8sdp"
         android:paddingEnd="@dimen/_12sdp"
         android:paddingBottom="@dimen/_8sdp"
+        android:layout_marginLeft="5dp"
         android:textColor="@color/primary__color"
         android:textSize="@dimen/_13sdp"
         app:layout_constraintStart_toEndOf="@+id/imageProfile"

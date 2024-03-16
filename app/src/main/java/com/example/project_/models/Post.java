@@ -5,6 +5,7 @@ import java.util.List;
 public class Post {
     public String id;
     public String content;
+    public String translatedContent;
     public String hashTag;
     public List<String> imageUris;
     public String userName;

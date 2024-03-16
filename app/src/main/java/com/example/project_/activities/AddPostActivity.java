@@ -2,6 +2,7 @@ package com.example.project_.activities;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.ClipData;
 import android.content.Intent;
@@ -26,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import www.sanju.motiontoast.MotionToast;
+import www.sanju.motiontoast.MotionToastStyle;
 
 public class AddPostActivity extends AppCompatActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
@@ -57,7 +61,9 @@ public class AddPostActivity extends AppCompatActivity {
         if (intent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(intent, PICK_IMAGE_REQUEST);
         } else {
-            Toast.makeText(this, "No app available to pick images", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
+            MotionToast.Companion.createColorToast(this, "Error", "No app available to pick images", MotionToastStyle.ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_regular));
+
         }
     }
 
@@ -83,7 +89,8 @@ public class AddPostActivity extends AppCompatActivity {
             int i = 0;
             for (Uri uri : imageUris) {
                 if (imageUris.size() > 4) {
-                    Toast.makeText(AddPostActivity.this, "Cant show more than 4 images", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AddPostActivity.this, "Cant show more than 4 images", Toast.LENGTH_SHORT).show();
+                    MotionToast.Companion.createColorToast(this, "Error", "Cant show more than 4 images", MotionToastStyle.ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_regular));
                 }
                 if (i == 0) {
                     Picasso.get().load(uri).into(binding.uploadedImage2);
@@ -128,12 +135,14 @@ public class AddPostActivity extends AppCompatActivity {
                             });
                         })
                         .addOnFailureListener(e -> {
-                            Toast.makeText(AddPostActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(AddPostActivity.this, "Failed to upload image", Toast.LENGTH_SHORT).show();
+                            MotionToast.Companion.createColorToast(this, "Error", "Failed to upload image", MotionToastStyle.ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_regular));
                             Log.e(TAG, "Failed to upload image", e);
                         });
             }
         } else {
-            Toast.makeText(this, "No images selected", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "No images selected", Toast.LENGTH_SHORT).show();
+            MotionToast.Companion.createColorToast(this, "Error", "No images selected", MotionToastStyle.ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_regular));
         }
     }
     private void savePostDetails(List<String> downloadUrls) {
@@ -149,12 +158,14 @@ public class AddPostActivity extends AppCompatActivity {
         firebaseFirestore.collection("posts")
                 .add(post)
                 .addOnSuccessListener(documentReference -> {
-                    Toast.makeText(AddPostActivity.this, "Post added successfully", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AddPostActivity.this, "Post added successfully", Toast.LENGTH_SHORT).show();
+                    MotionToast.Companion.createColorToast(this, "Post is added", "Your post is added", MotionToastStyle.SUCCESS, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_regular));
                     loading(false);
                     finish();
                 })
                 .addOnFailureListener(e -> {
-                    Toast.makeText(AddPostActivity.this, "Failed to add post", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(AddPostActivity.this, "Failed to add post", Toast.LENGTH_SHORT).show();
+                    MotionToast.Companion.createColorToast(this, "Error", "Failed to add post", MotionToastStyle.ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_regular));
                     loading(false);
                     Log.e(TAG, "Failed to add post", e);
                 });

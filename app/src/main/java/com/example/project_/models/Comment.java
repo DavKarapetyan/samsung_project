@@ -6,4 +6,5 @@ public class Comment {
     public String userId;
     public String postId;
     public String userProfileImage;
+    public String time;
 }

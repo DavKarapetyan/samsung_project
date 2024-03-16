@@ -9,6 +9,9 @@
         android:icon="@drawable/message"
         android:title=""/>
     <item
+        android:id="@+id/placeHolder"
+        android:title="" />
+    <item
         android:id="@+id/notifications"
         android:icon="@drawable/notifications"
         android:title=""/>

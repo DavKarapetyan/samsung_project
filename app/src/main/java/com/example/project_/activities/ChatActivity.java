@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.view.View;
@@ -17,9 +16,11 @@ import androidx.annotation.Nullable;
 import com.example.project_.adapters.ChatAdapter;
 import com.example.project_.databinding.ActivityChatBinding;
 import com.example.project_.models.ChatMessage;
+import com.example.project_.models.TimeModel;
 import com.example.project_.models.User;
 import com.example.project_.network.ApiClient;
 import com.example.project_.network.ApiService;
+import com.example.project_.repository.MainRepository;
 import com.example.project_.utilities.Constants;
 import com.example.project_.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,19 +32,17 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.permissionx.guolindev.PermissionX;
 import com.squareup.picasso.Picasso;
 
 
-import org.apache.commons.net.ntp.NTPUDPClient;
-import org.apache.commons.net.ntp.TimeInfo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.InetAddress;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -66,9 +65,12 @@ public class ChatActivity extends BaseActivity {
     private String conversionId = null;
     private Boolean isReceiverAvailable = false;
     private static final String NTP_SERVER = "pool.ntp.org";
-    private Date messageTime;
     private StorageReference storageReference;
     private Uri imageUri;
+    private MainRepository mainRepository;
+    private String currentTime1;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +82,7 @@ public class ChatActivity extends BaseActivity {
         loadReceiverDetails();
         init();
         listenMessages();
-        new NtpTask().execute();
+        //12new NtpTask().execute();
     }
     private void openFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
@@ -121,74 +123,92 @@ public class ChatActivity extends BaseActivity {
 
     private void sendMessage() {
         HashMap<String, Object> message = new HashMap<>();
-        new NtpTask().execute();
-        String messageText = binding.inputMessage.getText().toString();
-        if(imageUri != null) {
-            StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ".jpg");
+        //new NtpTask().execute();
+        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        Call<TimeModel> timeModelCall = apiService.getTime();
+        timeModelCall.enqueue(new Callback<TimeModel>() {
+            @Override
+            public void onResponse(Call<TimeModel> call, Response<TimeModel> response) {
+                currentTime1 = response.body().getDateTime();
+                if (currentTime1 != null) {
+                    String messageText = binding.inputMessage.getText().toString();
+                    if(imageUri != null) {
+                        StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ".jpg");
 
-            fileReference.putFile(imageUri)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                            message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
-                            message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
-                            message.put(Constants.KEY_TIMESTAMP, messageTime);
-                            message.put(Constants.KEY_SEND_IMAGE, uri.toString());
+                        fileReference.putFile(imageUri)
+                                .addOnSuccessListener(taskSnapshot -> {
+                                    fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                        message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                                        message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
+                                        message.put(Constants.KEY_TIMESTAMP, currentTime1);
+                                        message.put(Constants.KEY_SEND_IMAGE, uri.toString());
 
-                            // Add message text only after image upload is completed
-                            message.put(Constants.KEY_MESSAGE, messageText);
+                                        // Add message text only after image upload is completed
+                                        message.put(Constants.KEY_MESSAGE, messageText);
 
-                            database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
-                        });
-                    });
-        } else {
-            message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
-            message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
-            message.put(Constants.KEY_TIMESTAMP, messageTime);
-            // Add message text directly if no image is selected
-            message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
+                                        database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+                                    });
+                                });
+                    } else {
+                        message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                        message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
+                        message.put(Constants.KEY_TIMESTAMP, currentTime1);
+                        // Add message text directly if no image is selected
+                        message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
 
-            database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
-        }
-        imageUri = null;
-        if (conversionId != null) {
-            updateConversion(binding.inputMessage.getText().toString());
-        } else {
-            HashMap<String, Object> conversion = new HashMap<>();
-            conversion.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
-            conversion.put(Constants.KEY_SENDER_NAME, preferenceManager.getString(Constants.KEY_NAME));
-            conversion.put(Constants.KEY_SENDER_IMAGE, preferenceManager.getString(Constants.KEY_IMAGE));
-            conversion.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
-            conversion.put(Constants.KEY_RECEIVER_NAME, receiverUser.name);
-            conversion.put(Constants.KEY_RECEIVER_IMAGE, receiverUser.image);
-            conversion.put(Constants.KEY_LAST_MESSAGE, binding.inputMessage.getText().toString());
-            conversion.put(Constants.KEY_TIMESTAMP, messageTime);
-            addConversion(conversion);
-        }
-        if (!isReceiverAvailable) {
-            try {
-                JSONArray tokens = new JSONArray();
-                tokens.put(receiverUser.token);
+                        database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+                    }
+                    imageUri = null;
+                    if (conversionId != null) {
+                        updateConversion(binding.inputMessage.getText().toString());
+                    } else {
+                        HashMap<String, Object> conversion = new HashMap<>();
+                        conversion.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                        conversion.put(Constants.KEY_SENDER_NAME, preferenceManager.getString(Constants.KEY_NAME));
+                        conversion.put(Constants.KEY_SENDER_IMAGE, preferenceManager.getString(Constants.KEY_IMAGE));
+                        conversion.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
+                        conversion.put(Constants.KEY_RECEIVER_NAME, receiverUser.name);
+                        conversion.put(Constants.KEY_RECEIVER_IMAGE, receiverUser.image);
+                        conversion.put(Constants.KEY_LAST_MESSAGE, binding.inputMessage.getText().toString());
+                        conversion.put(Constants.KEY_TIMESTAMP, currentTime1);
+                        addConversion(conversion);
+                    }
+                    if (!isReceiverAvailable) {
+                        try {
+                            JSONArray tokens = new JSONArray();
+                            tokens.put(receiverUser.token);
 
-                JSONObject data = new JSONObject();
-                data.put(Constants.KEY_USER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
-                data.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME));
-                data.put(Constants.KEY_FCM_TOKEN, preferenceManager.getString(Constants.KEY_FCM_TOKEN));
-                data.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
-                if(imageUri != null) {
-                    data.put(Constants.KEY_SEND_IMAGE, imageUri.toString());
+                            JSONObject data = new JSONObject();
+                            data.put(Constants.KEY_USER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                            data.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME));
+                            data.put(Constants.KEY_FCM_TOKEN, preferenceManager.getString(Constants.KEY_FCM_TOKEN));
+                            data.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
+                            if(imageUri != null) {
+                                data.put(Constants.KEY_SEND_IMAGE, imageUri.toString());
+                            }
+                            JSONObject body = new JSONObject();
+                            body.put(Constants.REMOTE_MSG_DATA, data);
+                            body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
+
+                            sendNotification(body.toString());
+                        } catch (Exception exception) {
+                            showToast(exception.getMessage());
+                        }
+                    }
+                    binding.image.setVisibility(View.GONE);
+                    binding.viewImage.setVisibility(View.GONE);
+                    binding.inputMessage.setText(null);
+                } else {
+                    Toast.makeText(getApplicationContext(), "Date is null", Toast.LENGTH_SHORT).show();
                 }
-                JSONObject body = new JSONObject();
-                body.put(Constants.REMOTE_MSG_DATA, data);
-                body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
-
-                sendNotification(body.toString());
-            } catch (Exception exception) {
-                showToast(exception.getMessage());
             }
-        }
-        binding.image.setVisibility(View.GONE);
-        binding.viewImage.setVisibility(View.GONE);
-        binding.inputMessage.setText(null);
+
+            @Override
+            public void onFailure(Call<TimeModel> call, Throwable t) {
+                String a = t.getMessage();
+                Toast.makeText(getApplicationContext(), "Cant get date" + a, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void showToast(String message) {
@@ -197,7 +217,7 @@ public class ChatActivity extends BaseActivity {
 
     private void sendNotification(String messageBody) {
         HashMap<String, Object> message = new HashMap<>();
-        new NtpTask().execute();
+        //new NtpTask().execute();
         ApiClient.getClient().create(ApiService.class).sendMessage(
                 Constants.getRemoteMsgHeaders(),
                 messageBody
@@ -239,7 +259,7 @@ public class ChatActivity extends BaseActivity {
             notification.put("name", "New message");
             notification.put("receiverId", receiverUser.id);
             notification.put("senderImage", preferenceManager.getString(Constants.KEY_IMAGE));
-            notification.put("timestamp", messageTime);
+            notification.put("timestamp", new Date());
             notification.put("message", name + " sent you a message");
 
             database.collection("notifications").add(notification);
@@ -301,8 +321,8 @@ public class ChatActivity extends BaseActivity {
                     chatMessage.receiverId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
                     chatMessage.message = documentChange.getDocument().getString(Constants.KEY_MESSAGE);
                     chatMessage.image = documentChange.getDocument().getString(Constants.KEY_SEND_IMAGE);
-                    chatMessage.dateTime = getReadableDateTime(documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP));
-                    chatMessage.dateObject = documentChange.getDocument().getDate(Constants.KEY_TIMESTAMP);
+                    chatMessage.dateTime = getReadableDateTime(documentChange.getDocument().getString(Constants.KEY_TIMESTAMP));
+                    chatMessage.dateObject = documentChange.getDocument().getString(Constants.KEY_TIMESTAMP);
                     chatMessages.add(chatMessage);
                 }
             }
@@ -345,7 +365,7 @@ public class ChatActivity extends BaseActivity {
     private void setListeners() {
         binding.imageBack.setOnClickListener(v -> onBackPressed());
         binding.layoutSend.setOnClickListener(v -> sendMessage());
-        binding.video.setOnClickListener(v -> startVideoCall());
+        startVideoCall();
         binding.uploadImage.setOnClickListener(v -> openFileChooser());
     }
 
@@ -369,26 +389,76 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void updateConversion(String message) {
-        DocumentReference documentReference =
-                database.collection(Constants.KEY_COLLECTION_CONVERSATIONS).document(conversionId);
-        documentReference.update(
-                Constants.KEY_LAST_MESSAGE, message,
-                Constants.KEY_TIMESTAMP, messageTime
-        );
-    }
+        ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
+        Call<TimeModel> timeModelCall = apiService.getTime();
 
-    private String getReadableDateTime(Date date) {
-        if (date != null) {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-            return sdf.format(date);
+        timeModelCall.enqueue(new Callback<TimeModel>() {
+            @Override
+            public void onResponse(Call<TimeModel> call, Response<TimeModel> response) {
+                currentTime1 = response.body().getDateTime();
+
+                Toast.makeText(getApplicationContext(), "Date is getted", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<TimeModel> call, Throwable t) {
+                String a = t.getMessage();
+                Toast.makeText(getApplicationContext(), "Cant get date" + a, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if (currentTime1 != null) {
+            DocumentReference documentReference =
+                    database.collection(Constants.KEY_COLLECTION_CONVERSATIONS).document(conversionId);
+            documentReference.update(
+                    Constants.KEY_LAST_MESSAGE, message,
+                    Constants.KEY_TIMESTAMP, new Date()
+            );
         } else {
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-            return sdf.format(new Date());
+            Toast.makeText(getApplicationContext(), "Date is null", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private String getReadableDateTime(String timestamp) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+
+        try {
+            // Parse the timestamp
+            Date date = inputFormat.parse(timestamp);
+
+            // Format the parsed date
+            String formattedDate = outputFormat.format(date);
+
+            // Output the formatted date
+            return formattedDate;
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     private void startVideoCall() {
-        Intent intent = new Intent(ChatActivity.this, VideoCallActivity.class);
-        startActivity(intent);
+        mainRepository = MainRepository.getInstance();
+        binding.video.setOnClickListener(v -> {
+            PermissionX.init(this)
+                    .permissions(android.Manifest.permission.CAMERA, android.Manifest.permission.RECORD_AUDIO)
+                    .request((allGranted, grantedList, deniedList) -> {
+                        if (allGranted) {
+                            //login to firebase here
+
+                            mainRepository.login(
+                                    preferenceManager.getString(Constants.KEY_USER_ID), getApplicationContext(), () -> {
+                                        //if success then we want to move to call activity
+                                        Intent intent = new Intent(ChatActivity.this, CallActivity.class);
+                                        intent.putExtra("receiverId", receiverUser.id);
+                                        startActivity(intent);
+                                    }
+                            );
+                        }
+                    });
+
+
+        });
     }
 
     private void checkForConversionRemotely(String senderId, String receiverId) {
@@ -406,40 +476,40 @@ public class ChatActivity extends BaseActivity {
         }
     };
 
-    private class NtpTask extends AsyncTask<Void, Void, Long> {
-        @Override
-        protected Long doInBackground(Void... voids) {
-            // Perform NTP operation in the background
-            return getTimeFromNtpServer();
-        }
-
-        @Override
-        protected void onPostExecute(Long result) {
-            // Create a Date object using the obtained time
-            Date ntpDate = new Date(result);
-
-            messageTime = ntpDate;
-        }
-
-        private Long getTimeFromNtpServer() {
-            try {
-                NTPUDPClient client = new NTPUDPClient();
-                client.setDefaultTimeout(5000); // Set timeout in milliseconds
-
-                InetAddress inetAddress = InetAddress.getByName("pool.ntp.org");
-                TimeInfo timeInfo = client.getTime(inetAddress);
-
-                if (!Objects.isNull(timeInfo.getMessage().getTransmitTimeStamp().getTime())) {
-                    return timeInfo.getMessage().getTransmitTimeStamp().getTime();
-                } else {
-                   return new Date().getTime();
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-    }
+//    private class NtpTask extends AsyncTask<Void, Void, Long> {
+//        @Override
+//        protected Long doInBackground(Void... voids) {
+//            // Perform NTP operation in the background
+//            return getTimeFromNtpServer();
+//        }
+//
+//        @Override
+//        protected void onPostExecute(Long result) {
+//            // Create a Date object using the obtained time
+//            Date ntpDate = new Date(result);
+//
+//            messageTime = ntpDate;
+//        }
+//
+//        private Long getTimeFromNtpServer() {
+//            try {
+//                NTPUDPClient client = new NTPUDPClient();
+//                client.setDefaultTimeout(5000); // Set timeout in milliseconds
+//
+//                InetAddress inetAddress = InetAddress.getByName("pool.ntp.org");
+//                TimeInfo timeInfo = client.getTime(inetAddress);
+//
+//                if (!Objects.isNull(timeInfo.getMessage().getTransmitTimeStamp().getTime())) {
+//                    return timeInfo.getMessage().getTransmitTimeStamp().getTime();
+//                } else {
+//                   return new Date().getTime();
+//                }
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//                return null;
+//            }
+//        }
+//    }
 
     @Override
     protected void onResume() {

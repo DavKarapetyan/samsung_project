@@ -47,14 +47,6 @@
                 android:layout_height="2dp"
                 android:layout_marginTop="7dp"
                 app:dividerColor="@color/primary__color" />
-<!--            <ImageView-->
-<!--                android:id="@+id/postImage"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="@dimen/_200sdp"-->
-<!--                android:background="@drawable/rounded_corner"-->
-<!--                android:clipToOutline="true"-->
-<!--                android:layout_marginTop="7dp"-->
-<!--                android:scaleType="centerCrop"/>-->
             <com.codebyashish.autoimageslider.AutoImageSlider
                 android:id="@+id/postImages"
                 android:layout_width="match_parent"

@@ -117,6 +117,7 @@
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
                 android:layout_height="3dp"
+                app:dividerColor="@color/primary__color"
                 android:layout_marginTop="30dp"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/postsRecyclerView"

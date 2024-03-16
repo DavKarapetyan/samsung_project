@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,32 +9,65 @@
 
     <FrameLayout
         android:id="@+id/frame_layout"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     </FrameLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNavigationView"
+<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--            android:id="@+id/bottomNavigationView"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="80dp"-->
+<!--            android:background="@drawable/bottom_bar_bg"-->
+<!--            android:paddingHorizontal="30dp"-->
+<!--            android:paddingTop="15dp"-->
+<!--            app:itemActiveIndicatorStyle="@drawable/avtive_item_style"-->
+<!--            app:itemHorizontalTranslationEnabled="true"-->
+<!--            app:itemIconSize="27dp"-->
+<!--            app:itemIconTint="@color/bottom_nav_color"-->
+<!--            app:itemTextColor="@color/bottom_nav_color"-->
+<!--            app:labelVisibilityMode="labeled"-->
+<!--            app:menu="@menu/bottom_navigation_menu"-->
+<!--            android:layout_gravity="bottom"-->
+<!--            app:tabBackground="@color/white"-->
+<!--            />-->
+    <com.google.android.material.bottomappbar.BottomAppBar
+        android:id="@+id/bottomAppBar"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:background="@drawable/bottom_bar_bg"
-        android:paddingHorizontal="30dp"
-        android:paddingTop="15dp"
-        app:itemActiveIndicatorStyle="@drawable/avtive_item_style"
-        app:itemHorizontalTranslationEnabled="true"
-        app:itemIconSize="27dp"
-        app:itemIconTint="@color/bottom_nav_color"
-        app:itemTextColor="@color/bottom_nav_color"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBaseline_toBottomOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu"
-        app:tabBackground="@color/white" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:backgroundTint="@color/primary__color"
+        app:fabAnchorMode="cradle"
+        app:fabAlignmentMode="center"
+        app:fabCradleVerticalOffset="0dp"
+        >
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/transperant_background"
+            android:paddingTop="15dp"
+            android:layout_marginEnd="9dp"
+            app:itemActiveIndicatorStyle="@drawable/avtive_item_style"
+            app:itemHorizontalTranslationEnabled="true"
+            app:itemIconSize="27dp"
+            app:itemIconTint="@color/bottom_nav_color"
+            app:itemTextColor="@color/bottom_nav_color"
+            app:labelVisibilityMode="labeled"
+            app:menu="@menu/bottom_navigation_menu"
+            app:tabBackground="@color/white" />
+
+    </com.google.android.material.bottomappbar.BottomAppBar>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/primary__color"
+        app:tint="@color/white"
+        android:contentDescription="a"
+        android:clipToOutline="true"
+        android:elevation="10dp"
+        android:src="@drawable/baseline_add_24"
+        app:shapeAppearanceOverlay="@style/fab_3_rounded"
+        app:layout_anchor="@id/bottomAppBar"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

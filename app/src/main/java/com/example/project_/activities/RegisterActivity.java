@@ -3,6 +3,7 @@ package com.example.project_.activities;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -32,6 +33,9 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Objects;
+
+import www.sanju.motiontoast.MotionToast;
+import www.sanju.motiontoast.MotionToastStyle;
 
 public class RegisterActivity extends AppCompatActivity {
     private ActivityRegisterBinding binding;
@@ -63,6 +67,9 @@ public class RegisterActivity extends AppCompatActivity {
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
             pickImage.launch(intent);
         });
+        binding.fab.setOnClickListener(v -> {
+            finish();
+        });
     }
     private void showToast(String message) {
         Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
@@ -90,11 +97,13 @@ public class RegisterActivity extends AppCompatActivity {
         user.sendEmailVerification()
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        showToast("Verification email sent. Please check your email.");
+                        //showToast("Verification email sent. Please check your email.");
+                        MotionToast.Companion.createColorToast(this, "Success", "Verification email was sent. Please check your email", MotionToastStyle.SUCCESS, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_regular));
                         saveUserDataToFirestore(user);
                     } else {
                         loading(false);
-                        showToast("Failed to send verification email. Please try again.");
+                        //showToast("Failed to send verification email. Please try again.");
+                        MotionToast.Companion.createColorToast(this, "Error", "Failed to send verification email. Please try again", MotionToastStyle.ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_regular));
                     }
                 });
     }
@@ -104,7 +113,6 @@ public class RegisterActivity extends AppCompatActivity {
         HashMap<String, Object> userData = new HashMap<>();
         userData.put(Constants.KEY_NAME, binding.fullName.getText().toString());
         userData.put(Constants.KEY_NICKNAME, binding.nickName.getText().toString());
-        userData.put(Constants.KEY_PHONENUMBER, binding.phoneNumber.getText().toString());
         userData.put(Constants.KEY_EMAIL, user.getEmail());
         userData.put(Constants.KEY_PASSWORD, binding.password.getText().toString());
         userData.put(Constants.KEY_IMAGE, encodedImage);
@@ -173,9 +181,6 @@ public class RegisterActivity extends AppCompatActivity {
             return false;
         } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.email.getText().toString()).matches()) {
             showToast("Enter valid email");
-            return false;
-        } else if (binding.phoneNumber.getText().toString().trim().isEmpty()) {
-            showToast("Enter phone number");
             return false;
         } else if (binding.password.getText().toString().trim().isEmpty()) {
             showToast("Enter password");

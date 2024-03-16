@@ -1,5 +1,6 @@
 package com.example.project_;
 
+import android.app.Notification;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,7 +44,6 @@ public class HomeFragment extends Fragment {
         // Retrieve initial posts
         retrievePosts();
         binding.postsRecyclerView.setVisibility(View.VISIBLE);
-
 
         return binding.getRoot();
     }

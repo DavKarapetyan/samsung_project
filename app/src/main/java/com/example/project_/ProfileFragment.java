@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 
 import android.util.Base64;
 import android.util.Log;
@@ -28,6 +29,9 @@ import com.example.project_.databinding.FragmentProfileBinding;
 import com.example.project_.models.Post;
 import com.example.project_.utilities.Constants;
 import com.example.project_.utilities.PreferenceManager;
+import com.google.android.flexbox.AlignContent;
+import com.google.android.flexbox.AlignItems;
+import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayout;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -42,6 +46,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.android.flexbox.FlexboxLayoutManager;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -67,6 +72,8 @@ public class ProfileFragment extends Fragment {
     SharedPreferences.Editor editor;
     private PreferenceManager preferenceManager;
     private FirebaseFirestore firebaseFirestore;
+    private ProfilePostsAdapter profilePostsAdapter;
+    private List<Post> posts;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -129,11 +136,6 @@ public class ProfileFragment extends Fragment {
         binding.start.setOnClickListener(v -> {
             signOut();
         });
-        binding.addPost.setOnClickListener(v -> {
-            //addPost(post);
-            Intent intent = new Intent(getContext(), AddPostActivity.class);
-            startActivity(intent);
-        });
         binding.fab.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), SettingsActivity.class));
         });
@@ -143,8 +145,85 @@ public class ProfileFragment extends Fragment {
 
         loadUserDetails();
         getToken();
+
+        posts = new ArrayList<>();
+        profilePostsAdapter = new ProfilePostsAdapter(posts, getActivity());
+        binding.profilePostsRecyclerView.setAdapter(profilePostsAdapter);
+
+        FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getActivity());
+        layoutManager.setFlexWrap(FlexWrap.WRAP);
+        retrievePosts();
+        binding.profilePostsRecyclerView.setLayoutManager(layoutManager);
+        binding.profilePostsRecyclerView.addItemDecoration(new DividerItemDecoration(binding.profilePostsRecyclerView.getContext(), DividerItemDecoration.HORIZONTAL));
+        binding.profilePostsRecyclerView.setVisibility(View.VISIBLE);
+
         // Inflate the layout for this fragment
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        retrievePosts();
+    }
+
+    private void retrievePosts() {
+        FirebaseFirestore.getInstance().collection("posts").whereEqualTo("userId", preferenceManager.getString(Constants.KEY_USER_ID))
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    posts.clear(); // Clear previous posts
+                    for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
+                        Post post = createPostFromDocument(documentSnapshot);
+                        post.id = documentSnapshot.getId();
+                        posts.add(post);
+                    }
+                    binding.postsCount.setText(Integer.toString(posts.size()));
+                    profilePostsAdapter.notifyDataSetChanged();
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Home", "Failed to retrieve posts: " + e.getMessage());
+                });
+    }
+
+    private Post createPostFromDocument(QueryDocumentSnapshot documentSnapshot) {
+        Post post = new Post();
+        post.hashTag = documentSnapshot.getString("hashTag");
+        post.content = documentSnapshot.getString("content");
+        // Get the imageUris field from the DocumentSnapshot
+        List<String> imageUris = (List<String>) documentSnapshot.get("imageUrls");
+        if (imageUris != null) {
+            post.imageUris = imageUris;
+        }
+
+        // Get user details using userId
+        String userId = documentSnapshot.getString("userId");
+        retrieveUserDetails(userId, post);
+
+        return post;
+    }
+
+    private void retrieveUserDetails(String userId, Post post) {
+        FirebaseFirestore.getInstance().collection("users").document(userId)
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // User document exists, retrieve user details
+                        String userName = documentSnapshot.getString("name");
+                        String userImage = documentSnapshot.getString("image");
+
+                        // Set user details to post object
+                        post.userName = userName;
+                        post.userImage = userImage;
+
+                        // Notify adapter about changes
+                        profilePostsAdapter.notifyDataSetChanged();
+                    } else {
+                        Log.e("Home", "User document does not exist for userId: " + userId);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("Home", "Failed to retrieve user details for userId: " + userId + ", Error: " + e.getMessage());
+                });
     }
     private void loadUserDetails() {
         binding.textName.setText(preferenceManager.getString(Constants.KEY_NAME));

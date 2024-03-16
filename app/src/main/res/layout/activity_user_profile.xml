@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/page_bg"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.UserProfileActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_180sdp"
+                    android:clipToOutline="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img6"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab"
+                    android:layout_width="@dimen/_48sdp"
+                    android:layout_height="@dimen/_48sdp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginLeft="20dp"
+                    android:backgroundTint="@color/primary__color"
+                    android:clipToOutline="true"
+                    android:contentDescription="a"
+                    android:elevation="10dp"
+                    android:src="@drawable/arrow_back"
+                    app:fabCustomSize="@dimen/_48sdp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/fab_3_rounded"
+                    app:tint="@color/white" />
+
+                <com.makeramen.roundedimageview.RoundedImageView
+                    android:id="@+id/imageProfile"
+                    android:layout_width="@dimen/_80ssp"
+                    android:layout_height="@dimen/_80ssp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="@dimen/_140sdp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/img7"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <Button
+                    android:id="@+id/start"
+                    android:layout_width="@dimen/_100ssp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:backgroundTint="@color/primary__color"
+                    android:clipToOutline="true"
+                    android:fontFamily="@font/nunito_medium"
+                    android:paddingVertical="0dp"
+                    android:text="Follow"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_11ssp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/imageView3"
+                app:layout_constraintTop_toBottomOf="@+id/imageView4">
+
+                <TextView
+                    android:id="@+id/textName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_semibold"
+                    android:text="Davit Karapetyan"
+                    android:textColor="@color/primary__color"
+                    android:textSize="@dimen/_14ssp" />
+
+                <TextView
+                    android:id="@+id/textNickName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_regular"
+                    android:text="DavKarapetyan"
+                    android:textColor="#7A7A7A"
+                    android:textSize="@dimen/_11ssp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:divider="@drawable/empty_tall_divider"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:showDividers="middle">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text__color"
+                        android:id="@+id/postsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_bold"
+                        android:textSize="@dimen/_11ssp" />
+
+                    <TextView
+                        style="@style/text__color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:text="Posts"
+                        android:textSize="@dimen/_11ssp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text__color"
+                        android:id="@+id/followingsCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_bold"
+                        android:text="128"
+                        android:textSize="@dimen/_11ssp" />
+
+                    <TextView
+                        style="@style/text__color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:text="Following"
+                        android:textSize="@dimen/_11ssp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/text__color"
+                        android:id="@+id/followersCount"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_bold"
+                        android:text="128"
+                        android:textSize="@dimen/_11ssp" />
+
+                    <TextView
+                        style="@style/text__color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/nunito_regular"
+                        android:text="Followers"
+                        android:textSize="@dimen/_11ssp" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                style="@style/text__color"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/nunito_bold"
+                android:text="Posts"
+                android:textSize="@dimen/_14ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <!--            <GridLayout-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="10dp"-->
+            <!--                android:columnCount="3"-->
+            <!--                android:gravity="center"-->
+            <!--                android:paddingHorizontal="20dp"-->
+            <!--                android:useDefaultMargins="true">-->
+
+            <!--                <androidx.constraintlayout.widget.ConstraintLayout-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="@dimen/_90sdp"-->
+            <!--                    android:layout_columnWeight="1"-->
+            <!--                    android:layout_gravity="fill_horizontal"-->
+            <!--                    android:background="@drawable/rounded_corner"-->
+            <!--                    android:backgroundTint="@color/active_bg">-->
+
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:fontFamily="@font/nunito_medium"-->
+            <!--                        android:text="+"-->
+            <!--                        android:textColor="@color/primary__color"-->
+            <!--                        android:textSize="40dp"-->
+            <!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                        app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                        app:layout_constraintStart_toStartOf="parent"-->
+            <!--                        app:layout_constraintTop_toTopOf="parent" />-->
+            <!--                </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+            <!--                <ImageView-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="@dimen/_90sdp"-->
+            <!--                    android:background="@drawable/rounded_corner"-->
+            <!--                    android:clipToOutline="true"-->
+            <!--                    android:layout_columnWeight="1"-->
+            <!--                    android:layout_gravity="fill_horizontal"-->
+            <!--                    android:scaleType="centerCrop"-->
+            <!--                    android:src="@drawable/image2" />-->
+
+            <!--                <ImageView-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="@dimen/_90sdp"-->
+            <!--                    android:background="@drawable/rounded_corner"-->
+            <!--                    android:clipToOutline="true"-->
+            <!--                    android:layout_columnWeight="1"-->
+            <!--                    android:layout_gravity="fill_horizontal"-->
+            <!--                    android:scaleType="centerCrop"-->
+            <!--                    android:src="@drawable/image2" />-->
+
+            <!--                <ImageView-->
+            <!--                    android:layout_width="0dp"-->
+            <!--                    android:layout_height="@dimen/_90sdp"-->
+            <!--                    android:background="@drawable/rounded_corner"-->
+            <!--                    android:clipToOutline="true"-->
+            <!--                    android:layout_columnWeight="1"-->
+            <!--                    android:scaleType="centerCrop"-->
+            <!--                    android:src="@drawable/image2" />-->
+
+            <!--            </GridLayout>-->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/profilePostsRecyclerView"
+                android:layout_width="match_parent"
+                android:padding="@dimen/_12ssp"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </ScrollView>
+
+</FrameLayout>

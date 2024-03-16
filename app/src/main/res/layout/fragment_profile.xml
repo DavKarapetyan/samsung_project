@@ -62,7 +62,7 @@
                 <Button
                     android:id="@+id/start"
                     android:layout_width="@dimen/_100ssp"
-                    android:layout_height="@dimen/_25ssp"
+                    android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
                     android:backgroundTint="@color/primary__color"
                     android:clipToOutline="true"
@@ -127,10 +127,10 @@
 
                     <TextView
                         style="@style/text__color"
+                        android:id="@+id/postsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
-                        android:text="9"
                         android:textSize="@dimen/_11ssp" />
 
                     <TextView
@@ -150,6 +150,7 @@
 
                     <TextView
                         style="@style/text__color"
+                        android:id="@+id/followingsCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
@@ -173,6 +174,7 @@
 
                     <TextView
                         style="@style/text__color"
+                        android:id="@+id/followersCount"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
@@ -262,40 +264,11 @@
             <!--                    android:src="@drawable/image2" />-->
 
             <!--            </GridLayout>-->
-            <com.google.android.flexbox.FlexboxLayout
-                android:id="@+id/profilePosts"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/profilePostsRecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:flexWrap="wrap"
                 android:padding="@dimen/_12ssp"
-                app:dividerDrawable="@drawable/empty_divider"
-                app:showDivider="middle"
-                app:alignItems="stretch"
-                app:alignContent="stretch">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/addPost"
-                    android:layout_width="@dimen/_90sdp"
-                    android:layout_height="@dimen/_90sdp"
-                    app:layout_flexGrow="1"
-                    android:layout_gravity="fill_horizontal"
-                    android:background="@drawable/rounded_corner"
-                    android:backgroundTint="@color/active_bg">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/nunito_medium"
-                        android:text="+"
-                        android:textColor="@color/primary__color"
-                        android:textSize="40dp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-            </com.google.android.flexbox.FlexboxLayout>
+                android:layout_height="wrap_content"/>
         </LinearLayout>
     </ScrollView>
 

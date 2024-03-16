@@ -1,6 +1,7 @@
 package com.example.project_.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,11 +9,15 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.project_.R;
 import com.example.project_.databinding.ActivityLoginBinding;
 import com.example.project_.utilities.Constants;
 import com.example.project_.utilities.PreferenceManager;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+
+import www.sanju.motiontoast.MotionToast;
+import www.sanju.motiontoast.MotionToastStyle;
 
 public class LoginActivity extends AppCompatActivity {
     private ActivityLoginBinding binding;
@@ -39,6 +44,9 @@ public class LoginActivity extends AppCompatActivity {
             if(isValidSignInDetails()) {
                 signIn();
             }
+        });
+        binding.fab.setOnClickListener(v -> {
+            finish();
         });
     }
 
@@ -79,7 +87,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void showToast(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();;
+        //Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        MotionToast.Companion.createColorToast(this, "Error", message, MotionToastStyle.ERROR, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_regular));
+
     }
 
     private Boolean isValidSignInDetails() {

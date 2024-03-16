@@ -35,7 +35,7 @@
             android:fontFamily="@font/nunito_medium"
             android:text="New notification"
             android:textColor="@color/primary__color"
-            android:textSize="20dp" />
+            android:textSize="@dimen/_16ssp" />
 
         <TextView
             android:id="@+id/notification_message"

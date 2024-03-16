@@ -54,7 +54,7 @@
                 android:layout_height="218dp"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
-                app:lottie_rawRes="@raw/animation_1706549444205" />
+                app:lottie_rawRes="@raw/animation_1706636230240" />
 
         </LinearLayout>
         <ProgressBar
@@ -70,7 +70,6 @@
         android:layout_height="@dimen/_48sdp"
         android:layout_marginStart="@dimen/_16sdp"
         android:layout_marginLeft="@dimen/_16sdp"
-        android:layout_marginTop="@dimen/_12sdp"
         android:backgroundTint="@color/primary__color"
         app:tint="@color/white"
         android:contentDescription="a"
@@ -83,5 +82,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginEnd="@dimen/_24sdp"
         android:layout_marginRight="@dimen/_24sdp"
-        android:layout_marginBottom="@dimen/_24sdp"/>
+        android:layout_marginBottom="@dimen/_85sdp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
