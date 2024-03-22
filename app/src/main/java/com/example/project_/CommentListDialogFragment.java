@@ -62,7 +62,6 @@ public class CommentListDialogFragment extends BottomSheetDialogFragment {
 
     // TODO: Customize parameter argument names
     private static final String ARG_POST_ID = "postId";
-    private static final String ARG_USER_PROFILE_IMAGE = "postProfileImage";
     private FragmentCommentListDialogListDialogBinding binding;
     private FirebaseFirestore firebaseFirestore;
     private ItemAdapter itemAdapter;
@@ -123,9 +122,8 @@ public class CommentListDialogFragment extends BottomSheetDialogFragment {
                         comment.userProfileImage = documentSnapshot.getString("userProfileImage");
                         comment.time = documentSnapshot.getString("time");
                         comments.add(comment);
-                        itemAdapter.notifyDataSetChanged();
-
                     }
+                    itemAdapter.notifyDataSetChanged();
                     if (comments.isEmpty()) {
                         binding.headerLottie.setVisibility(View.VISIBLE);
                     } else {

@@ -10,15 +10,19 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.project_.activities.PostDetailsActivity;
 import com.example.project_.databinding.ItemContainerPostProfileBinding;
 import com.example.project_.models.Post;
+import com.example.project_.utilities.Constants;
+import com.example.project_.utilities.PreferenceManager;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 public class ProfilePostsAdapter extends RecyclerView.Adapter<ProfilePostsAdapter.ProfilePostViewHolder> {
     private final List<Post> posts;
+    private static PreferenceManager preferenceManager;
     private static Context context;
-    public ProfilePostsAdapter(List<Post> posts, Context context) {
+    public ProfilePostsAdapter(List<Post> posts, PreferenceManager preferenceManager, Context context) {
         this.posts = posts;
+        this.preferenceManager = preferenceManager;
         this.context = context;
     }
     @NonNull
@@ -55,9 +59,12 @@ public class ProfilePostsAdapter extends RecyclerView.Adapter<ProfilePostsAdapte
                 Picasso.get().load(post.imageUris.get(0)).into(binding.postImage);
             }
             binding.postImage.setOnClickListener(v -> {
-                Intent intent = new Intent(context.getApplicationContext(), PostDetailsActivity.class);
-                intent.putExtra("postId", post.id);
-                context.startActivity(intent);
+                if (preferenceManager.getString(Constants.KEY_USER_ID).equals(post.userId)) {
+                    Intent intent = new Intent(context.getApplicationContext(), PostDetailsActivity.class);
+                    intent.putExtra("postId", post.id);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);
+                }
             });
         }
     }

@@ -38,7 +38,7 @@ public class HomeFragment extends Fragment {
 
         // Initialize posts list and adapter
         posts = new ArrayList<>();
-        postAdapter = new PostAdapter(posts, getParentFragmentManager(), new PreferenceManager(getActivity()));
+        postAdapter = new PostAdapter(posts, getParentFragmentManager(), new PreferenceManager(getActivity()), getActivity());
         binding.postsRecyclerView.setAdapter(postAdapter);
 
         // Retrieve initial posts
@@ -56,6 +56,7 @@ public class HomeFragment extends Fragment {
                     for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                         Post post = createPostFromDocument(documentSnapshot);
                         post.id = documentSnapshot.getId();
+                        post.userId = documentSnapshot.getString("userId");
                         posts.add(post);
                     }
                     postAdapter.notifyDataSetChanged();

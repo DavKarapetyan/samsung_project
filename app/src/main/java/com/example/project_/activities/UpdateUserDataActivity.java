@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -30,6 +31,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
+import www.sanju.motiontoast.MotionToast;
+import www.sanju.motiontoast.MotionToastStyle;
+
 public class UpdateUserDataActivity extends AppCompatActivity {
 
     private ActivityUpdateUserDataBinding binding;
@@ -54,12 +58,26 @@ public class UpdateUserDataActivity extends AppCompatActivity {
         loadUserData();
     }
     private void loadUserData() {
-        binding.name.setText(preferenceManager.getString(Constants.KEY_NAME));
-        binding.nickName.setText(preferenceManager.getString(Constants.KEY_NICKNAME));
-        byte[] bytes = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        binding.imageProfile.setImageBitmap(bitmap);
-        binding.textAddImage.setVisibility(View.GONE);
+//        binding.name.setText(preferenceManager.getString(Constants.KEY_NAME));
+//        binding.nickName.setText(preferenceManager.getString(Constants.KEY_NICKNAME));
+//        byte[] bytes = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT);
+//        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+//        binding.imageProfile.setImageBitmap(bitmap);
+//        binding.textAddImage.setVisibility(View.GONE);
+        firebaseFirestore.collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID))
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        binding.name.setText(documentSnapshot.getString("name"));
+                        binding.nickName.setText(documentSnapshot.getString("nickName"));
+                        byte[] bytes = Base64.decode(documentSnapshot.getString("image"), Base64.DEFAULT);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        encodedImage = encodeImage(bitmap);
+                        binding.imageProfile.setImageBitmap(bitmap);
+                        binding.textAddImage.setVisibility(View.GONE);
+                    }
+                });
     }
     private void updateUser() {
         loading(true);
@@ -68,6 +86,7 @@ public class UpdateUserDataActivity extends AppCompatActivity {
         userRef.update("nickName", binding.nickName.getText().toString());
         userRef.update("image", encodedImage);
         loading(false);
+        MotionToast.Companion.createColorToast(UpdateUserDataActivity.this, "Success", "Your data is successfully updated", MotionToastStyle.SUCCESS, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_regular));
         finish();
     }
     private void loading(Boolean isLoading) {

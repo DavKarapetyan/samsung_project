@@ -143,6 +143,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/followings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -154,7 +155,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
-                        android:text="128"
                         android:textSize="@dimen/_11ssp" />
 
                     <TextView
@@ -167,6 +167,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/followers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -178,7 +179,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
-                        android:text="128"
                         android:textSize="@dimen/_11ssp" />
 
                     <TextView

@@ -82,7 +82,7 @@ public class CallActivity extends AppCompatActivity implements MainRepository.Li
         views.switchCameraButton.setOnClickListener(v->{
             mainRepository.switchCamera();
         });
-
+        mainRepository.turnOnSpeakers();
         views.micButton.setOnClickListener(v->{
             if (isMicrophoneMuted){
                 views.micButton.setImageResource(R.drawable.ic_baseline_mic_off_24);

@@ -1,7 +1,10 @@
 package com.example.project_.repository;
 
 import android.content.Context;
+import android.media.AudioManager;
 import android.util.Log;
+
+import androidx.core.content.ContextCompat;
 
 import com.example.project_.remote.FirebaseClient;
 import com.example.project_.utilities.DataModel;
@@ -30,7 +33,7 @@ public class MainRepository implements WebRTCClient.Listener {
     private String currentUsername;
 
     private SurfaceViewRenderer remoteView;
-
+    private AudioManager audioManager;
     private String target;
     private void updateCurrentUsername(String username){
         this.currentUsername = username;
@@ -87,6 +90,7 @@ public class MainRepository implements WebRTCClient.Listener {
             webRTCClient.listener = this;
             callBack.onSuccess();
         });
+        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
     }
 
     public void initLocalView(SurfaceViewRenderer view){
@@ -97,11 +101,9 @@ public class MainRepository implements WebRTCClient.Listener {
         webRTCClient.initRemoteSurfaceView(view);
         this.remoteView = view;
     }
-
     public void startCall(String target){
         webRTCClient.call(target);
     }
-
     public void switchCamera() {
         webRTCClient.switchCamera();
     }
@@ -117,7 +119,21 @@ public class MainRepository implements WebRTCClient.Listener {
                 new DataModel(target,currentUsername,null, DataModelType.StartCall),errorCallBack
         );
     }
+    public void turnOnSpeakers() {
+        int result = audioManager.requestAudioFocus(null, AudioManager.STREAM_VOICE_CALL, AudioManager.AUDIOFOCUS_GAIN);
 
+        if (result == AudioManager.AUDIOFOCUS_REQUEST_GRANTED) {
+            audioManager.setMode(AudioManager.MODE_IN_CALL);
+            audioManager.setSpeakerphoneOn(true);
+        } else {
+            Log.e("MainRepository", "Failed to request audio focus");
+        }
+    }
+    public void releaseAudioFocus() {
+        audioManager.abandonAudioFocus(null); // Release audio focus
+        audioManager.setMode(AudioManager.MODE_NORMAL); // Reset audio mode
+        audioManager.setSpeakerphoneOn(false); // Turn off speakerphone
+    }
     public void endCall(){
         webRTCClient.closeConnection();
     }

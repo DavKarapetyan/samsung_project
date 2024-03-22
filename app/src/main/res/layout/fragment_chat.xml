@@ -7,7 +7,21 @@
     android:background="@color/primary__color"
     tools:context=".ChatFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nunito_regular"
+        android:text="Chat"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_13ssp"
+        app:layout_constraintBottom_toTopOf="@+id/frameLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <FrameLayout
+        android:id="@+id/frameLayout2"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_56sdp"
@@ -34,20 +48,20 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:orientation="vertical"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
+
             <TextView
                 android:id="@+id/heading_text"
                 style="@style/text__color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/nunito_bold"
                 android:text="Lets Start Messaging"
                 android:textSize="@dimen/_20sdp"
-                android:textStyle="bold"
-                android:layout_gravity="center_horizontal"
-                />
+                android:textStyle="bold" />
+
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/header_lottie"
                 android:layout_width="match_parent"
@@ -57,6 +71,7 @@
                 app:lottie_rawRes="@raw/animation_1706636230240" />
 
         </LinearLayout>
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="@dimen/_25sdp"

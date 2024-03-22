@@ -17,10 +17,12 @@ import com.example.project_.R;
 import com.example.project_.databinding.ActivityHomeBinding;
 import com.example.project_.repository.MainRepository;
 import com.example.project_.utilities.Constants;
+import com.example.project_.utilities.DataModelType;
 import com.example.project_.utilities.PreferenceManager;
 import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.android.material.shape.CornerFamily;
 import com.google.android.material.shape.MaterialShapeDrawable;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class HomeActivity extends BaseActivity {
 

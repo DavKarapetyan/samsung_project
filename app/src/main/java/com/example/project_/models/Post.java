@@ -10,4 +10,5 @@ public class Post {
     public List<String> imageUris;
     public String userName;
     public String userImage;
+    public String userId;
 }

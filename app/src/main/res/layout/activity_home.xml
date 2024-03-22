@@ -6,6 +6,39 @@
     android:layout_height="match_parent"
     style="@style/page_bg"
     tools:context=".activities.HomeActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:id="@+id/incomingCallLayout"
+        android:visibility="gone"
+        android:orientation="horizontal"
+        android:layout_alignParentTop="true">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_weight="6"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:text="someone is calling"
+            android:id="@+id/incomingNameTV"/>
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:src="@drawable/ic_accept"
+            android:padding="15dp"
+            android:id="@+id/acceptButton"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.5"
+            android:src="@drawable/ic_reject"
+            android:padding="15dp"
+            android:id="@+id/rejectButton"/>
+
+    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/frame_layout"

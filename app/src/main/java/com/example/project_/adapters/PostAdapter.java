@@ -1,5 +1,7 @@
 package com.example.project_.adapters;
 
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
@@ -17,6 +19,8 @@ import com.codebyashish.autoimageslider.Enums.ImageScaleType;
 import com.codebyashish.autoimageslider.ExceptionsClass;
 import com.codebyashish.autoimageslider.Models.ImageSlidesModel;
 import com.example.project_.CommentListDialogFragment;
+import com.example.project_.activities.PostDetailsActivity;
+import com.example.project_.activities.UserProfileActivity;
 import com.example.project_.databinding.ItemContainerPostBinding;
 import com.example.project_.models.Post;
 import com.example.project_.utilities.Constants;
@@ -44,11 +48,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     private final List<Post> posts;
     private FragmentManager fragmentManager;
     private PreferenceManager preferenceManager;
+    private static Context context;
 
-    public PostAdapter(List<Post> posts, FragmentManager fragmentManager, PreferenceManager preferenceManager) {
+
+    public PostAdapter(List<Post> posts, FragmentManager fragmentManager, PreferenceManager preferenceManager, Context context) {
         this.posts = posts;
         this.fragmentManager = fragmentManager;
         this.preferenceManager = preferenceManager;
+        this.context = context;
     }
 
     @NonNull
@@ -102,7 +109,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             }
             binding.fullName.setText(post.userName);
             //String content = new HttpRequestTask().execute(locale.getLanguage(), post.content).toString();
-            //binding.content.setText(content);
+            binding.content.setText(post.content);
 
             if (post.userImage != null) {
                 binding.profileImage.setImageBitmap(getUserImage(post.userImage));
@@ -110,6 +117,13 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
             binding.showComments.setOnClickListener(v -> {
                 CommentListDialogFragment commentListDialogFragment = CommentListDialogFragment.newInstance(post.id);
                 commentListDialogFragment.show(fragmentManager, "TAG");
+            });
+            binding.fullName.setOnClickListener(v -> {
+                if (!post.userId.equals(preferenceManager.getString(Constants.KEY_USER_ID))) {
+                    Intent intent = new Intent(context.getApplicationContext(), UserProfileActivity.class);
+                    intent.putExtra("userId", post.userId);
+                    context.startActivity(intent);
+                }
             });
 //            if (isUserExistsInLiked(post.id)) {
 //                binding.likeButton.setLiked(true);

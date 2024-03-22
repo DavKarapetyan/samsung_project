@@ -19,5 +19,8 @@ public class SettingsActivity extends AppCompatActivity {
         binding.profileText.setOnClickListener(v -> {
             startActivity(new Intent(SettingsActivity.this, UpdateUserDataActivity.class));
         });
+        binding.statisticsText.setOnClickListener(v -> {
+            startActivity(new Intent(SettingsActivity.this, StatisticsActivity.class));
+        });
     }
 }

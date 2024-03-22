@@ -129,6 +129,8 @@ public class RegisterActivity extends AppCompatActivity {
                     Intent intent = new Intent(getApplicationContext(), EmailConfirmationActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent.putExtra("name", binding.fullName.getText().toString());
+                    intent.putExtra("email", binding.email.getText().toString());
+                    intent.putExtra("password", binding.password.getText().toString());
                     startActivity(intent);
                 })
                 .addOnFailureListener(exception -> {

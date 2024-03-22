@@ -39,9 +39,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.android.flexbox.FlexboxLayoutManager;
 
@@ -107,6 +109,12 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
+    public void onDetach() {
+        super.onDetach();
+        loadUserDetails();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
@@ -139,7 +147,14 @@ public class ProfileFragment extends Fragment {
         binding.fab.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), SettingsActivity.class));
         });
-
+        binding.followings.setOnClickListener(v -> {
+            FollowListDialogFragment followListDialogFragment = FollowListDialogFragment.newInstance("followings", preferenceManager.getString(Constants.KEY_USER_ID));
+            followListDialogFragment.show(getParentFragmentManager(), "TAG");
+        });
+        binding.followers.setOnClickListener(v -> {
+            FollowListDialogFragment followListDialogFragment = FollowListDialogFragment.newInstance("followers", preferenceManager.getString(Constants.KEY_USER_ID));
+            followListDialogFragment.show(getParentFragmentManager(), "TAG");
+        });
 
         preferenceManager = new PreferenceManager(getContext());
 
@@ -147,7 +162,7 @@ public class ProfileFragment extends Fragment {
         getToken();
 
         posts = new ArrayList<>();
-        profilePostsAdapter = new ProfilePostsAdapter(posts, getActivity());
+        profilePostsAdapter = new ProfilePostsAdapter(posts, new PreferenceManager(getActivity()),getActivity());
         binding.profilePostsRecyclerView.setAdapter(profilePostsAdapter);
 
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getActivity());
@@ -175,6 +190,7 @@ public class ProfileFragment extends Fragment {
                     for (QueryDocumentSnapshot documentSnapshot : queryDocumentSnapshots) {
                         Post post = createPostFromDocument(documentSnapshot);
                         post.id = documentSnapshot.getId();
+                        post.userId = documentSnapshot.getString("userId");
                         posts.add(post);
                     }
                     binding.postsCount.setText(Integer.toString(posts.size()));
@@ -225,12 +241,38 @@ public class ProfileFragment extends Fragment {
                     Log.e("Home", "Failed to retrieve user details for userId: " + userId + ", Error: " + e.getMessage());
                 });
     }
+
     private void loadUserDetails() {
-        binding.textName.setText(preferenceManager.getString(Constants.KEY_NAME));
-        binding.textNickName.setText(preferenceManager.getString(Constants.KEY_NICKNAME));
-        byte[] bytes = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT);
-        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-        binding.imageProfile.setImageBitmap(bitmap);
+        //binding.textName.setText(preferenceManager.getString(Constants.KEY_NAME));
+        //binding.textNickName.setText(preferenceManager.getString(Constants.KEY_NICKNAME));
+        //byte[] bytes = Base64.decode(preferenceManager.getString(Constants.KEY_IMAGE), Base64.DEFAULT);
+        firebaseFirestore.collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID))
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        binding.textName.setText(documentSnapshot.getString("name"));
+                        binding.textNickName.setText(documentSnapshot.getString("nickName"));
+                        byte[] bytes = Base64.decode(documentSnapshot.getString("image"), Base64.DEFAULT);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        binding.imageProfile.setImageBitmap(bitmap);
+                    }
+                });
+
+        firebaseFirestore.collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID)).collection("followers").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        binding.followersCount.setText(Integer.toString(queryDocumentSnapshots.size()));
+                    }
+                });
+        firebaseFirestore.collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID)).collection("followings").get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        binding.followingsCount.setText(Integer.toString(queryDocumentSnapshots.size()));
+                    }
+                });
     }
 
     private void showToast(String message) {

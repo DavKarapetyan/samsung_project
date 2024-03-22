@@ -55,12 +55,11 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="@dimen/_140sdp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img7"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
-                    android:id="@+id/start"
+                    android:id="@+id/follow"
                     android:layout_width="@dimen/_100ssp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="20dp"
@@ -72,6 +71,23 @@
                     android:textAllCaps="false"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_11ssp"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent" />
+                <Button
+                    android:id="@+id/unFollow"
+                    android:layout_width="@dimen/_100ssp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="20dp"
+                    android:backgroundTint="@color/secondary__color"
+                    android:clipToOutline="true"
+                    android:fontFamily="@font/nunito_medium"
+                    android:paddingVertical="0dp"
+                    android:text="Unfollow"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primary__color"
+                    android:textSize="@dimen/_11ssp"
+                    android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -91,7 +107,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_semibold"
-                    android:text="Davit Karapetyan"
                     android:textColor="@color/primary__color"
                     android:textSize="@dimen/_14ssp" />
 
@@ -100,7 +115,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_regular"
-                    android:text="DavKarapetyan"
                     android:textColor="#7A7A7A"
                     android:textSize="@dimen/_11ssp" />
             </LinearLayout>
@@ -138,6 +152,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/followings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -149,7 +164,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
-                        android:text="128"
                         android:textSize="@dimen/_11ssp" />
 
                     <TextView
@@ -162,6 +176,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/followers"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -173,7 +188,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/nunito_bold"
-                        android:text="128"
                         android:textSize="@dimen/_11ssp" />
 
                     <TextView
