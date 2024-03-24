@@ -75,7 +75,6 @@ dependencies {
     implementation 'com.github.jd-alexander:LikeButton:0.2.3'
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
-    implementation 'com.github.dangiashish:Auto-Image-Slider:1.0.4'
     implementation 'com.google.firebase:firebase-database-ktx:20.2.2'
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.mesibo.api:webrtc:1.0.5'
@@ -84,4 +83,6 @@ dependencies {
     implementation 'com.github.Spikeysanju:MotionToast:1.4'
     implementation 'nl.joery.animatedbottombar:library:1.1.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    implementation 'com.github.dangiashish:Auto-Image-Slider:1.0.6'
+    implementation 'com.nambimobile.widgets:expandable-fab:1.2.1'
 }

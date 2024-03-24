@@ -3,131 +3,146 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipeRefreshLayout"
+    style="@style/page_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/page_bg"
     tools:context=".HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            style="@style/text__color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/nunito_semibold"
+            android:text="Moments"
+            android:textSize="@dimen/_12ssp" />
+
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/image1" />
+
+                <ImageView
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/image1" />
+
+                <ImageView
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/image1" />
+
+                <ImageView
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/image1" />
+
+                <ImageView
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/image1" />
+
+                <ImageView
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/image1" />
+
+                <ImageView
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:layout_marginLeft="20dp"
+                    android:src="@drawable/image1" />
+            </LinearLayout>
+        </HorizontalScrollView>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
+
             <TextView
+                android:id="@+id/textView6"
+                style="@style/text__color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/nunito_semibold"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="20dp"
-                android:text="Moments"
-                style="@style/text__color"
-                android:textSize="@dimen/_12ssp" />
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:scrollbars="none">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="@dimen/_45sdp"
-                        android:layout_height="@dimen/_45sdp"
-                        android:layout_marginLeft="20dp"
-                        android:src="@drawable/image1"/>
-                    <ImageView
-                        android:layout_width="@dimen/_45sdp"
-                        android:layout_height="@dimen/_45sdp"
-                        android:layout_marginLeft="20dp"
-                        android:src="@drawable/image1"/>
-                    <ImageView
-                        android:layout_width="@dimen/_45sdp"
-                        android:layout_height="@dimen/_45sdp"
-                        android:layout_marginLeft="20dp"
-                        android:src="@drawable/image1"/>
-                    <ImageView
-                        android:layout_width="@dimen/_45sdp"
-                        android:layout_height="@dimen/_45sdp"
-                        android:layout_marginLeft="20dp"
-                        android:src="@drawable/image1"/>
-                    <ImageView
-                        android:layout_width="@dimen/_45sdp"
-                        android:layout_height="@dimen/_45sdp"
-                        android:layout_marginLeft="20dp"
-                        android:src="@drawable/image1"/>
-                    <ImageView
-                        android:layout_width="@dimen/_45sdp"
-                        android:layout_height="@dimen/_45sdp"
-                        android:layout_marginLeft="20dp"
-                        android:src="@drawable/image1"/>
-                    <ImageView
-                        android:layout_width="@dimen/_45sdp"
-                        android:layout_height="@dimen/_45sdp"
-                        android:layout_marginLeft="20dp"
-                        android:src="@drawable/image1"/>
-                </LinearLayout>
-            </HorizontalScrollView>
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraint1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="20dp"
-                android:paddingHorizontal="20dp">
-
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/nunito_semibold"
-                    android:text="Latest Posts"
-                    android:textSize="@dimen/_12ssp"
-                    style="@style/text__color"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:src="@drawable/filter"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-            <EditText
-                android:id="@+id/editText"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/_36sdp"
-                android:layout_marginHorizontal="@dimen/_18sdp"
-                android:layout_marginTop="25dp"
-                style="@style/input__bg"
-                android:clipToPadding="false"
-                android:fontFamily="@font/nunito_regular"
-                android:hint="Search"
-                android:inputType="textEmailAddress"
-                android:paddingHorizontal="@dimen/_12ssp"
-                android:paddingVertical="13dp"
-                android:textColorHint="@color/primary__color"
-                android:textSize="@dimen/_11ssp"
-                android:drawableEnd="@drawable/baseline_search_24"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="Latest Posts"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            <com.google.android.material.divider.MaterialDivider
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                app:dividerColor="@color/primary__color"
-                android:layout_marginTop="30dp"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/postsRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:orientation="vertical"
-                android:overScrollMode="never"
-                android:padding="@dimen/_20sdp"
-                android:visibility="gone"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-        </LinearLayout>
+
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/filter"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <EditText
+            android:id="@+id/editText"
+            style="@style/input__bg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_36sdp"
+            android:layout_marginHorizontal="@dimen/_18sdp"
+            android:layout_marginTop="25dp"
+            android:clipToPadding="false"
+            android:drawableEnd="@drawable/baseline_search_24"
+            android:fontFamily="@font/nunito_regular"
+            android:hint="Search"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="@dimen/_12ssp"
+            android:paddingVertical="13dp"
+            android:textColorHint="@color/primary__color"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_marginTop="30dp"
+            app:dividerColor="@color/primary__color" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/postsRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="75dp"
+            android:clipToPadding="false"
+            android:orientation="vertical"
+            android:overScrollMode="never"
+            android:padding="@dimen/_20sdp"
+            android:visibility="gone"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    </LinearLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

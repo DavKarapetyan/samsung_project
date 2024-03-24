@@ -79,23 +79,67 @@
             android:layout_gravity="center" />
     </FrameLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabNewChat"
-        android:layout_width="@dimen/_48sdp"
-        android:layout_height="@dimen/_48sdp"
-        android:layout_marginStart="@dimen/_16sdp"
-        android:layout_marginLeft="@dimen/_16sdp"
-        android:backgroundTint="@color/primary__color"
-        app:tint="@color/white"
-        android:contentDescription="a"
-        android:clipToOutline="true"
-        android:elevation="10dp"
-        android:src="@drawable/baseline_add_24"
-        app:fabCustomSize="@dimen/_48sdp"
-        app:shapeAppearanceOverlay="@style/fab_3_rounded"
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fabNewChat"-->
+<!--        android:layout_width="@dimen/_48sdp"-->
+<!--        android:layout_height="@dimen/_48sdp"-->
+<!--        android:layout_marginStart="@dimen/_16sdp"-->
+<!--        android:layout_marginLeft="@dimen/_16sdp"-->
+<!--        android:backgroundTint="@color/primary__color"-->
+<!--        app:tint="@color/white"-->
+<!--        android:contentDescription="a"-->
+<!--        android:clipToOutline="true"-->
+<!--        android:elevation="10dp"-->
+<!--        android:src="@drawable/baseline_add_24"-->
+<!--        app:fabCustomSize="@dimen/_48sdp"-->
+<!--        app:shapeAppearanceOverlay="@style/fab_3_rounded"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:layout_marginEnd="@dimen/_24sdp"-->
+<!--        android:layout_marginRight="@dimen/_24sdp"-->
+<!--        android:layout_marginBottom="@dimen/_85sdp"-->
+<!--        android:visibility="gone"/>-->
+    <!-- This is NOT a root view, but should be a child of whatever root view you choose (CoordinatorLayout, ConstraintLayout, etc) -->
+    <com.nambimobile.widgets.efab.ExpandableFabLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginEnd="@dimen/_24sdp"
-        android:layout_marginRight="@dimen/_24sdp"
-        android:layout_marginBottom="@dimen/_85sdp"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <!-- The next 3 Views will only display in portrait orientation -->
+        <com.nambimobile.widgets.efab.Overlay
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:overlay_orientation="portrait" />
+
+        <com.nambimobile.widgets.efab.ExpandableFab
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:backgroundTint="@color/primary__color"
+            app:efab_orientation="portrait"
+            android:layout_marginEnd="@dimen/_24sdp"
+            android:layout_marginRight="@dimen/_24sdp"
+            android:layout_marginBottom="@dimen/_85sdp"
+            app:shapeAppearanceOverlay="@style/fab_3_rounded"
+            app:tint="@color/white" />
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/fabNewChat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary__color"
+            android:src="@drawable/chat"
+            app:fab_orientation="portrait"
+            app:label_text="New Chat" />
+
+        <com.nambimobile.widgets.efab.FabOption
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/primary__color"
+            android:src="@drawable/group_chat"
+            app:fab_orientation="portrait"
+            app:label_text="New Group Chat" />
+
+    </com.nambimobile.widgets.efab.ExpandableFabLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

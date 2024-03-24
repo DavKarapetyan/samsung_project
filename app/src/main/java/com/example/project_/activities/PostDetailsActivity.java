@@ -60,11 +60,7 @@ public class PostDetailsActivity extends AppCompatActivity {
                             //Picasso.get().load(post.imageUris.get(0)).into(binding.postImage);
                             ArrayList<ImageSlidesModel> autoImageList = new ArrayList<>();
                             for (String str : post.imageUris) {
-                                try {
-                                    autoImageList.add(new ImageSlidesModel(str, ImageScaleType.CENTER_CROP));
-                                } catch (ExceptionsClass e) {
-                                    throw new RuntimeException(e);
-                                }
+                                autoImageList.add(new ImageSlidesModel(str, ImageScaleType.CENTER_CROP));
                             }
                             binding.postImages.setImageList(autoImageList);
                             binding.postImages.setDefaultAnimation();
