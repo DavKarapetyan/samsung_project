@@ -6,7 +6,11 @@
     android:layout_height="match_parent"
     android:background="@color/primary__color"
     tools:context=".ChatFragment">
-
+    <Button
+        android:id="@+id/groupChat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Group chat"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -134,6 +138,7 @@
             app:label_text="New Chat" />
 
         <com.nambimobile.widgets.efab.FabOption
+            android:id="@+id/fabNewGroupChat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/primary__color"

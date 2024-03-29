@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.AddGroupChatActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/nunito_regular"
+        android:text="Add Group Chat"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_13ssp" />
+
+    <EditText
+        android:id="@+id/chatName"
+        style="@style/input__bg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_36sdp"
+        android:layout_marginHorizontal="@dimen/_18sdp"
+        android:layout_marginTop="15dp"
+        android:clipToPadding="false"
+        android:fontFamily="@font/nunito_regular"
+        android:hint="Chat Name"
+        android:inputType="text"
+        android:paddingHorizontal="@dimen/_12ssp"
+        android:paddingVertical="12.5dp"
+        android:textColorHint="@color/primary__color"
+        android:textSize="@dimen/_11ssp" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        >
+        <EditText
+            android:id="@+id/member"
+            style="@style/input__bg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_36sdp"
+            android:layout_marginHorizontal="@dimen/_18sdp"
+            android:clipToPadding="false"
+            android:fontFamily="@font/nunito_regular"
+            android:hint="Member Nickname"
+            android:inputType="text"
+            android:paddingHorizontal="@dimen/_12ssp"
+            android:paddingVertical="12.5dp"
+            android:textColorHint="@color/primary__color"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="@dimen/_28sdp"
+            android:layout_height="@dimen/_28sdp"
+            android:backgroundTint="@color/primary__color"
+            android:clipToOutline="true"
+            android:contentDescription="a"
+            android:elevation="10dp"
+            android:src="@drawable/baseline_add_24"
+            app:fabCustomSize="@dimen/_28sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/member"
+            app:layout_constraintTop_toTopOf="@+id/member"
+            app:shapeAppearanceOverlay="@style/fab_3_rounded"
+            app:tint="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/members"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_18sdp">
+    </com.google.android.material.chip.ChipGroup>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_18sdp"
+        android:layout_marginTop="25dp"
+        android:fontFamily="@font/nunito_regular"
+        android:text="Images"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_13ssp" />
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_12ssp"
+        app:alignContent="stretch"
+        app:alignItems="stretch"
+        app:dividerDrawable="@drawable/empty_divider"
+        app:flexWrap="wrap"
+        app:showDivider="middle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/uploadImage1"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/rounded_corner"
+            android:backgroundTint="@color/active_bg"
+            app:layout_flexGrow="1">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/nunito_medium"
+                android:text="+"
+                android:textColor="@color/primary__color"
+                android:textSize="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/uploadedImage2"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/rounded_corner"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image2"
+            android:visibility="gone"
+            app:layout_flexGrow="1" />
+
+        <ImageView
+            android:id="@+id/uploadedImage3"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/rounded_corner"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image2"
+            android:visibility="gone"
+            app:layout_flexGrow="1" />
+
+        <ImageView
+            android:id="@+id/uploadedImage4"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/rounded_corner"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image2"
+            android:visibility="gone"
+            app:layout_flexGrow="1" />
+
+        <ImageView
+            android:id="@+id/uploadedImage5"
+            android:layout_width="@dimen/_90sdp"
+            android:layout_height="@dimen/_90sdp"
+            android:layout_gravity="fill_horizontal"
+            android:background="@drawable/rounded_corner"
+            android:clipToOutline="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/image2"
+            android:visibility="gone"
+            app:layout_flexGrow="1" />
+
+
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true">
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginHorizontal="@dimen/_18sdp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/primary__color"
+            android:clipToOutline="true"
+            android:elevation="10dp"
+            android:fontFamily="@font/nunito_medium"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/_25sdp"
+            android:layout_height="@dimen/_25sdp"
+            android:layout_gravity="center"
+            android:visibility="invisible" />
+    </FrameLayout>
+</LinearLayout>

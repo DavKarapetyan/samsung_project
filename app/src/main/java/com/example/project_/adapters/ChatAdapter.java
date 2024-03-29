@@ -1,6 +1,8 @@
 package com.example.project_.adapters;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.project_.databinding.ItemContainerReceivedMessageBinding;
 import com.example.project_.databinding.ItemContainerSentMessageBinding;
 import com.example.project_.models.ChatMessage;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -114,6 +119,15 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (receiverProfileImage != null) {
                 binding.imageProfile.setImageBitmap(receiverProfileImage);
             }
+            if (chatMessage.groupChatId != null) {
+                FirebaseFirestore.getInstance().collection("users").document(chatMessage.senderId).get()
+                        .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                binding.imageProfile.setImageBitmap(getUserImage(   documentSnapshot.getString("image")));
+                            }
+                        });
+            }
             if (chatMessage.image != null) {
                 Picasso.get().load(chatMessage.image).into(binding.sendImage);
                 binding.sendImage.setVisibility(View.VISIBLE);
@@ -123,6 +137,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             } else {
                 binding.textMessage.setText(chatMessage.message);
             }
+        }
+        private Bitmap getUserImage(String encodedImage) {
+            byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         }
     }
 }

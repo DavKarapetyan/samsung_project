@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.project_.activities.AddGroupChatActivity;
 import com.example.project_.activities.ChatActivity;
+import com.example.project_.activities.GroupChatsActivity;
 import com.example.project_.activities.HomeActivity;
 import com.example.project_.activities.UsersActivity;
 import com.example.project_.adapters.RecentConversationsAdapter;
@@ -92,6 +94,12 @@ public class ChatFragment extends BaseFragment implements ConversionListener {
         preferenceManager = new PreferenceManager(getActivity());
         binding.fabNewChat.setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), UsersActivity.class));
+        });
+        binding.fabNewGroupChat.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), AddGroupChatActivity.class));
+        });
+        binding.groupChat.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), GroupChatsActivity.class));
         });
         listenConversations();
         return binding.getRoot();
