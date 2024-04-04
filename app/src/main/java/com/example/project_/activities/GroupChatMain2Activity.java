@@ -117,6 +117,11 @@ public class GroupChatMain2Activity extends AppCompatActivity {
         binding.imageBack.setOnClickListener(v -> onBackPressed());
         binding.layoutSend.setOnClickListener(v -> sendMessage());
         binding.uploadImage.setOnClickListener(v -> openFileChooser());
+        binding.textName.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), GroupChatDetailsActivity.class);
+            intent.putExtra("groupChatId", groupChataId);
+            startActivity(intent);
+        });
     }
     private void sendMessage() {
         HashMap<String, Object> message = new HashMap<>();

@@ -30,6 +30,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".activities.GroupChatDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.GroupChatMain2Activity"
             android:exported="false" />
         <activity
