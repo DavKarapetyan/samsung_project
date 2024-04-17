@@ -93,16 +93,17 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         void setData(ChatMessage chatMessage) {
+            binding.textMessage.setText(chatMessage.message);
             binding.textDateTime.setText(chatMessage.dateTime);
             if (chatMessage.image != null) {
                 Picasso.get().load(chatMessage.image).into(binding.sendImage);
                 binding.sendImage.setVisibility(View.VISIBLE);
             }
-            if (chatMessage.message.isEmpty()) {
-                binding.textMessage.setVisibility(View.GONE);
-            } else {
-                binding.textMessage.setText(chatMessage.message);
-            }
+//            if (chatMessage.message.isEmpty()) {
+//                binding.textMessage.setVisibility(View.GONE);
+//            } else {
+//                binding.textMessage.setText(chatMessage.message);
+//            }
         }
     }
 
@@ -115,6 +116,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         }
 
         void setData(ChatMessage chatMessage, Bitmap receiverProfileImage) {
+            binding.textMessage.setText(chatMessage.message);
             binding.textDateTime.setText(chatMessage.dateTime);
             if (receiverProfileImage != null) {
                 binding.imageProfile.setImageBitmap(receiverProfileImage);
@@ -132,11 +134,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 Picasso.get().load(chatMessage.image).into(binding.sendImage);
                 binding.sendImage.setVisibility(View.VISIBLE);
             }
-            if (chatMessage.message.isEmpty()) {
-                binding.textMessage.setVisibility(View.GONE);
-            } else {
-                binding.textMessage.setText(chatMessage.message);
-            }
+//            if (chatMessage.message.isEmpty()) {
+//                binding.textMessage.setVisibility(View.GONE);
+//            } else {
+//                binding.textMessage.setText(chatMessage.message);
+//            }
         }
         private Bitmap getUserImage(String encodedImage) {
             byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
