@@ -23,62 +23,105 @@
             android:fontFamily="@font/nunito_semibold"
             android:text="Moments"
             android:textSize="@dimen/_12ssp" />
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scrollbars="none">
+            android:orientation="horizontal">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/addMoment"
+                android:layout_width="@dimen/_45sdp"
+                android:layout_height="@dimen/_45sdp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="fill_horizontal"
+                android:background="@drawable/moment_bg"
+                android:backgroundTint="@color/active_bg"
+                app:layout_flexGrow="1">
 
-            <LinearLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/nunito_medium"
+                    android:text="+"
+                    android:textColor="@color/primary__color"
+                    android:textSize="@dimen/_20sdp"
+                    android:layout_marginBottom="3dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/primary__color"
+                android:layout_marginLeft="10dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/momentsRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:overScrollMode="never"
+                android:visibility="visible"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                />
+        </LinearLayout>
 
-                <ImageView
-                    android:id="@+id/imageView1"
-                    android:layout_width="@dimen/_45sdp"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/image1" />
+<!--        <HorizontalScrollView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:scrollbars="none">-->
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="@dimen/_45sdp"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/image1" />
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="horizontal">-->
 
-                <ImageView
-                    android:layout_width="@dimen/_45sdp"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/image1" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageView1"-->
+<!--                    android:layout_width="@dimen/_45sdp"-->
+<!--                    android:layout_height="@dimen/_45sdp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:src="@drawable/image1" />-->
 
-                <ImageView
-                    android:layout_width="@dimen/_45sdp"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/image1" />
+<!--                <ImageView-->
+<!--                    android:id="@+id/imageView2"-->
+<!--                    android:layout_width="@dimen/_45sdp"-->
+<!--                    android:layout_height="@dimen/_45sdp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:src="@drawable/image1" />-->
 
-                <ImageView
-                    android:layout_width="@dimen/_45sdp"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/image1" />
+<!--                <ImageView-->
+<!--                    android:layout_width="@dimen/_45sdp"-->
+<!--                    android:layout_height="@dimen/_45sdp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:src="@drawable/image1" />-->
 
-                <ImageView
-                    android:layout_width="@dimen/_45sdp"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/image1" />
+<!--                <ImageView-->
+<!--                    android:layout_width="@dimen/_45sdp"-->
+<!--                    android:layout_height="@dimen/_45sdp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:src="@drawable/image1" />-->
 
-                <ImageView
-                    android:layout_width="@dimen/_45sdp"
-                    android:layout_height="@dimen/_45sdp"
-                    android:layout_marginLeft="20dp"
-                    android:src="@drawable/image1" />
-            </LinearLayout>
-        </HorizontalScrollView>
+<!--                <ImageView-->
+<!--                    android:layout_width="@dimen/_45sdp"-->
+<!--                    android:layout_height="@dimen/_45sdp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:src="@drawable/image1" />-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="@dimen/_45sdp"-->
+<!--                    android:layout_height="@dimen/_45sdp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:src="@drawable/image1" />-->
+
+<!--                <ImageView-->
+<!--                    android:layout_width="@dimen/_45sdp"-->
+<!--                    android:layout_height="@dimen/_45sdp"-->
+<!--                    android:layout_marginLeft="20dp"-->
+<!--                    android:src="@drawable/image1" />-->
+<!--            </LinearLayout>-->
+<!--        </HorizontalScrollView>-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint1"

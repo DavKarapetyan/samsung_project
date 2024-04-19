@@ -4,7 +4,7 @@
     android:id="@+id/story_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/image2">
+    >
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
@@ -16,6 +16,7 @@
             android:id="@+id/imageProfile"
             android:layout_width="@dimen/_35sdp"
             android:layout_height="@dimen/_35sdp"
+            android:clipToOutline="false"
             android:background="@drawable/background_image"
             android:scaleType="centerCrop"
             app:riv_oval="true" />

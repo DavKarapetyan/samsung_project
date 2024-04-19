@@ -26,16 +26,20 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.dsphotoeditor.sdk.activity.DsPhotoEditorActivity;
 import com.dsphotoeditor.sdk.utils.DsPhotoEditorConstants;
+import com.example.project_.adapters.MomentsAdapter;
 import com.example.project_.adapters.PostAdapter;
 import com.example.project_.databinding.FragmentHomeBinding;
 import com.example.project_.models.Post;
+import com.example.project_.models.User;
 import com.example.project_.utilities.Constants;
 import com.example.project_.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -49,7 +53,9 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private PostAdapter postAdapter;
+    private MomentsAdapter momentsAdapter;
     private List<Post> posts;
+    private List<User> momentsUsers;
     private SwipeRefreshLayout swipeRefreshLayout;
     private PreferenceManager preferenceManager;
 
@@ -68,21 +74,22 @@ public class HomeFragment extends Fragment {
         postAdapter = new PostAdapter(posts, getParentFragmentManager(), new PreferenceManager(getActivity()), getActivity());
         binding.postsRecyclerView.setAdapter(postAdapter);
 
+        momentsUsers = new ArrayList<>();
+        momentsAdapter = new MomentsAdapter(momentsUsers, getActivity());
+        binding.momentsRecyclerView.setAdapter(momentsAdapter);
+
         // Retrieve initial posts
         retrievePosts();
+        retrieveMoments();
         binding.postsRecyclerView.setVisibility(View.VISIBLE);
-        binding.imageView1.setOnClickListener(v -> {
+        binding.momentsRecyclerView.setVisibility(View.VISIBLE);
+        binding.addMoment.setOnClickListener(v -> {
             checkPermission();
         });
-        View view = getLayoutInflater().inflate(R.layout.story_dialog, null);
-        Dialog dialog = new StoryDialog(getActivity(), preferenceManager.getString(Constants.KEY_USER_ID));
-        dialog.getWindow().getAttributes().windowAnimations = R.style.StoryDialogAnimation;
-        dialog.setContentView(view);
 
-
-        binding.imageView2.setOnClickListener(v -> {
-            dialog.show();
-        });
+//        binding.imageView2.setOnClickListener(v -> {
+//            dialog.show();
+//        });
 
         return binding.getRoot();
     }
@@ -132,7 +139,7 @@ public class HomeFragment extends Fragment {
                     startActivityForResult(intent, 101);
                     break;
                 case 101:
-                    binding.imageView1.setImageURI(uri);
+                    //binding.addMoment.setImageURI(uri);
                     StorageReference storageRef = FirebaseStorage.getInstance().getReference();
 
                     StorageReference imageRef = storageRef.child("images/" + UUID.randomUUID().toString());
@@ -164,6 +171,32 @@ public class HomeFragment extends Fragment {
                     break;
             }
         }
+    }
+
+    private void retrieveMoments() {
+        FirebaseFirestore.getInstance().collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID)).collection("followings")
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                            FirebaseFirestore.getInstance().collection("users").document(queryDocumentSnapshot.getString("userId"))
+                                    .get()
+                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            User user = new User();
+                                            user.name = documentSnapshot.getString("name");
+                                            user.image = documentSnapshot.getString("image");
+                                            user.id = documentSnapshot.getId();
+                                            momentsUsers.add(user);
+                                            momentsAdapter.notifyDataSetChanged();
+                                        }
+                                    });
+                        }
+                        momentsAdapter.notifyDataSetChanged();
+                    }
+                });
     }
 
     private void retrievePosts() {

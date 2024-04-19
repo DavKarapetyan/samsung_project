@@ -18,7 +18,7 @@ public interface ApiService {
             @Body String messageBody
     );
 
-    @GET("current/ip?ipAddress=237.71.232.203")
+    @GET("current/ip?ipAddress=46.70.164.243")
     Call<TimeModel> getTime();
 
 }
