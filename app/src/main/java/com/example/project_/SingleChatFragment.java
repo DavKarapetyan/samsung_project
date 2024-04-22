@@ -5,25 +5,20 @@ import android.os.Bundle;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.project_.activities.AddGroupChatActivity;
 import com.example.project_.activities.ChatActivity;
 import com.example.project_.activities.HomeActivity;
-import com.example.project_.activities.UsersActivity;
-import com.example.project_.adapters.MyViewPagerAdapter;
 import com.example.project_.adapters.RecentConversationsAdapter;
-import com.example.project_.databinding.FragmentChatBinding;
+import com.example.project_.databinding.FragmentSingleChatBinding;
 import com.example.project_.listeners.ConversionListener;
 import com.example.project_.models.ChatMessage;
 import com.example.project_.models.User;
 import com.example.project_.utilities.Constants;
 import com.example.project_.utilities.PreferenceManager;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.firestore.DocumentChange;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -35,10 +30,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ChatFragment#newInstance} factory method to
+ * Use the {@link SingleChatFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ChatFragment extends BaseFragment implements ConversionListener {
+public class SingleChatFragment extends Fragment implements ConversionListener {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -48,18 +43,15 @@ public class ChatFragment extends BaseFragment implements ConversionListener {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    private FragmentChatBinding binding;
+    private FragmentSingleChatBinding binding;
     HomeActivity homeActivity;
     ConstraintLayout constraintLayout;
     private List<ChatMessage> conversations;
     private RecentConversationsAdapter conversationsAdapter;
     private PreferenceManager preferenceManager;
     private FirebaseFirestore database;
-    TabLayout tabLayout;
-    ViewPager2 viewPager2;
-    MyViewPagerAdapter myViewPagerAdapter;
 
-    public ChatFragment() {
+    public SingleChatFragment() {
         // Required empty public constructor
     }
 
@@ -69,11 +61,11 @@ public class ChatFragment extends BaseFragment implements ConversionListener {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ChatFragment.
+     * @return A new instance of fragment SingleChatFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ChatFragment newInstance(String param1, String param2) {
-        ChatFragment fragment = new ChatFragment();
+    public static SingleChatFragment newInstance(String param1, String param2) {
+        SingleChatFragment fragment = new SingleChatFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -93,55 +85,18 @@ public class ChatFragment extends BaseFragment implements ConversionListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        binding = FragmentChatBinding.inflate(inflater, container, false);
+        binding = FragmentSingleChatBinding.inflate(inflater, container, false);
         init();
         preferenceManager = new PreferenceManager(getActivity());
-        binding.fabNewChat.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), UsersActivity.class));
-        });
-        binding.fabNewGroupChat.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), AddGroupChatActivity.class));
-        });
         listenConversations();
 
-        tabLayout = binding.tabLayout;
-        viewPager2 = binding.viewPager;
-        myViewPagerAdapter = new MyViewPagerAdapter(getActivity());
-        viewPager2.setAdapter(myViewPagerAdapter);
-
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager2.setCurrentItem(tab.getPosition());
-            }
-
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
-
-        viewPager2.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                tabLayout.getTabAt(position).select();
-            }
-        });
 
         return binding.getRoot();
     }
-
     private void init() {
         conversations = new ArrayList<>();
         conversationsAdapter = new RecentConversationsAdapter(conversations, this);
-        //binding.conversationsRecyclerView.setAdapter(conversationsAdapter);
+        binding.conversationsRecyclerView.setAdapter(conversationsAdapter);
         database = FirebaseFirestore.getInstance();
     }
 
@@ -192,13 +147,13 @@ public class ChatFragment extends BaseFragment implements ConversionListener {
             Collections.reverse(conversations);
             //Collections.sort(conversations, (obj1, obj2) -> obj2.dateObject.compareTo(obj1.dateObject));
             conversationsAdapter.notifyDataSetChanged();
-            //binding.conversationsRecyclerView.smoothScrollToPosition(0);
-            //binding.conversationsRecyclerView.setVisibility(View.VISIBLE);
-            //binding.progressBar.setVisibility(View.GONE);
+            binding.conversationsRecyclerView.smoothScrollToPosition(0);
+            binding.conversationsRecyclerView.setVisibility(View.VISIBLE);
+            binding.progressBar.setVisibility(View.GONE);
             if (conversations.isEmpty()) {
-                //binding.noMessages.setVisibility(View.VISIBLE);
+                binding.noMessages.setVisibility(View.VISIBLE);
             } else {
-                //binding.noMessages.setVisibility(View.GONE);
+                binding.noMessages.setVisibility(View.GONE);
             }
         }
     };

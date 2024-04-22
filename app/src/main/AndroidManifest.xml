@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:targetSandboxVersion="1">
-
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
@@ -35,12 +35,6 @@
             android:exported="false" />
         <activity
             android:name=".activities.GroupChatMain2Activity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.GroupChatMainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activities.GroupChatsActivity"
             android:exported="false" />
         <activity
             android:name=".activities.AddGroupChatActivity"

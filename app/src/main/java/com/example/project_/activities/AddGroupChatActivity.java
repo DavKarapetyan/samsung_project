@@ -3,6 +3,7 @@ package com.example.project_.activities;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.content.ClipData;
@@ -66,23 +67,38 @@ public class AddGroupChatActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
                                 if (task.getResult().size() > 0) {
-                                    Chip chip = new Chip(AddGroupChatActivity.this);
-                                    chip.setText(binding.member.getText().toString());
-                                    chip.setTextSize(14);
-                                    chip.setTextColor(getResources().getColor(R.color.primary__color));
-                                    chip.setChipStrokeColorResource(R.color.primary__color);
-                                    chip.setChipIcon(getDrawable(R.drawable.delete));
-                                    chip.setChipIconTint(ColorStateList.valueOf(getColor(R.color.primary__color)));
-                                    binding.members.addView(chip);
-                                    binding.member.setText(null);
                                     for (QueryDocumentSnapshot queryDocumentSnapshot : task.getResult()) {
+                                        String nickname = queryDocumentSnapshot.getString("nickName");
+
+                                        // Create a new Chip
+                                        Chip chip = new Chip(AddGroupChatActivity.this);
+                                        chip.setText(nickname);
+                                        chip.setTextSize(14);
+                                        chip.setTextColor(getResources().getColor(R.color.primary__color));
+                                        chip.setChipStrokeColorResource(R.color.primary__color);
+                                        chip.setCloseIconVisible(true);
+                                        chip.setCloseIconResource(R.drawable.delete);
+                                        chip.setCloseIconTint(ColorStateList.valueOf(getColor(R.color.primary__color)));
+
+                                        // Set OnClickListener to delete the Chip
+                                        chip.setOnCloseIconClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                binding.members.removeView(chip); // Remove the Chip from the layout
+                                                members.remove(nickname); // Remove the member from the list
+                                            }
+                                        });
+
+                                        // Add the Chip to the layout
+                                        binding.members.addView(chip);
+                                        binding.member.setText(null);
                                         members.add(queryDocumentSnapshot.getId());
                                     }
                                 } else {
                                     Toast.makeText(getApplicationContext(), "No user with this nickName", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
-                                Toast.makeText(getApplicationContext(), "No user with this nickName", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getApplicationContext(), "Failed to fetch user with this nickName", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -90,6 +106,7 @@ public class AddGroupChatActivity extends AppCompatActivity {
         binding.uploadImage1.setOnClickListener(v -> openFileChooser());
         binding.save.setOnClickListener(v -> addGroupChat());
     }
+
 
     private void openFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);

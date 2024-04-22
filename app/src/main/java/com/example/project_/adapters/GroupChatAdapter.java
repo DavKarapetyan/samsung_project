@@ -2,7 +2,6 @@ package com.example.project_.adapters;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -10,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_.activities.GroupChatMain2Activity;
-import com.example.project_.activities.GroupChatMainActivity;
 import com.example.project_.databinding.ItemContainerRecentConversionBinding;
 import com.example.project_.models.GroupChat;
 import com.squareup.picasso.Picasso;

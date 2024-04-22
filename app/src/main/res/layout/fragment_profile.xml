@@ -55,7 +55,6 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="@dimen/_140sdp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img7"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
