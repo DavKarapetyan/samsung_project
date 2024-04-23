@@ -363,6 +363,11 @@ public class ChatActivity extends BaseActivity {
     }
 
     private void setListeners() {
+        binding.textName.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), UserProfileActivity.class);
+            intent.putExtra("userId", receiverUser.id);
+            startActivity(intent);
+        });
         binding.imageBack.setOnClickListener(v -> onBackPressed());
         binding.layoutSend.setOnClickListener(v -> sendMessage());
         startVideoCall();
