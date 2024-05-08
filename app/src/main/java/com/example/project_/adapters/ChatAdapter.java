@@ -63,12 +63,14 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+        ChatMessage message = chatMessages.get(position);
         if (getItemViewType(position) == VIEW_TYPE_SENT) {
-            ((SentMessageViewHolder) holder).setData(chatMessages.get(position));
+            ((SentMessageViewHolder) holder).setData(message);
         } else {
-            ((ReceivedMessageViewHolder) holder).setData(chatMessages.get(position), receiverProfileImage);
+            ((ReceivedMessageViewHolder) holder).setData(message, receiverProfileImage);
         }
     }
+
 
     @Override
     public int getItemCount() {
@@ -83,7 +85,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return VIEW_TYPE_RECEIVED;
         }
     }
-
     static class SentMessageViewHolder extends RecyclerView.ViewHolder {
         private final ItemContainerSentMessageBinding binding;
 
@@ -98,12 +99,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             if (chatMessage.image != null) {
                 Picasso.get().load(chatMessage.image).into(binding.sendImage);
                 binding.sendImage.setVisibility(View.VISIBLE);
+            } else {
+                // If no image, hide the ImageView
+                binding.sendImage.setVisibility(View.GONE);
             }
-//            if (chatMessage.message.isEmpty()) {
-//                binding.textMessage.setVisibility(View.GONE);
-//            } else {
-//                binding.textMessage.setText(chatMessage.message);
-//            }
         }
     }
 
@@ -126,23 +125,23 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                             @Override
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                binding.imageProfile.setImageBitmap(getUserImage(   documentSnapshot.getString("image")));
+                                binding.imageProfile.setImageBitmap(getUserImage(documentSnapshot.getString("image")));
                             }
                         });
             }
             if (chatMessage.image != null) {
                 Picasso.get().load(chatMessage.image).into(binding.sendImage);
                 binding.sendImage.setVisibility(View.VISIBLE);
+            } else {
+                // If no image, hide the ImageView
+                binding.sendImage.setVisibility(View.GONE);
             }
-//            if (chatMessage.message.isEmpty()) {
-//                binding.textMessage.setVisibility(View.GONE);
-//            } else {
-//                binding.textMessage.setText(chatMessage.message);
-//            }
         }
+
         private Bitmap getUserImage(String encodedImage) {
             byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
             return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         }
     }
+
 }

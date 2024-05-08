@@ -13,6 +13,7 @@ import androidx.appcompat.widget.SwitchCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 
+import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -51,13 +52,7 @@ import com.google.android.flexbox.FlexboxLayoutManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ProfileFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ProfileFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -76,6 +71,8 @@ public class ProfileFragment extends Fragment {
     private FirebaseFirestore firebaseFirestore;
     private ProfilePostsAdapter profilePostsAdapter;
     private List<Post> posts;
+    private String api = "AIzaSyAaY036WM5OntGLeHgWkxNmuMl3IfEri5Q";
+
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -123,25 +120,13 @@ public class ProfileFragment extends Fragment {
         nightMode = sharedPreferences.getBoolean("nightMode", false);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        if (nightMode) {
-            binding.switchMode.setChecked(true);
-        }
-        binding.switchMode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (nightMode) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                    editor = sharedPreferences.edit();
-                    editor.putBoolean("nightMode", false);
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                    editor = sharedPreferences.edit();
-                    editor.putBoolean("nightMode", true);
-                }
-                editor.apply();
-            }
-        });
         binding.start.setOnClickListener(v -> {
+//            String targetLang = "en"; // for Arabic
+//            String sourceLang = "ja"; // for japan
+//            Translate translate = (Translate) TranslateOptions.newBuilder().setApiKey(api).build().getService();
+//            //Translation translation = translate.translate("Hello", translate.TranslateOption.targetLanguage(targetLang), Translate.TranslateOption.sourceLanguage(sourceLang));
+//            Tran
+//            String translatedText = translation.getTranslatedText();
             signOut();
         });
         binding.fab.setOnClickListener(v -> {
@@ -162,7 +147,7 @@ public class ProfileFragment extends Fragment {
         getToken();
 
         posts = new ArrayList<>();
-        profilePostsAdapter = new ProfilePostsAdapter(posts, new PreferenceManager(getActivity()),getActivity());
+        profilePostsAdapter = new ProfilePostsAdapter(posts, new PreferenceManager(getActivity()), getActivity());
         binding.profilePostsRecyclerView.setAdapter(profilePostsAdapter);
 
         FlexboxLayoutManager layoutManager = new FlexboxLayoutManager(getActivity());
@@ -300,6 +285,7 @@ public class ProfileFragment extends Fragment {
                 .addOnSuccessListener(unused -> showToast("Token updated successfully"))
                 .addOnFailureListener(e -> showToast("Unable to update token"));
     }
+
     private void signOut() {
         showToast("Signing out...");
         FirebaseFirestore database = FirebaseFirestore.getInstance();

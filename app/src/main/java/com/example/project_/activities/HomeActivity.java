@@ -14,6 +14,7 @@ import com.example.project_.HomeFragment;
 import com.example.project_.NotificationsFragment;
 import com.example.project_.ProfileFragment;
 import com.example.project_.R;
+import com.example.project_.SearchFragment;
 import com.example.project_.databinding.ActivityHomeBinding;
 import com.example.project_.repository.MainRepository;
 import com.example.project_.utilities.Constants;
@@ -62,8 +63,8 @@ public class HomeActivity extends BaseActivity {
                 case R.id.chat:
                     replaceFragment(new ChatFragment());
                     break;
-                case R.id.notifications:
-                    replaceFragment(new NotificationsFragment());
+                case R.id.search:
+                    replaceFragment(new SearchFragment());
                     break;
                 case R.id.profile:
                     replaceFragment(new ProfileFragment());

@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    style="@style/page_bg"
     tools:context=".activities.AddGroupChatActivity">
 
     <TextView
@@ -14,7 +15,7 @@
         android:layout_marginTop="25dp"
         android:fontFamily="@font/nunito_regular"
         android:text="Add Group Chat"
-        android:textColor="@color/black"
+        style="@style/text__color"
         android:textSize="@dimen/_13ssp" />
 
     <EditText
@@ -85,13 +86,13 @@
         android:layout_marginTop="25dp"
         android:fontFamily="@font/nunito_regular"
         android:text="Images"
-        android:textColor="@color/black"
+        style="@style/text__color"
         android:textSize="@dimen/_13ssp" />
 
     <com.google.android.flexbox.FlexboxLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/_12ssp"
+        android:padding="@dimen/_18sdp"
         app:alignContent="stretch"
         app:alignItems="stretch"
         app:dividerDrawable="@drawable/empty_divider"

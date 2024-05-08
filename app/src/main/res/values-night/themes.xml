@@ -12,5 +12,6 @@
     <style name="chat_message"><item name="android:textColor">@color/black</item></style>
     <style name="fab_bg"><item name="android:backgroundTint">@color/black</item></style>
     <style name="card_bg"><item name="android:backgroundTint">#191919</item></style>
-
+    <style name="content__top"><item name="android:background">@drawable/background_content_top_dark</item> </style>
+    <style name="content__bottom"><item name="android:background">@drawable/background_content_bottom_dark</item> </style>
 </resources>

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +26,15 @@ import com.example.project_.databinding.ItemContainerPostBinding;
 import com.example.project_.models.Post;
 import com.example.project_.utilities.Constants;
 import com.example.project_.utilities.PreferenceManager;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -91,6 +97,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
     class PostViewHolder extends RecyclerView.ViewHolder {
         ItemContainerPostBinding binding;
+        int count;
 
         PostViewHolder(ItemContainerPostBinding itemContainerPostBinding) {
             super(itemContainerPostBinding.getRoot()); // Use the root view of the binding object
@@ -98,6 +105,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         }
 
         void setPostData(Post post) throws ExceptionsClass {
+            count = 0;
+            FirebaseFirestore.getInstance().collection("posts").document(post.id)
+                    .get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            List<String> likedUsers = (List<String>) documentSnapshot.get("likedUsers");
+                            if (likedUsers != null && likedUsers.contains(preferenceManager.getString(Constants.KEY_USER_ID))) {
+                                binding.likeButton.setLiked(true);
+                                count = likedUsers.size();
+                                binding.likeCount.setText(Integer.toString(count));
+                            } else if (likedUsers == null) {
+                                binding.likeButton.setLiked(false);
+                                count = 0;
+                                binding.likeCount.setText(Integer.toString(count));
+                            } else if (likedUsers != null) {
+                                binding.likeButton.setLiked(false);
+                                count = likedUsers.size();
+                                binding.likeCount.setText(Integer.toString(count));
+                            }
+                        }
+                    });
             if (post.imageUris != null && !post.imageUris.isEmpty()) {
                 //Picasso.get().load(post.imageUris.get(0)).into(binding.postImage);
                 ArrayList<ImageSlidesModel> autoImageList = new ArrayList<>();
@@ -125,6 +154,21 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     context.startActivity(intent);
                 }
             });
+            binding.likeButton.setOnLikeListener(new OnLikeListener() {
+                @Override
+                public void liked(LikeButton likeButton) {
+                    addLike(post.id);
+                    count++;
+                    binding.likeCount.setText(Integer.toString(count));
+                }
+
+                @Override
+                public void unLiked(LikeButton likeButton) {
+                    removeLike(post.id);
+                    count--;
+                    binding.likeCount.setText(Integer.toString(count));
+                }
+            });
 //            if (isUserExistsInLiked(post.id)) {
 //                binding.likeButton.setLiked(true);
 //            }
@@ -137,20 +181,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
-    private boolean isUserExistsInLiked(String postId) {
-        final boolean[] a = new boolean[1];
-        FirebaseFirestore.getInstance().collection("posts").document(postId)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        List<String> likedUsers = (List<String>) documentSnapshot.get("likedUsers");
-                        a[0] = likedUsers.contains(preferenceManager.getString(Constants.KEY_USER_ID));
-                    }
-                });
-        return a[0];
-    }
-
     private void addLike(String postId) {
         DocumentReference docRef = FirebaseFirestore.getInstance().collection("posts").document(postId);
         docRef
@@ -159,7 +189,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            List<String> likedUsers = documentSnapshot.get("likedUsers", List.class);
+                            List<String> likedUsers = (List<String>) documentSnapshot.get("likedUsers");
                             if (likedUsers == null) {
                                 likedUsers = new ArrayList<>();
                             }
@@ -182,7 +212,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     @Override
                     public void onSuccess(DocumentSnapshot documentSnapshot) {
                         if (documentSnapshot.exists()) {
-                            List<String> likedUsers = documentSnapshot.get("likedUsers", List.class);
+                            List<String> likedUsers = (List<String>) documentSnapshot.get("likedUsers");
                             if (likedUsers != null) {
                                 likedUsers.remove(preferenceManager.getString(Constants.KEY_USER_ID));
 

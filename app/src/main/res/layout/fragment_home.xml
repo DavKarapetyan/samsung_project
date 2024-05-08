@@ -151,26 +151,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <EditText
-            android:id="@+id/editText"
-            style="@style/input__bg"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_36sdp"
-            android:layout_marginHorizontal="@dimen/_18sdp"
-            android:layout_marginTop="25dp"
-            android:clipToPadding="false"
-            android:drawableEnd="@drawable/baseline_search_24"
-            android:fontFamily="@font/nunito_regular"
-            android:hint="Search"
-            android:inputType="textEmailAddress"
-            android:paddingHorizontal="@dimen/_12ssp"
-            android:paddingVertical="13dp"
-            android:textColorHint="@color/primary__color"
-            android:textSize="@dimen/_11ssp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        
 
         <com.google.android.material.divider.MaterialDivider
             android:layout_width="match_parent"

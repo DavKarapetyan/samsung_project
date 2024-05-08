@@ -6,39 +6,92 @@
     android:layout_height="match_parent"
     android:keepScreenOn="true">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="match_parent"
         android:id="@+id/incomingCallLayout"
         android:visibility="gone"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:background="#4E4E4E"
         android:layout_alignParentTop="true">
+
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/imageProfile"
+            android:layout_width="@dimen/_140sdp"
+            android:layout_height="@dimen/_140sdp"
+            android:background="@drawable/background_image"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toTopOf="@+id/incomingNameTV"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="70dp"
+            app:riv_oval="true" />
+
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="6"
-            android:textSize="20sp"
-            android:textColor="@color/black"
+            android:id="@+id/incomingNameTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nunito_regular"
             android:text="someone is calling"
-            android:id="@+id/incomingNameTV"/>
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            android:src="@drawable/ic_accept"
-            android:padding="15dp"
-            android:id="@+id/acceptButton"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            android:src="@drawable/ic_reject"
-            android:padding="15dp"
-            android:id="@+id/rejectButton"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/incomingNameTV">
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/rejectButton"
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:backgroundTint="#EF4747"
+                android:layout_marginRight="50dp"
+                android:clipToOutline="true"
+                android:contentDescription="a"
+                android:elevation="10dp"
+                android:src="@drawable/ic_baseline_call_end_24"
+                app:fabCustomSize="@dimen/_48sdp"
+                app:shapeAppearanceOverlay="@style/fab_3_rounded"
+                app:tint="@color/white" />
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/acceptButton"
+                android:layout_width="@dimen/_48sdp"
+                android:layout_height="@dimen/_48sdp"
+                android:backgroundTint="#29BC52"
+                android:layout_marginLeft="50dp"
+                android:clipToOutline="true"
+                android:contentDescription="a"
+                android:elevation="10dp"
+                android:src="@drawable/ic_accept"
+                app:fabCustomSize="@dimen/_48sdp"
+                app:shapeAppearanceOverlay="@style/fab_3_rounded"
+                app:tint="@color/white" />
+        </LinearLayout>
 
-    </LinearLayout>
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1.5"-->
+<!--            android:src="@drawable/ic_accept"-->
+<!--            android:padding="15dp"-->
+<!--            android:id="@+id/acceptButton"/>-->
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_weight="1.5"-->
+<!--            android:src="@drawable/ic_reject"-->
+<!--            android:padding="15dp"-->
+<!--            android:id="@+id/rejectButton"/>-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

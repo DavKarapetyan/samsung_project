@@ -1,0 +1,22 @@
+<!-- notification_call_request.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/notification_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="16dp">
+
+    <!-- Your notification content views here -->
+    <Button
+        android:id="@+id/acceptCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Accept"/>
+    <Button
+        android:id="@+id/rejectCall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reject"
+        android:layout_marginLeft="10dp"
+        android:backgroundTint="#FF0000"/>
+</LinearLayout>

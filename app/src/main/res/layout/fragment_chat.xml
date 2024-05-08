@@ -24,7 +24,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="@dimen/_56sdp"
-        android:background="@drawable/background_content_bottom"
+        style="@style/content__bottom"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
@@ -33,7 +33,11 @@
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/background_content_bottom"
+            style="@style/content__bottom"
+            app:tabIndicatorColor="@color/primary__color"
+            app:tabTextColor="@color/primary__color"
+            app:tabRippleColor="@color/primary__color"
+            app:tabSelectedTextColor="@color/primary__color"
             >
             <com.google.android.material.tabs.TabItem
                 android:layout_width="match_parent"

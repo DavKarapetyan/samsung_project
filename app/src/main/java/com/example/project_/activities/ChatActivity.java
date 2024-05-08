@@ -71,7 +71,6 @@ public class ChatActivity extends BaseActivity {
     private String currentTime1;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +83,7 @@ public class ChatActivity extends BaseActivity {
         listenMessages();
         //12new NtpTask().execute();
     }
+
     private void openFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -101,13 +101,18 @@ public class ChatActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            if (data.getClipData() != null) {
+                imageUri = data.getClipData().getItemAt(0).getUri();
+            } else {
+                imageUri = data.getData();
+            }
             Picasso.get().load(imageUri).into(binding.image);
             binding.image.setVisibility(View.VISIBLE);
             binding.viewImage.setVisibility(View.VISIBLE);
         }
     }
+
 
     private void init() {
         preferenceManager = new PreferenceManager(getApplicationContext());
@@ -126,89 +131,92 @@ public class ChatActivity extends BaseActivity {
         //new NtpTask().execute();
         ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
         Call<TimeModel> timeModelCall = apiService.getTime();
-        timeModelCall.enqueue(new Callback<TimeModel>() {
-            @Override
-            public void onResponse(Call<TimeModel> call, Response<TimeModel> response) {
-                currentTime1 = response.body().getDateTime();
-                if (currentTime1 != null) {
-                    String messageText = binding.inputMessage.getText().toString();
-                    if(imageUri != null) {
-                        StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ".jpg");
+        if (binding.inputMessage.getText().toString() != null && !binding.inputMessage.getText().toString().isEmpty()) {
+            timeModelCall.enqueue(new Callback<TimeModel>() {
+                @Override
+                public void onResponse(Call<TimeModel> call, Response<TimeModel> response) {
+                    currentTime1 = response.body().getDateTime();
+                    if (currentTime1 != null) {
+                        String messageText = binding.inputMessage.getText().toString();
+                        if (imageUri != null) {
+                            StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ".jpg");
 
-                        fileReference.putFile(imageUri)
-                                .addOnSuccessListener(taskSnapshot -> {
-                                    fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                                        message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
-                                        message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
-                                        message.put(Constants.KEY_TIMESTAMP, currentTime1);
-                                        message.put(Constants.KEY_SEND_IMAGE, uri.toString());
+                            fileReference.putFile(imageUri)
+                                    .addOnSuccessListener(taskSnapshot -> {
+                                        fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                            message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                                            message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
+                                            message.put(Constants.KEY_TIMESTAMP, currentTime1);
+                                            message.put(Constants.KEY_SEND_IMAGE, uri.toString());
+                                            // Add message text only after image upload is completed
+                                            message.put(Constants.KEY_MESSAGE, messageText);
 
-                                        // Add message text only after image upload is completed
-                                        message.put(Constants.KEY_MESSAGE, messageText);
-
-                                        database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+                                            database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+                                        });
                                     });
-                                });
-                    } else {
-                        message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
-                        message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
-                        message.put(Constants.KEY_TIMESTAMP, currentTime1);
-                        // Add message text directly if no image is selected
-                        message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
+                        } else {
+                            message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                            message.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
+                            message.put(Constants.KEY_TIMESTAMP, currentTime1);
+                            // Add message text directly if no image is selected
+                            message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
 
-                        database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
-                    }
-                    imageUri = null;
-                    if (conversionId != null) {
-                        updateConversion(binding.inputMessage.getText().toString());
-                    } else {
-                        HashMap<String, Object> conversion = new HashMap<>();
-                        conversion.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
-                        conversion.put(Constants.KEY_SENDER_NAME, preferenceManager.getString(Constants.KEY_NAME));
-                        conversion.put(Constants.KEY_SENDER_IMAGE, preferenceManager.getString(Constants.KEY_IMAGE));
-                        conversion.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
-                        conversion.put(Constants.KEY_RECEIVER_NAME, receiverUser.name);
-                        conversion.put(Constants.KEY_RECEIVER_IMAGE, receiverUser.image);
-                        conversion.put(Constants.KEY_LAST_MESSAGE, binding.inputMessage.getText().toString());
-                        conversion.put(Constants.KEY_TIMESTAMP, currentTime1);
-                        addConversion(conversion);
-                    }
-                    if (!isReceiverAvailable) {
-                        try {
-                            JSONArray tokens = new JSONArray();
-                            tokens.put(receiverUser.token);
-
-                            JSONObject data = new JSONObject();
-                            data.put(Constants.KEY_USER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
-                            data.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME));
-                            data.put(Constants.KEY_FCM_TOKEN, preferenceManager.getString(Constants.KEY_FCM_TOKEN));
-                            data.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
-                            if(imageUri != null) {
-                                data.put(Constants.KEY_SEND_IMAGE, imageUri.toString());
-                            }
-                            JSONObject body = new JSONObject();
-                            body.put(Constants.REMOTE_MSG_DATA, data);
-                            body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
-
-                            sendNotification(body.toString());
-                        } catch (Exception exception) {
-                            showToast(exception.getMessage());
+                            database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
                         }
-                    }
-                    binding.image.setVisibility(View.GONE);
-                    binding.viewImage.setVisibility(View.GONE);
-                    binding.inputMessage.setText(null);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Date is null", Toast.LENGTH_SHORT).show();
-                }
-            }
+                        imageUri = null;
+                        if (conversionId != null) {
+                            updateConversion(binding.inputMessage.getText().toString());
+                        } else {
+                            HashMap<String, Object> conversion = new HashMap<>();
+                            conversion.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                            conversion.put(Constants.KEY_SENDER_NAME, preferenceManager.getString(Constants.KEY_NAME));
+                            conversion.put(Constants.KEY_SENDER_IMAGE, preferenceManager.getString(Constants.KEY_IMAGE));
+                            conversion.put(Constants.KEY_RECEIVER_ID, receiverUser.id);
+                            conversion.put(Constants.KEY_RECEIVER_NAME, receiverUser.name);
+                            conversion.put(Constants.KEY_RECEIVER_IMAGE, receiverUser.image);
+                            conversion.put(Constants.KEY_LAST_MESSAGE, binding.inputMessage.getText().toString());
+                            conversion.put(Constants.KEY_TIMESTAMP, currentTime1);
+                            addConversion(conversion);
+                        }
+                        if (!isReceiverAvailable) {
+                            try {
+                                JSONArray tokens = new JSONArray();
+                                tokens.put(receiverUser.token);
 
-            @Override
-            public void onFailure(Call<TimeModel> call, Throwable t) {
-                String a = t.getMessage();
-                Toast.makeText(getApplicationContext(), "Cant get date" + a, Toast.LENGTH_SHORT).show();
-            }
-        });
+                                JSONObject data = new JSONObject();
+                                data.put(Constants.KEY_USER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                                data.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME));
+                                data.put(Constants.KEY_FCM_TOKEN, preferenceManager.getString(Constants.KEY_FCM_TOKEN));
+                                data.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
+                                if (imageUri != null) {
+                                    data.put(Constants.KEY_SEND_IMAGE, imageUri.toString());
+                                }
+                                JSONObject body = new JSONObject();
+                                body.put(Constants.REMOTE_MSG_DATA, data);
+                                body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
+
+                                sendNotification(body.toString());
+                            } catch (Exception exception) {
+                                showToast(exception.getMessage());
+                            }
+                        }
+                        binding.image.setVisibility(View.GONE);
+                        binding.viewImage.setVisibility(View.GONE);
+                        binding.inputMessage.setText(null);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Date is null", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<TimeModel> call, Throwable t) {
+                    String a = t.getMessage();
+                    Toast.makeText(getApplicationContext(), "Cant get date" + a, Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            showToast("Message is empty");
+        }
     }
 
     private void showToast(String message) {
@@ -442,6 +450,7 @@ public class ChatActivity extends BaseActivity {
         }
         return null;
     }
+
     private void startVideoCall() {
         mainRepository = MainRepository.getInstance();
         binding.video.setOnClickListener(v -> {
@@ -480,41 +489,6 @@ public class ChatActivity extends BaseActivity {
             conversionId = documentSnapshot.getId();
         }
     };
-
-//    private class NtpTask extends AsyncTask<Void, Void, Long> {
-//        @Override
-//        protected Long doInBackground(Void... voids) {
-//            // Perform NTP operation in the background
-//            return getTimeFromNtpServer();
-//        }
-//
-//        @Override
-//        protected void onPostExecute(Long result) {
-//            // Create a Date object using the obtained time
-//            Date ntpDate = new Date(result);
-//
-//            messageTime = ntpDate;
-//        }
-//
-//        private Long getTimeFromNtpServer() {
-//            try {
-//                NTPUDPClient client = new NTPUDPClient();
-//                client.setDefaultTimeout(5000); // Set timeout in milliseconds
-//
-//                InetAddress inetAddress = InetAddress.getByName("pool.ntp.org");
-//                TimeInfo timeInfo = client.getTime(inetAddress);
-//
-//                if (!Objects.isNull(timeInfo.getMessage().getTransmitTimeStamp().getTime())) {
-//                    return timeInfo.getMessage().getTransmitTimeStamp().getTime();
-//                } else {
-//                   return new Date().getTime();
-//                }
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//                return null;
-//            }
-//        }
-//    }
 
     @Override
     protected void onResume() {

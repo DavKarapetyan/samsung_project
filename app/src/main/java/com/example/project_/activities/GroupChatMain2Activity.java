@@ -1,5 +1,6 @@
 package com.example.project_.activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -35,6 +36,7 @@ import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.text.ParseException;
@@ -50,7 +52,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class GroupChatMain2Activity extends AppCompatActivity {
+public class GroupChatMain2Activity extends BaseActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private ActivityGroupChatMain2Binding binding;
     private List<ChatMessage> chatMessages;
@@ -77,6 +79,7 @@ public class GroupChatMain2Activity extends AppCompatActivity {
         loadGroupChatDetails();
         listenMessages();
     }
+
     private void openFileChooser() {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
@@ -113,6 +116,7 @@ public class GroupChatMain2Activity extends AppCompatActivity {
         binding.chatRecyclerView.setAdapter(chatAdapter);
         database = FirebaseFirestore.getInstance();
     }
+
     private void setListeners() {
         binding.imageBack.setOnClickListener(v -> onBackPressed());
         binding.layoutSend.setOnClickListener(v -> sendMessage());
@@ -123,61 +127,87 @@ public class GroupChatMain2Activity extends AppCompatActivity {
             startActivity(intent);
         });
     }
+
     private void sendMessage() {
         HashMap<String, Object> message = new HashMap<>();
         //new NtpTask().execute();
         ApiService apiService = ApiClient.getRetrofitInstance().create(ApiService.class);
         Call<TimeModel> timeModelCall = apiService.getTime();
-        timeModelCall.enqueue(new Callback<TimeModel>() {
-            @Override
-            public void onResponse(Call<TimeModel> call, Response<TimeModel> response) {
-                currentTime1 = response.body().getDateTime();
-                if (currentTime1 != null) {
-                    String messageText = binding.inputMessage.getText().toString();
-                    if(imageUri != null) {
-                        StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ".jpg");
+        if (binding.inputMessage.getText().toString() != null && !binding.inputMessage.getText().toString().isEmpty()) {
+            timeModelCall.enqueue(new Callback<TimeModel>() {
+                @Override
+                public void onResponse(Call<TimeModel> call, Response<TimeModel> response) {
+                    currentTime1 = response.body().getDateTime();
+                    if (currentTime1 != null) {
+                        String messageText = binding.inputMessage.getText().toString();
+                        if (imageUri != null) {
+                            StorageReference fileReference = storageReference.child(System.currentTimeMillis() + ".jpg");
 
-                        fileReference.putFile(imageUri)
-                                .addOnSuccessListener(taskSnapshot -> {
-                                    fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
-                                        message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
-                                        message.put(Constants.KEY_RECEIVER_ID, "");
-                                        message.put("groupChatId", groupChataId);
-                                        message.put(Constants.KEY_TIMESTAMP, currentTime1);
-                                        message.put(Constants.KEY_SEND_IMAGE, uri.toString());
+                            fileReference.putFile(imageUri)
+                                    .addOnSuccessListener(taskSnapshot -> {
+                                        fileReference.getDownloadUrl().addOnSuccessListener(uri -> {
+                                            message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                                            message.put(Constants.KEY_RECEIVER_ID, "");
+                                            message.put("groupChatId", groupChataId);
+                                            message.put(Constants.KEY_TIMESTAMP, currentTime1);
+                                            message.put(Constants.KEY_SEND_IMAGE, uri.toString());
 
-                                        // Add message text only after image upload is completed
-                                        message.put(Constants.KEY_MESSAGE, messageText);
+                                            // Add message text only after image upload is completed
+                                            message.put(Constants.KEY_MESSAGE, messageText);
 
-                                        database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+                                            database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+                                        });
                                     });
-                                });
+                        } else {
+                            message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                            message.put(Constants.KEY_RECEIVER_ID, "");
+                            message.put("groupChatId", groupChataId);
+                            message.put(Constants.KEY_TIMESTAMP, currentTime1);
+                            // Add message text directly if no image is selected
+                            message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
+
+                            database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+                        }
+                        if (!isReceiverAvailable) {
+                            try {
+                                JSONArray tokens = new JSONArray();
+                                tokens.put(groupChataId);
+
+                                JSONObject data = new JSONObject();
+                                data.put(Constants.KEY_USER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
+                                data.put(Constants.KEY_NAME, preferenceManager.getString(Constants.KEY_NAME));
+                                data.put(Constants.KEY_FCM_TOKEN, preferenceManager.getString(Constants.KEY_FCM_TOKEN));
+                                data.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
+                                if(imageUri != null) {
+                                    data.put(Constants.KEY_SEND_IMAGE, imageUri.toString());
+                                }
+                                JSONObject body = new JSONObject();
+                                body.put(Constants.REMOTE_MSG_DATA, data);
+                                body.put(Constants.REMOTE_MSG_REGISTRATION_IDS, tokens);
+
+                                sendNotification(body.toString());
+                            } catch (Exception exception) {
+                                showToast(exception.getMessage());
+                            }
+                        }
+                        imageUri = null;
+                        binding.image.setVisibility(View.GONE);
+                        binding.viewImage.setVisibility(View.GONE);
+                        binding.inputMessage.setText(null);
                     } else {
-                        message.put(Constants.KEY_SENDER_ID, preferenceManager.getString(Constants.KEY_USER_ID));
-                        message.put(Constants.KEY_RECEIVER_ID, "");
-                        message.put("groupChatId", groupChataId);
-                        message.put(Constants.KEY_TIMESTAMP, currentTime1);
-                        // Add message text directly if no image is selected
-                        message.put(Constants.KEY_MESSAGE, binding.inputMessage.getText().toString());
-
-                        database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
+                        Toast.makeText(getApplicationContext(), "Date is null", Toast.LENGTH_SHORT).show();
                     }
-                    imageUri = null;
-                    binding.image.setVisibility(View.GONE);
-                    binding.viewImage.setVisibility(View.GONE);
-                    binding.inputMessage.setText(null);
-                } else {
-                    Toast.makeText(getApplicationContext(), "Date is null", Toast.LENGTH_SHORT).show();
                 }
-            }
 
-            @Override
-            public void onFailure(Call<TimeModel> call, Throwable t) {
-                String a = t.getMessage();
-                Toast.makeText(getApplicationContext(), "Cant get date" + a, Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<TimeModel> call, Throwable t) {
+                    String a = t.getMessage();
+                    Toast.makeText(getApplicationContext(), "Cant get date" + a, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
+
     private void listenMessages() {
         database.collection(Constants.KEY_COLLECTION_CHAT)
                 .whereEqualTo("groupChatId", groupChataId)
@@ -238,6 +268,7 @@ public class GroupChatMain2Activity extends AppCompatActivity {
         }
         return null;
     }
+
     private Bitmap getBitmapFromEncodedString(String encodedImage) {
         if (encodedImage != null) {
             byte[] bytes = Base64.decode(encodedImage, Base64.DEFAULT);
@@ -246,6 +277,7 @@ public class GroupChatMain2Activity extends AppCompatActivity {
             return null;
         }
     }
+
     private void loadGroupChatDetails() {
         database.collection("groupChats").document(groupChataId).get()
                 .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -256,5 +288,60 @@ public class GroupChatMain2Activity extends AppCompatActivity {
                         binding.textName.setText(documentSnapshot.getString("chatName"));
                     }
                 });
+    }
+    private void sendNotification(String messageBody) {
+        HashMap<String, Object> message = new HashMap<>();
+        //new NtpTask().execute();
+        ApiClient.getClient().create(ApiService.class).sendMessage(
+                Constants.getRemoteMsgHeaders(),
+                messageBody
+        ).enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(@NonNull Call<String> call, @NonNull Response<String> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        if (response.body() != null) {
+                            JSONObject responseJson = new JSONObject(response.body());
+                            JSONArray results = responseJson.getJSONArray("results");
+                            if (responseJson.getInt("failure") == 1) {
+                                JSONObject error = (JSONObject) results.get(0);
+                                showToast(error.getString("error"));
+                                return;
+                            }
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    showToast("Notification sent successfully");
+                } else {
+                    showToast("Error: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<String> call, @NonNull Throwable t) {
+                showToast(t.getMessage());
+            }
+        });
+        try {
+            JSONObject jsonObject = new JSONObject(messageBody);
+            JSONObject dataObject = jsonObject.getJSONObject("data");
+
+            String name = dataObject.getString("name");
+
+            HashMap<String, Object> notification = new HashMap<>();
+            notification.put("name", "New message");
+            notification.put("groupChatId", groupChataId);
+            notification.put("senderImage", preferenceManager.getString(Constants.KEY_IMAGE));
+            notification.put("timestamp", new Date());
+            notification.put("message", name + " sent you a message in group chat");
+
+            database.collection("notifications").add(notification);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    private void showToast(String message) {
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
     }
 }

@@ -30,7 +30,7 @@ import java.util.List;
 import www.sanju.motiontoast.MotionToast;
 import www.sanju.motiontoast.MotionToastStyle;
 
-public class PostDetailsActivity extends AppCompatActivity {
+public class PostDetailsActivity extends BaseActivity {
     ActivityPostDetailsBinding binding;
     Post post;
 
@@ -40,6 +40,11 @@ public class PostDetailsActivity extends AppCompatActivity {
         binding = ActivityPostDetailsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         retrievePosts(getIntent().getStringExtra("postId"));
+        if (!getIntent().getBooleanExtra("editable", true)) {
+            binding.save.setVisibility(View.GONE);
+            binding.imageView5.setVisibility(View.GONE);
+            binding.content.setEnabled(false);
+        }
         binding.save.setOnClickListener(v -> {
             updatePost(getIntent().getStringExtra("postId"));
         });

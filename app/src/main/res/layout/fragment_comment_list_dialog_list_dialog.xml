@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:background="@drawable/comments_dialog_bg"
+    style="@style/content__bottom"
     android:orientation="vertical">
 
     <View
@@ -61,7 +61,6 @@
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/white"
         android:paddingTop="@dimen/_10ssp"
         app:layout_constraintBottom_toBottomOf="parent">
 
@@ -116,19 +115,6 @@
                 android:textColor="@color/white"
                 android:textColorHint="@color/white"
                 android:textSize="@dimen/_12sdp" />
-
-            <ImageView
-                android:id="@+id/uploadImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignEnd="@id/inputMessage"
-                android:layout_alignBottom="@id/inputMessage"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:clickable="true"
-                android:focusable="true"
-                android:paddingBottom="@dimen/_12sdp"
-                android:src="@drawable/attachment" />
-
         </RelativeLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 

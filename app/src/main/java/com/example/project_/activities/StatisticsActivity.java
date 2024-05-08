@@ -30,7 +30,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StatisticsActivity extends AppCompatActivity {
+public class StatisticsActivity extends BaseActivity {
     ActivityStatisticsBinding binding;
     PreferenceManager preferenceManager;
     @Override
@@ -76,31 +76,26 @@ public class StatisticsActivity extends AppCompatActivity {
             entries1.add(new Entry(i, (float) Math.random() * 100));
         }
 
-        // Create a dataset with sample data
         LineDataSet dataSet = new LineDataSet(entries1, "Followers per month");
         dataSet.setColor(R.color.primary__color);
         dataSet.setCircleColor(R.color.primary__color);
         dataSet.setDrawCircles(true);
         dataSet.setDrawValues(false);
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
-        dataSet.setDrawFilled(true); // Enable filling
+        dataSet.setDrawFilled(true);
         //dataSet.setFillAlpha(255); // Set fill transparency (0-255)
-        dataSet.setFillColor(R.color.primary__color); // Set fill color
+        dataSet.setFillColor(R.color.primary__color);
 
 
-        // Customize X axis
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-        // Customize Y axis
         YAxis leftAxis = lineChart.getAxisLeft();
         leftAxis.setAxisMinimum(0f);
 
-        // Customize chart appearance
         lineChart.getDescription().setEnabled(false);
         lineChart.setDrawGridBackground(false);
 
-        // Add data to the chart
         LineData lineData = new LineData(dataSet);
         lineChart.setData(lineData);
         lineChart.animateY(1000);

@@ -1,5 +1,6 @@
 package com.example.project_;
 
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,7 +10,6 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
@@ -35,6 +35,7 @@ public class StoryDialog extends Dialog {
         this.userId = userId;
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +46,8 @@ public class StoryDialog extends Dialog {
         params.width = WindowManager.LayoutParams.MATCH_PARENT;
         params.height = WindowManager.LayoutParams.MATCH_PARENT;
         getWindow().setAttributes(params);
+
+        getUserDetails(userId);
 
         // Fetch the moments
         FirebaseFirestore.getInstance().collection("users").document(userId).collection("moments")
@@ -59,12 +62,19 @@ public class StoryDialog extends Dialog {
                     }
                 });
 
-        // Set touch listener for advancing to next moment
         binding.getRoot().setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN && event.getX() > v.getWidth() * 0.5) {
-                    showNextMoment();
+                float touchX = event.getX();
+                float width = v.getWidth();
+                float halfWidth = width / 2;
+
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    if (touchX > halfWidth) {
+                        showNextMoment();
+                    } else {
+                        showPreviousMoment();
+                    }
                     return true;
                 }
                 return false;
@@ -74,11 +84,17 @@ public class StoryDialog extends Dialog {
 
     private void showNextMoment() {
         currentMomentIndex++;
-        if (momentSnapshots != null && currentMomentIndex < momentSnapshots.size()) {
+        if (momentSnapshots != null && currentMomentIndex < momentSnapshots.size() && currentMomentIndex >= 0) {
             showMoment((QueryDocumentSnapshot) momentSnapshots.getDocuments().get(currentMomentIndex));
         } else {
-            // End of moments
             dismiss();
+        }
+    }
+
+    private void showPreviousMoment() {
+        currentMomentIndex--;
+        if (currentMomentIndex >= 0 && momentSnapshots != null) {
+            showMoment((QueryDocumentSnapshot) momentSnapshots.getDocuments().get(currentMomentIndex));
         }
     }
 
@@ -96,6 +112,17 @@ public class StoryDialog extends Dialog {
                     @Override
                     public void onLoadCleared(@Nullable Drawable placeholder) {
                         // Handle placeholder cleanup if needed
+                    }
+                });
+    }
+
+    private void getUserDetails(String userId) {
+        FirebaseFirestore.getInstance().collection("users").document(userId).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        binding.userName.setText(documentSnapshot.getString("name"));
+                        binding.imageProfile.setImageBitmap(getUserImage(documentSnapshot.getString("image")));
                     }
                 });
     }

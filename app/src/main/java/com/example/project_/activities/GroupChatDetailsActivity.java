@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class GroupChatDetailsActivity extends AppCompatActivity {
+public class GroupChatDetailsActivity extends BaseActivity {
     private ActivityGroupChatDetailsBinding binding;
     private PreferenceManager preferenceManager;
     private String groupChatId;

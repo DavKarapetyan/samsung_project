@@ -39,7 +39,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import www.sanju.motiontoast.MotionToast;
 import www.sanju.motiontoast.MotionToastStyle;
 
-public class AddGroupChatActivity extends AppCompatActivity {
+public class AddGroupChatActivity extends BaseActivity {
     private static final int PICK_IMAGE_REQUEST = 1;
     private static final String TAG = "AddGroupChatActivity";
     ActivityAddGroupChatBinding binding;

@@ -34,7 +34,7 @@ import java.io.InputStream;
 import www.sanju.motiontoast.MotionToast;
 import www.sanju.motiontoast.MotionToastStyle;
 
-public class UpdateUserDataActivity extends AppCompatActivity {
+public class UpdateUserDataActivity extends BaseActivity {
 
     private ActivityUpdateUserDataBinding binding;
     private PreferenceManager preferenceManager;

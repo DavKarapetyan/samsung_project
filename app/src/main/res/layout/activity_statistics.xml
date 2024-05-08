@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="20dp"
+    style="@style/page_bg"
     tools:context=".activities.StatisticsActivity">
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,7 +19,7 @@
             android:fontFamily="@font/nunito_regular"
             android:textAlignment="center"
             android:layout_gravity="center_horizontal"
-            android:textColor="@color/black"
+            style="@style/text__color"
             android:layout_marginTop="25dp"
             />
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -66,7 +67,7 @@
             android:text="Followers per month"
             android:textSize="@dimen/_13ssp"
             android:fontFamily="@font/nunito_regular"
-            android:textColor="@color/black"
+            style="@style/text__color"
             android:layout_marginTop="25dp"
             />
         <com.github.mikephil.charting.charts.LineChart
@@ -80,7 +81,7 @@
             android:text="Most used rooms"
             android:textSize="@dimen/_13ssp"
             android:fontFamily="@font/nunito_regular"
-            android:textColor="@color/black"
+            style="@style/text__color"
             android:layout_marginTop="25dp"
             />
         <com.github.mikephil.charting.charts.PieChart

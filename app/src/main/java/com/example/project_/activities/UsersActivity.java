@@ -2,6 +2,7 @@ package com.example.project_.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.project_.R;
@@ -11,8 +12,13 @@ import com.example.project_.listeners.UserListener;
 import com.example.project_.models.User;
 import com.example.project_.utilities.Constants;
 import com.example.project_.utilities.PreferenceManager;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +26,7 @@ import java.util.List;
 public class UsersActivity extends BaseActivity implements UserListener {
     private ActivityUsersBinding binding;
     private PreferenceManager preferenceManager;
+    List<User> users = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,8 +64,7 @@ public class UsersActivity extends BaseActivity implements UserListener {
                             user.id = queryDocumentSnapshot.getId();
                             users.add(user);
                         }
-                        if (users.size() > 0)
-                        {
+                        if (users.size() > 0) {
                             UsersAdapter usersAdapter = new UsersAdapter(users, this);
                             binding.usersRecyclerView.setAdapter(usersAdapter);
                             binding.usersRecyclerView.setVisibility(View.VISIBLE);

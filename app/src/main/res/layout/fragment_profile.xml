@@ -90,7 +90,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_semibold"
-                    android:text="Davit Karapetyan"
                     android:textColor="@color/primary__color"
                     android:textSize="@dimen/_14ssp" />
 
@@ -99,14 +98,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/nunito_regular"
-                    android:text="DavKarapetyan"
                     android:textColor="#7A7A7A"
                     android:textSize="@dimen/_11ssp" />
-
-                <androidx.appcompat.widget.SwitchCompat
-                    android:id="@+id/switch_mode"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <LinearLayout

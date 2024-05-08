@@ -5,8 +5,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <ImageView
         android:id="@+id/postImage"
-        android:layout_width="@dimen/_92sdp"
-        android:layout_height="@dimen/_92sdp"
+        android:layout_width="@dimen/_90sdp"
+        android:layout_height="@dimen/_90sdp"
         app:layout_flexGrow="1"
         android:layout_gravity="fill_horizontal"
         android:background="@drawable/rounded_corner"

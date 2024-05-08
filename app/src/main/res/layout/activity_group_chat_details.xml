@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/page_bg"
     tools:context=".activities.GroupChatDetailsActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -50,7 +51,7 @@
         android:fontFamily="@font/nunito_regular"
         android:paddingHorizontal="20dp"
         android:text="Users"
-        android:textColor="@color/black"
+        style="@style/text__color"
         android:textSize="@dimen/_12ssp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout2" />

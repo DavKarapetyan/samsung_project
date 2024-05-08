@@ -36,7 +36,7 @@ import java.util.List;
 import www.sanju.motiontoast.MotionToast;
 import www.sanju.motiontoast.MotionToastStyle;
 
-public class UserProfileActivity extends AppCompatActivity {
+public class UserProfileActivity extends BaseActivity {
     ActivityUserProfileBinding binding;
     FirebaseFirestore firebaseFirestore;
     String userId;
@@ -69,6 +69,8 @@ public class UserProfileActivity extends AppCompatActivity {
         });
         binding.unFollow.setOnClickListener(v -> {
             unFollow();
+            binding.unFollow.setVisibility(View.GONE);
+            binding.follow.setVisibility(View.VISIBLE);
         });
         binding.followings.setOnClickListener(v -> {
             FollowListDialogFragment followListDialogFragment = FollowListDialogFragment.newInstance("followings", userId);
@@ -242,7 +244,7 @@ public class UserProfileActivity extends AppCompatActivity {
                     }
                 });
         loadUserDetails();
-        binding.follow.setVisibility(View.VISIBLE);
         binding.unFollow.setVisibility(View.GONE);
+        binding.follow.setVisibility(View.VISIBLE);
     }
 }

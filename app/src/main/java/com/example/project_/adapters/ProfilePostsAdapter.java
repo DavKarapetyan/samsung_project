@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,11 +21,13 @@ public class ProfilePostsAdapter extends RecyclerView.Adapter<ProfilePostsAdapte
     private final List<Post> posts;
     private static PreferenceManager preferenceManager;
     private static Context context;
+
     public ProfilePostsAdapter(List<Post> posts, PreferenceManager preferenceManager, Context context) {
         this.posts = posts;
         this.preferenceManager = preferenceManager;
         this.context = context;
     }
+
     @NonNull
     @Override
     public ProfilePostViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -59,12 +62,11 @@ public class ProfilePostsAdapter extends RecyclerView.Adapter<ProfilePostsAdapte
                 Picasso.get().load(post.imageUris.get(0)).into(binding.postImage);
             }
             binding.postImage.setOnClickListener(v -> {
-                if (preferenceManager.getString(Constants.KEY_USER_ID).equals(post.userId)) {
-                    Intent intent = new Intent(context.getApplicationContext(), PostDetailsActivity.class);
-                    intent.putExtra("postId", post.id);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);
-                }
+                Intent intent = new Intent(context.getApplicationContext(), PostDetailsActivity.class);
+                intent.putExtra("postId", post.id);
+                intent.putExtra("editable", preferenceManager.getString(Constants.KEY_USER_ID).equals(post.userId));
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
             });
         }
     }

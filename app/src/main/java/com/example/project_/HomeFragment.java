@@ -44,6 +44,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -135,7 +136,7 @@ public class HomeFragment extends Fragment {
                     intent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_OUTPUT_DIRECTORY, "Images");
                     intent.putExtra(DsPhotoEditorConstants.DS_TOOL_BAR_BACKGROUND_COLOR, Color.parseColor("#2D61AD"));
                     intent.putExtra(DsPhotoEditorConstants.DS_MAIN_BACKGROUND_COLOR, Color.parseColor("#FFFFFF"));
-                    intent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_TOOLS_TO_HIDE, new int[]{DsPhotoEditorActivity.TOOL_WARMTH, DsPhotoEditorActivity.TOOL_PIXELATE, DsPhotoEditorActivity.TOOL_FILTER, DsPhotoEditorActivity.TOOL_FRAME, DsPhotoEditorActivity.TOOL_ROUND, DsPhotoEditorActivity.TOOL_EXPOSURE, DsPhotoEditorActivity.TOOL_CONTRAST, DsPhotoEditorActivity.TOOL_VIGNETTE, DsPhotoEditorActivity.TOOL_ORIENTATION, DsPhotoEditorActivity.TOOL_SATURATION});
+                    intent.putExtra(DsPhotoEditorConstants.DS_PHOTO_EDITOR_TOOLS_TO_HIDE, new int[]{DsPhotoEditorActivity.TOOL_WARMTH, DsPhotoEditorActivity.TOOL_PIXELATE, DsPhotoEditorActivity.TOOL_FILTER, DsPhotoEditorActivity.TOOL_FRAME, DsPhotoEditorActivity.TOOL_ROUND, DsPhotoEditorActivity.TOOL_EXPOSURE, DsPhotoEditorActivity.TOOL_CONTRAST, DsPhotoEditorActivity.TOOL_VIGNETTE, DsPhotoEditorActivity.TOOL_ORIENTATION, DsPhotoEditorActivity.TOOL_SATURATION, DsPhotoEditorActivity.TOOL_SHARPNESS});
                     startActivityForResult(intent, 101);
                     break;
                 case 101:
@@ -174,6 +175,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void retrieveMoments() {
+        momentsUsers.clear();
         FirebaseFirestore.getInstance().collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID)).collection("followings")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -195,6 +197,7 @@ public class HomeFragment extends Fragment {
                                     });
                         }
                         momentsAdapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
                     }
                 });
     }
@@ -210,12 +213,13 @@ public class HomeFragment extends Fragment {
                         post.userId = documentSnapshot.getString("userId");
                         posts.add(post);
                     }
+                    Collections.shuffle(posts);
                     postAdapter.notifyDataSetChanged();
-                    swipeRefreshLayout.setRefreshing(false); // Stop refreshing animation
+                    swipeRefreshLayout.setRefreshing(false);
                 })
                 .addOnFailureListener(e -> {
                     Log.e("Home", "Failed to retrieve posts: " + e.getMessage());
-                    swipeRefreshLayout.setRefreshing(false); // Stop refreshing animation
+                    swipeRefreshLayout.setRefreshing(false);
                 });
     }
 
@@ -223,13 +227,10 @@ public class HomeFragment extends Fragment {
         Post post = new Post();
         post.hashTag = documentSnapshot.getString("hashTag");
         post.content = documentSnapshot.getString("content");
-        // Get the imageUris field from the DocumentSnapshot
         List<String> imageUris = (List<String>) documentSnapshot.get("imageUrls");
         if (imageUris != null) {
             post.imageUris = imageUris;
         }
-
-        // Get user details using userId
         String userId = documentSnapshot.getString("userId");
         retrieveUserDetails(userId, post);
 
@@ -263,5 +264,6 @@ public class HomeFragment extends Fragment {
     private void refreshPosts() {
         swipeRefreshLayout.setRefreshing(true); // Show refreshing animation
         retrievePosts(); // Fetch posts again
+        retrieveMoments();
     }
 }
