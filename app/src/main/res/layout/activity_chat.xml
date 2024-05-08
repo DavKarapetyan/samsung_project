@@ -74,7 +74,6 @@
         android:textStyle="bold"
         android:fontFamily="@font/nunito_bold"
         app:layout_constraintBottom_toBottomOf="@id/imageProfile"
-        app:layout_constraintEnd_toStartOf="@id/phone"
         app:layout_constraintStart_toEndOf="@id/imageProfile"
         app:layout_constraintTop_toTopOf="@id/imageProfile"/>
 

@@ -97,8 +97,12 @@ public class GroupChatMain2Activity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            imageUri = data.getData();
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null) {
+            if (data.getClipData() != null) {
+                imageUri = data.getClipData().getItemAt(0).getUri();
+            } else {
+                imageUri = data.getData();
+            }
             Picasso.get().load(imageUri).into(binding.image);
             binding.image.setVisibility(View.VISIBLE);
             binding.viewImage.setVisibility(View.VISIBLE);

@@ -25,11 +25,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <ImageView
+                <com.makeramen.roundedimageview.RoundedImageView
                     android:id="@+id/profileImage"
                     android:layout_width="@dimen/_38sdp"
                     android:layout_height="@dimen/_38sdp"
                     android:scaleType="centerCrop"
+                    android:background="@drawable/background_image"
+                    app:riv_oval="true"
                      />
                 <TextView
                     android:id="@+id/fullName"
@@ -40,7 +42,6 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:textSize="@dimen/_12ssp"/>
-
             </LinearLayout>
             <com.google.android.material.divider.MaterialDivider
                 android:layout_width="match_parent"
