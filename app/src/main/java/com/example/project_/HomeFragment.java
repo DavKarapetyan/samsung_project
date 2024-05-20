@@ -7,10 +7,13 @@ import android.app.Dialog;
 import android.app.Notification;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,12 +23,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.dsphotoeditor.sdk.activity.DsPhotoEditorActivity;
 import com.dsphotoeditor.sdk.utils.DsPhotoEditorConstants;
+import com.example.project_.activities.NotificationsActivity;
 import com.example.project_.adapters.MomentsAdapter;
 import com.example.project_.adapters.PostAdapter;
 import com.example.project_.databinding.FragmentHomeBinding;
@@ -35,6 +40,7 @@ import com.example.project_.utilities.Constants;
 import com.example.project_.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -43,7 +49,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
@@ -59,6 +67,7 @@ public class HomeFragment extends Fragment {
     private List<User> momentsUsers;
     private SwipeRefreshLayout swipeRefreshLayout;
     private PreferenceManager preferenceManager;
+    private boolean isUserMomentExisted;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,6 +78,7 @@ public class HomeFragment extends Fragment {
         // Set up SwipeRefreshLayout
         swipeRefreshLayout = binding.swipeRefreshLayout;
         swipeRefreshLayout.setOnRefreshListener(this::refreshPosts);
+        loadUserImage();
 
         // Initialize posts list and adapter
         posts = new ArrayList<>();
@@ -87,13 +97,28 @@ public class HomeFragment extends Fragment {
         binding.addMoment.setOnClickListener(v -> {
             checkPermission();
         });
+        binding.notifications.setOnClickListener(v -> {
+            startActivity(new Intent(getActivity(), NotificationsActivity.class));
+        });
+
+        View view = inflater.inflate(R.layout.story_dialog, null);
+        Dialog dialog = new StoryDialog(getActivity(), preferenceManager.getString(Constants.KEY_USER_ID));
+        dialog.getWindow().getAttributes().windowAnimations = R.style.StoryDialogAnimation;
+        dialog.setContentView(view);
+
+        binding.myImageProfile.setOnClickListener(v -> {
+            if (isUserMomentExisted) {
+                dialog.show();
+            }
+        });
+
 
 //        binding.imageView2.setOnClickListener(v -> {
 //            dialog.show();
 //        });
 
         return binding.getRoot();
-    }
+}
 
     private void checkPermission() {
         int permission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -147,21 +172,43 @@ public class HomeFragment extends Fragment {
 
                     imageRef.putFile(uri)
                             .addOnSuccessListener(taskSnapshot -> {
-                                    imageRef.getDownloadUrl().addOnSuccessListener(uri1 -> {
+                                imageRef.getDownloadUrl().addOnSuccessListener(uri1 -> {
                                     HashMap<String, Object> moment = new HashMap<>();
-                                    moment.put("imageURL", uri1.toString());
-                                    moment.put("publishDate", new Date());
+                                    Calendar calendar = Calendar.getInstance();
+                                    calendar.setTime(new Date());
+                                    Calendar newCalendar = Calendar.getInstance();
+                                    newCalendar.setTime(new Date());
 
-                                    FirebaseFirestore.getInstance().collection("users")
-                                            .document(preferenceManager.getString(Constants.KEY_USER_ID))
-                                            .collection("moments")
-                                            .add(moment)
-                                            .addOnSuccessListener(documentReference -> {
-                                                Toast.makeText(getActivity(), "Moment is added", Toast.LENGTH_SHORT).show();
-                                            })
-                                            .addOnFailureListener(e -> {
-                                                Toast.makeText(getActivity(), "Error adding moment", Toast.LENGTH_SHORT).show();
-                                            });
+                                    FirebaseFirestore.getInstance().collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID)).get()
+                                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                        @Override
+                                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                            if (documentSnapshot.getString("momentExpirationDate") != null) {
+                                                                String timeHour = documentSnapshot.getString("momentExpirationDate");
+                                                                String cleanedString = timeHour.replace(" hour", "").trim();
+                                                                int time =  Integer.parseInt(cleanedString);
+                                                                newCalendar.add(Calendar.HOUR, time);
+                                                                moment.put("imageURL", uri1.toString());
+                                                                moment.put("publishDate", calendar.getTime());
+                                                                moment.put("expirationDate", newCalendar.getTime());
+                                                            } else {
+                                                                newCalendar.add(Calendar.HOUR, 6);
+                                                                moment.put("imageURL", uri1.toString());
+                                                                moment.put("publishDate", calendar.getTime());
+                                                                moment.put("expirationDate", newCalendar.getTime());
+                                                            }
+                                                            FirebaseFirestore.getInstance().collection("users")
+                                                                    .document(preferenceManager.getString(Constants.KEY_USER_ID))
+                                                                    .collection("moments")
+                                                                    .add(moment)
+                                                                    .addOnSuccessListener(documentReference -> {
+                                                                        Toast.makeText(getActivity(), "Moment is added", Toast.LENGTH_SHORT).show();
+                                                                    })
+                                                                    .addOnFailureListener(e -> {
+                                                                        Toast.makeText(getActivity(), "Error adding moment", Toast.LENGTH_SHORT).show();
+                                                                    });
+                                                        }
+                                                    });
                                 });
                             })
                             .addOnFailureListener(e -> {
@@ -265,5 +312,29 @@ public class HomeFragment extends Fragment {
         swipeRefreshLayout.setRefreshing(true); // Show refreshing animation
         retrievePosts(); // Fetch posts again
         retrieveMoments();
+    }
+
+    private void loadUserImage() {
+        FirebaseFirestore.getInstance().collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID)).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        byte[] bytes = Base64.decode(documentSnapshot.getString("image"), Base64.DEFAULT);
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        binding.myImageProfile.setImageBitmap(bitmap);
+                    }
+                });
+        CollectionReference momentsRef = FirebaseFirestore.getInstance().collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID)).collection("moments");
+        momentsRef.whereGreaterThan("expirationDate", new Date()).get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                QuerySnapshot querySnapshot = task.getResult();
+                boolean momentsExist = querySnapshot != null && !querySnapshot.isEmpty();
+                isUserMomentExisted = momentsExist;
+                if (momentsExist) {
+                    binding.myImageProfile.setBorderColor(ContextCompat.getColor(getActivity(), R.color.primary__color));
+                    binding.myImageProfile.setBorderWidth(com.intuit.sdp.R.dimen._2sdp);
+                }
+            }
+        });
     }
 }

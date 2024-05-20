@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.example.project_.activities.AddPostActivity;
 import com.example.project_.activities.MainActivity;
 import com.example.project_.activities.SettingsActivity;
+import com.example.project_.activities.UpdateUserDataActivity;
 import com.example.project_.adapters.PostAdapter;
 import com.example.project_.adapters.ProfilePostsAdapter;
 import com.example.project_.databinding.FragmentProfileBinding;
@@ -106,12 +107,6 @@ public class ProfileFragment extends Fragment {
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        loadUserDetails();
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = FragmentProfileBinding.inflate(inflater, container, false);
@@ -120,17 +115,20 @@ public class ProfileFragment extends Fragment {
         nightMode = sharedPreferences.getBoolean("nightMode", false);
         firebaseFirestore = FirebaseFirestore.getInstance();
 
-        binding.start.setOnClickListener(v -> {
-//            String targetLang = "en"; // for Arabic
-//            String sourceLang = "ja"; // for japan
-//            Translate translate = (Translate) TranslateOptions.newBuilder().setApiKey(api).build().getService();
-//            //Translation translation = translate.translate("Hello", translate.TranslateOption.targetLanguage(targetLang), Translate.TranslateOption.sourceLanguage(sourceLang));
-//            Tran
-//            String translatedText = translation.getTranslatedText();
-            signOut();
-        });
-        binding.fab.setOnClickListener(v -> {
+//        binding.start.setOnClickListener(v -> {
+////            String targetLang = "en"; // for Arabic
+////            String sourceLang = "ja"; // for japan
+////            Translate translate = (Translate) TranslateOptions.newBuilder().setApiKey(api).build().getService();
+////            //Translation translation = translate.translate("Hello", translate.TranslateOption.targetLanguage(targetLang), Translate.TranslateOption.sourceLanguage(sourceLang));
+////            Tran
+////            String translatedText = translation.getTranslatedText();
+//            signOut();
+//        });
+        binding.menu.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), SettingsActivity.class));
+        });
+        binding.editProfile.setOnClickListener(v -> {
+            startActivity(new Intent(getContext(), UpdateUserDataActivity.class));
         });
         binding.followings.setOnClickListener(v -> {
             FollowListDialogFragment followListDialogFragment = FollowListDialogFragment.newInstance("followings", preferenceManager.getString(Constants.KEY_USER_ID));
@@ -142,10 +140,10 @@ public class ProfileFragment extends Fragment {
         });
 
         preferenceManager = new PreferenceManager(getContext());
-
+//
         loadUserDetails();
         getToken();
-
+//
         posts = new ArrayList<>();
         profilePostsAdapter = new ProfilePostsAdapter(posts, new PreferenceManager(getActivity()), getActivity());
         binding.profilePostsRecyclerView.setAdapter(profilePostsAdapter);

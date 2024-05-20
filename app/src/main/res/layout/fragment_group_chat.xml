@@ -44,7 +44,7 @@
             android:layout_height="218dp"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/animation_1706636230240" />
+            app:lottie_rawRes="@raw/animation"   />
 
     </LinearLayout>
 

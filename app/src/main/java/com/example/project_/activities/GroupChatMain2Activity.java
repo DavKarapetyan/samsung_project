@@ -227,12 +227,16 @@ public class GroupChatMain2Activity extends BaseActivity {
             for (DocumentChange documentChange : value.getDocumentChanges()) {
                 if (documentChange.getType() == DocumentChange.Type.ADDED) {
                     ChatMessage chatMessage = new ChatMessage();
+                    chatMessage.id = documentChange.getDocument().getId();
                     chatMessage.senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
                     chatMessage.groupChatId = documentChange.getDocument().getString("groupChatId");
                     chatMessage.message = documentChange.getDocument().getString(Constants.KEY_MESSAGE);
                     chatMessage.image = documentChange.getDocument().getString(Constants.KEY_SEND_IMAGE);
                     chatMessage.dateTime = getReadableDateTime(documentChange.getDocument().getString(Constants.KEY_TIMESTAMP));
                     chatMessage.dateObject = documentChange.getDocument().getString(Constants.KEY_TIMESTAMP);
+                    if (documentChange.getDocument().getBoolean("isLiked") != null) {
+                        chatMessage.isLiked = documentChange.getDocument().getBoolean("isLiked");
+                    }
                     chatMessages.add(chatMessage);
                 }
             }

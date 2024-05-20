@@ -17,6 +17,7 @@ import com.example.project_.databinding.FragmentSearchBinding;
 import com.example.project_.listeners.UserListener;
 import com.example.project_.models.User;
 import com.example.project_.utilities.Constants;
+import com.example.project_.utilities.PreferenceManager;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -34,6 +35,7 @@ public class SearchFragment extends Fragment {
     private FragmentSearchBinding binding;
     private List<User> users;
     private FirebaseFirestore firebaseFirestore;
+    private PreferenceManager preferenceManager;
 
     public SearchFragment() {
         // Required empty public constructor
@@ -64,6 +66,7 @@ public class SearchFragment extends Fragment {
         binding = FragmentSearchBinding.inflate(getLayoutInflater());
         firebaseFirestore = FirebaseFirestore.getInstance();
         users = new ArrayList<>();
+        preferenceManager = new PreferenceManager(getActivity());
         getUsers();
         binding.searchView.clearFocus();
         binding.searchView.addTextChangedListener(new TextWatcher() {
@@ -115,9 +118,11 @@ public class SearchFragment extends Fragment {
             UsersAdapter usersAdapter = new UsersAdapter(filteredUsers, new UserListener() {
                 @Override
                 public void onUserClicked(User user) {
-                    Intent intent = new Intent(getActivity(), UserProfileActivity.class);
-                    intent.putExtra("userId", user.id);
-                    startActivity(intent);
+                    if (!preferenceManager.getString(Constants.KEY_USER_ID).equals(user.id)) {
+                        Intent intent = new Intent(getActivity(), UserProfileActivity.class);
+                        intent.putExtra("userId", user.id);
+                        startActivity(intent);
+                    }
                 }
             });
             binding.usersRecyclerView.setAdapter(usersAdapter);

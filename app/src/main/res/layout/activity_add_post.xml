@@ -17,13 +17,12 @@
         android:text="Add Post"
         style="@style/text__color"
         android:textSize="@dimen/_13ssp" />
-
     <EditText
         android:id="@+id/content"
         style="@style/input__bg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_75sdp"
-        android:layout_marginHorizontal="@dimen/_18sdp"
+        android:layout_marginHorizontal="@dimen/_12ssp"
         android:layout_marginTop="25dp"
         android:clipToPadding="false"
         android:fontFamily="@font/nunito_regular"
@@ -32,15 +31,17 @@
         android:inputType="textEmailAddress"
         android:paddingHorizontal="@dimen/_12ssp"
         android:paddingVertical="12.5dp"
-        android:textColorHint="@color/primary__color"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:textSize="@dimen/_11ssp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_18sdp"
+        android:layout_marginHorizontal="@dimen/_12ssp"
         android:layout_marginTop="5dp"
         android:fontFamily="@font/nunito_regular"
+        android:textColor="@color/grey_font"
         android:text="Recomended to write content in english" />
 
     <EditText
@@ -48,7 +49,7 @@
         style="@style/input__bg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_36sdp"
-        android:layout_marginHorizontal="@dimen/_18sdp"
+        android:layout_marginHorizontal="@dimen/_12ssp"
         android:layout_marginTop="15dp"
         android:clipToPadding="false"
         android:fontFamily="@font/nunito_regular"
@@ -56,13 +57,14 @@
         android:inputType="text"
         android:paddingHorizontal="@dimen/_12ssp"
         android:paddingVertical="12.5dp"
-        android:textColorHint="@color/primary__color"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:textSize="@dimen/_11ssp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_18sdp"
+        android:layout_marginHorizontal="@dimen/_12ssp"
         android:layout_marginTop="25dp"
         android:fontFamily="@font/nunito_regular"
         android:text="Images"
@@ -161,9 +163,9 @@
             android:id="@+id/save"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginHorizontal="@dimen/_18sdp"
+            android:layout_marginHorizontal="@dimen/_12ssp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/primary__color"
+            android:background="@drawable/bottom_bar_bg"
             android:clipToOutline="true"
             android:elevation="10dp"
             android:fontFamily="@font/nunito_medium"

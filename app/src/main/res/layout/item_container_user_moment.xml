@@ -10,5 +10,6 @@
         android:background="@drawable/background_image"
         android:scaleType="centerCrop"
         android:layout_marginLeft="10dp"
+        android:padding="1dp"
         app:riv_oval="true"/>
 </RelativeLayout>

@@ -50,16 +50,21 @@
         android:layout_height="2dp"
         android:layout_marginTop="7dp"
         app:dividerColor="@color/primary__color" />
-    <com.codebyashish.autoimageslider.AutoImageSlider
+    <com.denzcoskun.imageslider.ImageSlider
         android:id="@+id/postImages"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/_200sdp"
-        android:background="@drawable/rounded_corner"
-        android:clipToOutline="true"
-        android:layout_marginTop="5dp"
-        app:ais_corner_radius="10"
-        app:ais_indicator_align="@string/center"
-        app:ais_placeholder="@drawable/placeholder_default_loading"/>
+        app:iss_text_align="CENTER"/>
+<!--    <com.codebyashish.autoimageslider.AutoImageSlider-->
+<!--        android:id="@+id/postImages"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="@dimen/_200sdp"-->
+<!--        android:background="@drawable/rounded_corner"-->
+<!--        android:clipToOutline="true"-->
+<!--        android:layout_marginTop="5dp"-->
+<!--        app:ais_corner_radius="10"-->
+<!--        app:ais_indicator_align="@string/center"-->
+<!--        app:ais_placeholder="@drawable/placeholder_default_loading"/>-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,7 +81,8 @@
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
             android:layout_marginLeft="15dp"
-            android:src="@drawable/comment"/>
+            android:tint="@color/white"
+            android:src="@drawable/messagechat"/>
     </LinearLayout>
     <EditText
         android:id="@+id/content"
@@ -88,10 +94,11 @@
         android:fontFamily="@font/nunito_regular"
         android:hint="Content"
         android:gravity="top"
-        android:inputType="textEmailAddress"
+        android:inputType="text"
         android:paddingHorizontal="@dimen/_12ssp"
         android:paddingVertical="12.5dp"
-        android:textColorHint="@color/primary__color"
+        android:textColorHint="@color/white"
+        android:textColor="@color/white"
         android:textSize="@dimen/_11ssp" />
     <FrameLayout
         android:layout_width="match_parent"
@@ -102,6 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
             android:layout_marginTop="20dp"
+            android:background="@drawable/bottom_bar_bg"
             android:backgroundTint="@color/primary__color"
             android:clipToOutline="true"
             android:elevation="10dp"

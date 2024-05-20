@@ -76,6 +76,7 @@
             android:textSize="@dimen/_12ssp"
             android:textColor="@color/white"
             android:textAllCaps="false"
+            android:background="@drawable/bottom_bar_bg"
             android:backgroundTint="@color/primary__color"
             android:clipToOutline="true"
             android:elevation="10dp"

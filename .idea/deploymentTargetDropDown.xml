@@ -2,7 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="app">
+      <entry key="Twaddle">
         <State>
           <targetSelectedWithDropDown>
             <Target>
@@ -10,12 +10,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Student\.android\avd\Medium_Tablet_API_34.avd" />
+                  <value value="C:\Users\davit\.android\avd\Pixel_Tablet_API_33.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-08T17:47:55.487914800Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-05-19T13:20:46.403065200Z" />
         </State>
       </entry>
     </value>

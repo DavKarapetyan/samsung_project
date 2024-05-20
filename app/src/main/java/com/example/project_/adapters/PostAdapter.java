@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.transition.Slide;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,6 +20,8 @@ import com.codebyashish.autoimageslider.Enums.ImageAnimationTypes;
 import com.codebyashish.autoimageslider.Enums.ImageScaleType;
 import com.codebyashish.autoimageslider.ExceptionsClass;
 import com.codebyashish.autoimageslider.Models.ImageSlidesModel;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.project_.CommentListDialogFragment;
 import com.example.project_.activities.PostDetailsActivity;
 import com.example.project_.activities.UserProfileActivity;
@@ -129,16 +132,27 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     });
             if (post.imageUris != null && !post.imageUris.isEmpty()) {
                 //Picasso.get().load(post.imageUris.get(0)).into(binding.postImage);
-                ArrayList<ImageSlidesModel> autoImageList = new ArrayList<>();
+                List<SlideModel> imageList = new ArrayList<SlideModel>();
+
                 for (String str : post.imageUris) {
-                    autoImageList.add(new ImageSlidesModel(str, ImageScaleType.CENTER_CROP));
+                    imageList.add(new SlideModel(str, null, ScaleTypes.CENTER_CROP));
                 }
-                binding.postImages.setImageList(autoImageList);
-                binding.postImages.setSlideAnimation(ImageAnimationTypes.DEPTH_SLIDE);
+                binding.postImages.setImageList(imageList);
+
+
+//                ArrayList<ImageSlidesModel> autoImageList = new ArrayList<>();
+//                for (String str : post.imageUris) {
+//                    autoImageList.add(new ImageSlidesModel(str, ImageScaleType.CENTER_CROP));
+//                }
+//                binding.postImages.setImageList(autoImageList);
+//                binding.postImages.setSlideAnimation(ImageAnimationTypes.DEPTH_SLIDE);
             }
             binding.fullName.setText(post.userName);
             //String content = new HttpRequestTask().execute(locale.getLanguage(), post.content).toString();
             binding.content.setText(post.content);
+            if (post.content.trim().length() < 50) {
+                binding.moreText.setVisibility(View.GONE);
+            }
 
             if (post.userImage != null) {
                 binding.profileImage.setImageBitmap(getUserImage(post.userImage));
@@ -169,9 +183,6 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     binding.likeCount.setText(Integer.toString(count));
                 }
             });
-//            if (isUserExistsInLiked(post.id)) {
-//                binding.likeButton.setLiked(true);
-//            }
         }
 
     }

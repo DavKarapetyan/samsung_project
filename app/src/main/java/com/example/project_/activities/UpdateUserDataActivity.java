@@ -76,6 +76,10 @@ public class UpdateUserDataActivity extends BaseActivity {
                         encodedImage = encodeImage(bitmap);
                         binding.imageProfile.setImageBitmap(bitmap);
                         binding.textAddImage.setVisibility(View.GONE);
+                        if (documentSnapshot.getString("momentExpirationDate") != null) {
+                            binding.inputTV.setText(documentSnapshot.getString("momentExpirationDate"));
+                            binding.inputTV.setSimpleItems(R.array.options_list);
+                        }
                     }
                 });
     }
@@ -85,6 +89,7 @@ public class UpdateUserDataActivity extends BaseActivity {
         userRef.update("name", binding.name.getText().toString());
         userRef.update("nickName", binding.nickName.getText().toString());
         userRef.update("image", encodedImage);
+        userRef.update("momentExpirationDate", binding.inputTV.getText().toString());
         loading(false);
         MotionToast.Companion.createColorToast(UpdateUserDataActivity.this, "Success", "Your data is successfully updated", MotionToastStyle.SUCCESS, MotionToast.GRAVITY_BOTTOM, MotionToast.LONG_DURATION, ResourcesCompat.getFont(getApplicationContext(), R.font.nunito_regular));
         finish();

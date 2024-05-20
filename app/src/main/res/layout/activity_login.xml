@@ -67,6 +67,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_18sdp"
                 android:layout_marginTop="20dp"
+                android:textColorHint="@color/white"
                 app:hintEnabled="true"
                 app:passwordToggleTint="@color/primary__color">
 
@@ -77,6 +78,7 @@
                     style="@style/input__bg"
                     android:fontFamily="@font/nunito_regular"
                     android:hint="Email"
+                    android:textColor="@color/white"
                     android:inputType="textEmailAddress"
                     android:paddingHorizontal="@dimen/_12ssp"
                     android:paddingVertical="12.5dp"
@@ -103,9 +105,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_18sdp"
                 android:layout_marginTop="20dp"
+                android:textColorHint="@color/white"
                 app:hintEnabled="true"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/primary__color">
+                app:passwordToggleTint="@color/active_bg">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/password"
@@ -114,6 +117,7 @@
                     style="@style/input__bg"
                     android:fontFamily="@font/nunito_regular"
                     android:hint="Password"
+                    android:textColor="@color/white"
                     android:inputType="textPassword"
                     android:paddingHorizontal="@dimen/_12ssp"
                     android:paddingVertical="12.5dp"
@@ -131,7 +135,7 @@
                     android:layout_height="@dimen/_40sdp"
                     android:layout_marginHorizontal="@dimen/_18sdp"
                     android:layout_marginTop="20dp"
-                    android:backgroundTint="@color/primary__color"
+                    android:background="@drawable/bottom_bar_bg"
                     android:clipToOutline="true"
                     android:elevation="30dp"
                     android:fontFamily="@font/nunito_medium"

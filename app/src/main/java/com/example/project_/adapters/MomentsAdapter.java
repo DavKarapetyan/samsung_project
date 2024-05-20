@@ -21,6 +21,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
@@ -107,7 +108,7 @@ public class MomentsAdapter extends RecyclerView.Adapter<MomentsAdapter.MomentsV
 
     private void checkUserMoments(String userId, MomentsExistCallback callback) {
         CollectionReference momentsRef = FirebaseFirestore.getInstance().collection("users").document(userId).collection("moments");
-        momentsRef.get().addOnCompleteListener(task -> {
+        momentsRef.whereGreaterThan("expirationDate", new Date()).get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 QuerySnapshot querySnapshot = task.getResult();
                 boolean momentsExist = querySnapshot != null && !querySnapshot.isEmpty();

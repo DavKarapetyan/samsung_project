@@ -38,36 +38,76 @@
             android:textColor="@color/black"
             android:textSize="@dimen/_10sdp"/>
     </FrameLayout>
-    <EditText
-        android:id="@+id/name"
-        style="@style/input__bg"
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_36sdp"
-        android:layout_marginHorizontal="@dimen/_18sdp"
-        android:layout_marginTop="25dp"
-        android:clipToPadding="false"
-        android:fontFamily="@font/nunito_regular"
-        android:hint="Name"
-        android:inputType="text"
-        android:paddingHorizontal="@dimen/_12ssp"
-        android:paddingVertical="12.5dp"
-        android:textColorHint="@color/primary__color"
-        android:textSize="@dimen/_11ssp" />
-    <EditText
-        android:id="@+id/nickName"
-        style="@style/input__bg"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_12ssp"
+        android:layout_marginTop="20dp"
+        android:textColorHint="@color/white"
+        app:hintEnabled="true"
+        app:passwordToggleTint="@color/primary__color">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_36sdp"
+            style="@style/input__bg"
+            android:fontFamily="@font/nunito_regular"
+            android:hint="Name"
+            android:textColor="@color/white"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="@dimen/_12ssp"
+            android:paddingVertical="12.5dp"
+            android:textSize="@dimen/_11ssp" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_36sdp"
-        android:layout_marginHorizontal="@dimen/_18sdp"
-        android:layout_marginTop="25dp"
-        android:clipToPadding="false"
-        android:fontFamily="@font/nunito_regular"
-        android:hint="Nick Name"
-        android:inputType="text"
-        android:paddingHorizontal="@dimen/_12ssp"
-        android:paddingVertical="12.5dp"
-        android:textColorHint="@color/primary__color"
-        android:textSize="@dimen/_11ssp" />
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_12ssp"
+        android:layout_marginTop="20dp"
+        android:textColorHint="@color/white"
+        app:hintEnabled="true"
+        app:passwordToggleTint="@color/primary__color">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nickName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_36sdp"
+            style="@style/input__bg"
+            android:fontFamily="@font/nunito_regular"
+            android:hint="Nick Name"
+            android:textColor="@color/white"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="@dimen/_12ssp"
+            android:paddingVertical="12.5dp"
+            android:textSize="@dimen/_11ssp" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/inputLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_12ssp"
+        android:layout_marginTop="20dp"
+        android:textColorHint="@color/white"
+        android:hint="Moment expiration time"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
+        app:boxStrokeWidth="0sp"
+        app:boxStrokeWidthFocused="0sp"
+        app:hintEnabled="true">
+        <com.google.android.material.textfield.MaterialAutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/inputTV"
+            android:inputType="none"
+            style="@style/input__bg"
+            android:textSize="@dimen/_11ssp"
+            android:textColor="@color/white"
+            app:simpleItems="@array/options_list"/>
+    </com.google.android.material.textfield.TextInputLayout>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -76,9 +116,9 @@
             android:id="@+id/save"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginHorizontal="@dimen/_18sdp"
+            android:layout_marginHorizontal="@dimen/_12ssp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/primary__color"
+            android:background="@drawable/bottom_bar_bg"
             android:clipToOutline="true"
             android:elevation="10dp"
             android:fontFamily="@font/nunito_medium"

@@ -18,6 +18,7 @@ import com.example.project_.R;
 import com.example.project_.adapters.ProfilePostsAdapter;
 import com.example.project_.databinding.ActivityUserProfileBinding;
 import com.example.project_.models.Post;
+import com.example.project_.models.User;
 import com.example.project_.utilities.Constants;
 import com.example.project_.utilities.PreferenceManager;
 import com.google.android.flexbox.FlexWrap;
@@ -43,6 +44,7 @@ public class UserProfileActivity extends BaseActivity {
     ProfilePostsAdapter profilePostsAdapter;
     PreferenceManager preferenceManager;
     private List<Post> posts;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +54,7 @@ public class UserProfileActivity extends BaseActivity {
         firebaseFirestore = FirebaseFirestore.getInstance();
         userId = getIntent().getStringExtra("userId");
         preferenceManager = new PreferenceManager(getApplicationContext());
-        binding.fab.setOnClickListener(v -> finish());
+        binding.backArrow.setOnClickListener(v -> finish());
         loadUserDetails();
         posts = new ArrayList<>();
         profilePostsAdapter = new ProfilePostsAdapter(posts, new PreferenceManager(getApplicationContext()), getApplicationContext());
@@ -79,6 +81,13 @@ public class UserProfileActivity extends BaseActivity {
         binding.followers.setOnClickListener(v -> {
             FollowListDialogFragment followListDialogFragment = FollowListDialogFragment.newInstance("followers", userId);
             followListDialogFragment.show(getSupportFragmentManager(), "TAG");
+        });
+        getUser(userId);
+        binding.startMessaging.setOnClickListener(v -> {
+            Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
+            intent.putExtra(Constants.KEY_USER, user);
+            startActivity(intent);
+            finish();
         });
     }
 
@@ -246,5 +255,17 @@ public class UserProfileActivity extends BaseActivity {
         loadUserDetails();
         binding.unFollow.setVisibility(View.GONE);
         binding.follow.setVisibility(View.VISIBLE);
+    }
+    private void getUser(String userId) {
+        user = new User();
+        FirebaseFirestore.getInstance().collection("users").document(userId).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        user.id = documentSnapshot.getId();
+                        user.name = documentSnapshot.getString(Constants.KEY_NAME);
+                        user.token = documentSnapshot.getString(Constants.KEY_FCM_TOKEN);
+                    }
+                });
     }
 }

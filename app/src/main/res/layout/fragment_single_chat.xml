@@ -1,21 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/page_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/page_bg"
     tools:context=".SingleChatFragment">
 
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/aiButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/_30sdp"
+        android:paddingVertical="@dimen/_8sdp">
 
+        <ImageView
+            android:id="@+id/aiImageProfile"
+            android:layout_width="@dimen/_35sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:src="@drawable/ai"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--        <com.makeramen.roundedimageview.RoundedImageView-->
+        <!--            android:id="@+id/imageProfile"-->
+        <!--            android:layout_width="@dimen/_35sdp"-->
+        <!--            android:layout_height="@dimen/_35sdp"-->
+        <!--            android:src="@drawable/ai"-->
+        <!--            android:scaleType="centerCrop"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            app:riv_oval="true"/>-->
+        <View
+            android:id="@+id/viewSuporter"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            app:layout_constraintBottom_toBottomOf="@id/aiImageProfile"
+            app:layout_constraintStart_toEndOf="@id/aiImageProfile"
+            app:layout_constraintTop_toTopOf="@id/aiImageProfile" />
+
+        <TextView
+            style="@style/text__color"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_8sdp"
+            android:layout_marginEnd="@dimen/_8sdp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="16dp"
+            android:text="Twaddle Assist"
+            android:fontFamily="@font/nunito_bold"
+            app:layout_constraintBottom_toTopOf="@id/viewSuporter"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/aiImageProfile" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.divider.MaterialDivider
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="7dp"
+        android:layout_below="@id/aiButton"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        app:dividerColor="@color/primary__color" />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/conversationsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/divider"
         android:clipToPadding="false"
         android:orientation="vertical"
         android:overScrollMode="never"
-        android:padding="@dimen/_20sdp"
+        android:paddingHorizontal="@dimen/_20sdp"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
@@ -23,7 +80,7 @@
         android:id="@+id/noMessages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -45,7 +102,7 @@
             android:layout_height="218dp"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/animation_1706636230240" />
+            app:lottie_rawRes="@raw/animation" />
 
     </LinearLayout>
 
@@ -53,6 +110,6 @@
         android:id="@+id/progressBar"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
-        android:layout_gravity="center" />
+        android:layout_centerInParent="true" />
 
-</FrameLayout>
+</RelativeLayout>

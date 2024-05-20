@@ -1,44 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    style="@style/page_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    style="@style/page_bg"
     tools:context=".activities.HomeActivity">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:id="@+id/incomingCallLayout"
-        android:visibility="gone"
-        android:orientation="horizontal"
-        android:layout_alignParentTop="true">
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:layout_weight="6"
-            android:textSize="20sp"
-            android:textColor="@color/black"
-            android:text="someone is calling"
-            android:id="@+id/incomingNameTV"/>
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            android:src="@drawable/ic_accept"
-            android:padding="15dp"
-            android:id="@+id/acceptButton"/>
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.5"
-            android:src="@drawable/ic_reject"
-            android:padding="15dp"
-            android:id="@+id/rejectButton"/>
-
-    </LinearLayout>
 
     <FrameLayout
         android:id="@+id/frame_layout"
@@ -46,61 +13,86 @@
         android:layout_height="match_parent">
 
     </FrameLayout>
-<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--            android:id="@+id/bottomNavigationView"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="80dp"-->
-<!--            android:background="@drawable/bottom_bar_bg"-->
-<!--            android:paddingHorizontal="30dp"-->
-<!--            android:paddingTop="15dp"-->
-<!--            app:itemActiveIndicatorStyle="@drawable/avtive_item_style"-->
-<!--            app:itemHorizontalTranslationEnabled="true"-->
-<!--            app:itemIconSize="27dp"-->
-<!--            app:itemIconTint="@color/bottom_nav_color"-->
-<!--            app:itemTextColor="@color/bottom_nav_color"-->
-<!--            app:labelVisibilityMode="labeled"-->
-<!--            app:menu="@menu/bottom_navigation_menu"-->
-<!--            android:layout_gravity="bottom"-->
-<!--            app:tabBackground="@color/white"-->
-<!--            />-->
-    <com.google.android.material.bottomappbar.BottomAppBar
-        android:id="@+id/bottomAppBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/bottom_bar_bg"
-        android:backgroundTint="@color/primary__color"
-        app:fabAnchorMode="cradle"
-        app:fabAlignmentMode="center"
-        app:fabCradleVerticalOffset="0dp"
-        >
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@drawable/transperant_background"
-            android:paddingTop="15dp"
-            android:layout_marginEnd="9dp"
-            app:itemActiveIndicatorStyle="@drawable/avtive_item_style"
-            app:itemHorizontalTranslationEnabled="true"
-            app:itemIconSize="27dp"
-            app:itemIconTint="@color/bottom_nav_color"
-            app:itemTextColor="@color/bottom_nav_color"
-            app:labelVisibilityMode="labeled"
-            app:menu="@menu/bottom_navigation_menu"
-            app:tabBackground="@color/white" />
 
-    </com.google.android.material.bottomappbar.BottomAppBar>
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/primary__color"
-        app:tint="@color/white"
-        android:contentDescription="a"
-        android:clipToOutline="true"
-        android:elevation="10dp"
-        android:src="@drawable/baseline_add_24"
-        app:shapeAppearanceOverlay="@style/fab_3_rounded"
-        app:layout_anchor="@id/bottomAppBar"/>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:background="@drawable/shadow_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_gravity="bottom"
+        android:layout_margin="10dp"
+        android:background="@drawable/bottom_bar_bg"
+        android:paddingHorizontal="5dp"
+        android:paddingTop="15dp"
+        app:itemActiveIndicatorStyle="@drawable/avtive_item_style"
+        app:itemHorizontalTranslationEnabled="true"
+        app:itemIconSize="27dp"
+        app:itemIconTint="@color/bottom_nav_color"
+        app:itemTextColor="@color/bottom_nav_color"
+        app:labelVisibilityMode="labeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_navigation_menu"
+        app:tabBackground="@color/white">
+
+        <Button
+            android:id="@+id/fab"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="7dp"
+            android:backgroundTint="@color/active_bg"
+            android:text="+"
+            android:textColor="@color/grey_second"
+            android:textSize="20dp" />
+    </com.google.android.material.bottomnavigation.BottomNavigationView>
+    <!--    <com.google.android.material.bottomappbar.BottomAppBar-->
+    <!--        android:id="@+id/bottomAppBar"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="bottom"-->
+    <!--        android:layout_margin="20dp"-->
+    <!--        android:background="@drawable/bottom_bar_bg"-->
+    <!--        app:fabAnchorMode="cradle"-->
+    <!--        app:fabAlignmentMode="center"-->
+    <!--        app:fabCradleVerticalOffset="0dp"-->
+    <!--        >-->
+    <!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
+    <!--            android:id="@+id/bottomNavigationView"-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="80dp"-->
+    <!--            android:background="@drawable/bottom_bar_bg"-->
+    <!--            android:paddingTop="15dp"-->
+    <!--            android:layout_marginEnd="9dp"-->
+    <!--            app:itemActiveIndicatorStyle="@drawable/avtive_item_style"-->
+    <!--            app:itemHorizontalTranslationEnabled="true"-->
+    <!--            app:itemIconSize="27dp"-->
+    <!--            app:itemIconTint="@color/bottom_nav_color"-->
+    <!--            app:itemTextColor="@color/bottom_nav_color"-->
+    <!--            app:labelVisibilityMode="labeled"-->
+    <!--            app:menu="@menu/bottom_navigation_menu"-->
+    <!--            app:tabBackground="@color/white" />-->
+
+    <!--    </com.google.android.material.bottomappbar.BottomAppBar>-->
+    <!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+    <!--        android:id="@+id/fab"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:backgroundTint="@color/primary__color"-->
+    <!--        app:tint="@color/white"-->
+    <!--        android:contentDescription="a"-->
+    <!--        android:clipToOutline="true"-->
+    <!--        android:elevation="10dp"-->
+    <!--        android:src="@drawable/baseline_add_24"-->
+    <!--        app:shapeAppearanceOverlay="@style/fab_3_rounded"-->
+    <!--        app:layout_anchor="@id/bottomAppBar"/>-->
+</androidx.constraintlayout.widget.ConstraintLayout>

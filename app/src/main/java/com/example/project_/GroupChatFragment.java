@@ -108,9 +108,13 @@ public class GroupChatFragment extends Fragment {
                                     groupChats.add(groupChat);
                                 }
                                 groupChatAdapter.notifyDataSetChanged();
-                                binding.progressBar.setVisibility(View.INVISIBLE);
-                            } else {
-                                Toast.makeText(getActivity(), "No Chats", Toast.LENGTH_SHORT).show();
+                                binding.progressBar.setVisibility(View.GONE);
+                                if (groupChats.isEmpty() || groupChats == null) {
+                                    binding.noMessages.setVisibility(View.VISIBLE);
+                                    binding.progressBar.setVisibility(View.INVISIBLE);
+                                } else {
+                                    binding.noMessages.setVisibility(View.GONE);
+                                }
                             }
                         }
                     }

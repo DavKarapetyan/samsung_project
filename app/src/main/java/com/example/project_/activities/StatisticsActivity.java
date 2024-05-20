@@ -86,7 +86,6 @@ public class StatisticsActivity extends BaseActivity {
         //dataSet.setFillAlpha(255); // Set fill transparency (0-255)
         dataSet.setFillColor(R.color.primary__color);
 
-
         XAxis xAxis = lineChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    style="@style/page_bg"
     android:keepScreenOn="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,40 +77,34 @@
                 app:tint="@color/white" />
         </LinearLayout>
 
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1.5"-->
-<!--            android:src="@drawable/ic_accept"-->
-<!--            android:padding="15dp"-->
-<!--            android:id="@+id/acceptButton"/>-->
-<!--        <ImageView-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:layout_weight="1.5"-->
-<!--            android:src="@drawable/ic_reject"-->
-<!--            android:padding="15dp"-->
-<!--            android:id="@+id/rejectButton"/>-->
-
     </androidx.constraintlayout.widget.ConstraintLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/incomingCallLayout"
         android:id="@+id/whoToCallLayout">
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
+            android:id="@+id/callBtn"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="@drawable/rounded_button"
-            android:layout_marginHorizontal="30dp"
-            android:text="call"
-            android:id="@+id/callBtn"/>
+            android:layout_height="@dimen/_40sdp"
+            android:layout_marginHorizontal="@dimen/_18sdp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/bottom_bar_bg"
+            android:clipToOutline="true"
+            android:elevation="30dp"
+            android:fontFamily="@font/nunito_medium"
+            android:outlineAmbientShadowColor="@color/primary__color"
+            android:shadowColor="@color/primary__color"
+            android:text="Start Call"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp" />
     </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:id="@+id/callLayout"
         android:visibility="gone"
-        tools:visibility="visible"
+        tools:visibility="gone"
         android:layout_height="match_parent">
         <org.webrtc.SurfaceViewRenderer
             android:id="@+id/remote_view"

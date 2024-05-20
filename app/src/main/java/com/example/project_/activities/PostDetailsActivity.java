@@ -15,6 +15,8 @@ import android.widget.Toast;
 import com.codebyashish.autoimageslider.Enums.ImageScaleType;
 import com.codebyashish.autoimageslider.ExceptionsClass;
 import com.codebyashish.autoimageslider.Models.ImageSlidesModel;
+import com.denzcoskun.imageslider.constants.ScaleTypes;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.project_.CommentListDialogFragment;
 import com.example.project_.R;
 import com.example.project_.databinding.ActivityPostDetailsBinding;
@@ -63,12 +65,18 @@ public class PostDetailsActivity extends BaseActivity {
                         post.id = documentSnapshot.getId();
                         if (post.imageUris != null && !post.imageUris.isEmpty()) {
                             //Picasso.get().load(post.imageUris.get(0)).into(binding.postImage);
-                            ArrayList<ImageSlidesModel> autoImageList = new ArrayList<>();
+//                            ArrayList<ImageSlidesModel> autoImageList = new ArrayList<>();
+//                            for (String str : post.imageUris) {
+//                                autoImageList.add(new ImageSlidesModel(str, ImageScaleType.CENTER_CROP));
+//                            }
+//                            binding.postImages.setImageList(autoImageList);
+//                            binding.postImages.setDefaultAnimation();
+
+                            List<SlideModel> imageList = new ArrayList<>();
                             for (String str : post.imageUris) {
-                                autoImageList.add(new ImageSlidesModel(str, ImageScaleType.CENTER_CROP));
+                                imageList.add(new SlideModel(str, null, ScaleTypes.CENTER_CROP));
                             }
-                            binding.postImages.setImageList(autoImageList);
-                            binding.postImages.setDefaultAnimation();
+                            binding.postImages.setImageList(imageList);
                         }
                         binding.content.setText(post.content);
                         binding.showComments.setOnClickListener(v -> {

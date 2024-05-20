@@ -48,6 +48,9 @@ public class LoginActivity extends AppCompatActivity {
         binding.fab.setOnClickListener(v -> {
             finish();
         });
+        binding.textView2.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(), ForgotPasswordActivity.class));
+        });
     }
 
     private void signIn() {

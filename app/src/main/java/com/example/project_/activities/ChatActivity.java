@@ -325,12 +325,16 @@ public class ChatActivity extends BaseActivity {
             for (DocumentChange documentChange : value.getDocumentChanges()) {
                 if (documentChange.getType() == DocumentChange.Type.ADDED) {
                     ChatMessage chatMessage = new ChatMessage();
+                    chatMessage.id = documentChange.getDocument().getId();
                     chatMessage.senderId = documentChange.getDocument().getString(Constants.KEY_SENDER_ID);
                     chatMessage.receiverId = documentChange.getDocument().getString(Constants.KEY_RECEIVER_ID);
                     chatMessage.message = documentChange.getDocument().getString(Constants.KEY_MESSAGE);
                     chatMessage.image = documentChange.getDocument().getString(Constants.KEY_SEND_IMAGE);
                     chatMessage.dateTime = getReadableDateTime(documentChange.getDocument().getString(Constants.KEY_TIMESTAMP));
                     chatMessage.dateObject = documentChange.getDocument().getString(Constants.KEY_TIMESTAMP);
+                    if (documentChange.getDocument().getBoolean("isLiked") != null) {
+                        chatMessage.isLiked = documentChange.getDocument().getBoolean("isLiked");
+                    }
                     chatMessages.add(chatMessage);
                 }
             }
@@ -479,6 +483,11 @@ public class ChatActivity extends BaseActivity {
         database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
                 .whereEqualTo(Constants.KEY_SENDER_ID, senderId)
                 .whereEqualTo(Constants.KEY_RECEIVER_ID, receiverId)
+                .get()
+                .addOnCompleteListener(conversionOnCompleteListener);
+        database.collection(Constants.KEY_COLLECTION_CONVERSATIONS)
+                .whereEqualTo(Constants.KEY_SENDER_ID, receiverId)
+                .whereEqualTo(Constants.KEY_RECEIVER_ID, senderId)
                 .get()
                 .addOnCompleteListener(conversionOnCompleteListener);
     }

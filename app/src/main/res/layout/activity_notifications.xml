@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/page_bg"
-    tools:context=".NotificationsFragment">
+    tools:context=".activities.NotificationsActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notificationsRecyclerView"

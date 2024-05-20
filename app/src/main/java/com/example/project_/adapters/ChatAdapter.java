@@ -3,9 +3,12 @@ package com.example.project_.adapters;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,6 +17,7 @@ import com.example.project_.databinding.ItemContainerReceivedMessageBinding;
 import com.example.project_.databinding.ItemContainerSentMessageBinding;
 import com.example.project_.models.ChatMessage;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.squareup.picasso.Picasso;
@@ -96,6 +100,38 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         void setData(ChatMessage chatMessage) {
             binding.textMessage.setText(chatMessage.message);
             binding.textDateTime.setText(chatMessage.dateTime);
+            DocumentReference chatMessageRef = FirebaseFirestore.getInstance().collection("chat").document(chatMessage.id);
+
+            if (chatMessage.isLiked == true) {
+                binding.likeImage.setVisibility(View.VISIBLE);
+            } else {
+                binding.likeImage.setVisibility(View.GONE);
+            }
+
+            GestureDetector gestureDetector = new GestureDetector(itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    // Handle double tap event
+                    chatMessageRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.getBoolean("isLiked") != null && !documentSnapshot.getBoolean("isLiked")) {
+                                FirebaseFirestore.getInstance().collection("chat").document(chatMessage.id).update("isLiked", true);
+                                binding.likeImage.setVisibility(View.VISIBLE);
+                            } else {
+                                FirebaseFirestore.getInstance().collection("chat").document(chatMessage.id).update("isLiked", false);
+                                binding.likeImage.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                    return true;
+                }
+            });
+            binding.senderMessage.setOnTouchListener((v, event) -> {
+                gestureDetector.onTouchEvent(event);
+                return true;
+            });
+
             if (chatMessage.image != null) {
                 Picasso.get().load(chatMessage.image).into(binding.sendImage);
                 binding.sendImage.setVisibility(View.VISIBLE);
@@ -129,6 +165,38 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                             }
                         });
             }
+            DocumentReference chatMessageRef = FirebaseFirestore.getInstance().collection("chat").document(chatMessage.id);
+
+            if (chatMessage.isLiked == true) {
+                binding.likeImage.setVisibility(View.VISIBLE);
+            } else {
+                binding.likeImage.setVisibility(View.GONE);
+            }
+
+            GestureDetector gestureDetector = new GestureDetector(itemView.getContext(), new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public boolean onDoubleTap(MotionEvent e) {
+                    // Handle double tap event
+                    chatMessageRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if (documentSnapshot.getBoolean("isLiked") != null && !documentSnapshot.getBoolean("isLiked")) {
+                                FirebaseFirestore.getInstance().collection("chat").document(chatMessage.id).update("isLiked", true);
+                                binding.likeImage.setVisibility(View.VISIBLE);
+                            } else {
+                                FirebaseFirestore.getInstance().collection("chat").document(chatMessage.id).update("isLiked", false);
+                                binding.likeImage.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+                    return true;
+                }
+            });
+            binding.receiverMessageContainer.setOnTouchListener((v, event) -> {
+                gestureDetector.onTouchEvent(event);
+                return true;
+            });
+
             if (chatMessage.image != null) {
                 Picasso.get().load(chatMessage.image).into(binding.sendImage);
                 binding.sendImage.setVisibility(View.VISIBLE);

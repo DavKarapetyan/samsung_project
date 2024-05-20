@@ -48,40 +48,47 @@
                 android:layout_height="2dp"
                 android:layout_marginTop="7dp"
                 app:dividerColor="@color/primary__color" />
-            <com.codebyashish.autoimageslider.AutoImageSlider
+            <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/postImages"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="@dimen/_200sdp"
-                android:background="@drawable/rounded_corner"
-                android:clipToOutline="true"
-                app:ais_corner_radius="10"
-                app:ais_indicator_align="@string/center"
-                app:ais_placeholder="@drawable/placeholder_default_loading"/>
+                app:iss_text_align="CENTER"/>
+            <!--            <com.codebyashish.autoimageslider.AutoImageSlider-->
+<!--                android:id="@+id/postImages"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="@dimen/_200sdp"-->
+<!--                android:background="@drawable/rounded_corner"-->
+<!--                android:clipToOutline="true"-->
+<!--                app:ais_corner_radius="10"-->
+<!--                app:ais_indicator_align="@string/center"-->
+<!--                app:ais_placeholder="@drawable/placeholder_default_loading"/>-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingTop="5dp"
+                android:paddingTop="10dp"
                 android:orientation="horizontal">
                 <com.like.LikeButton
                     app:icon_type="heart"
-                    app:icon_size="@dimen/_15sdp"
+                    app:icon_size="@dimen/_7sdp"
                     android:id="@+id/likeButton"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
                 <TextView
                     android:id="@+id/likeCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
+                    android:textColor="@color/white"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="@font/nunito_regular"
                     android:layout_gravity="center_vertical"/>
                 <ImageView
                     android:id="@+id/showComments"
-                    android:layout_width="@dimen/_18sdp"
-                    android:layout_height="@dimen/_18sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_marginLeft="5dp"
-                    android:src="@drawable/comment"/>
+                    android:src="@drawable/messagechat"
+                    app:tint="@color/white" />
             </LinearLayout>
             <TextView
                 android:id="@+id/content"
@@ -92,6 +99,7 @@
                 android:layout_marginTop="10dp"
                 style="@style/text__color"/>
             <TextView
+                android:id="@+id/moreText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="more"

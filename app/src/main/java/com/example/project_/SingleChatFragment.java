@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.project_.activities.AIChatActivity;
 import com.example.project_.activities.ChatActivity;
 import com.example.project_.activities.HomeActivity;
 import com.example.project_.adapters.RecentConversationsAdapter;
@@ -90,6 +91,10 @@ public class SingleChatFragment extends Fragment implements ConversionListener {
         preferenceManager = new PreferenceManager(getActivity());
         listenConversations();
 
+        binding.aiButton.setOnClickListener(v -> {
+            Intent intent = new Intent(getActivity(), AIChatActivity.class);
+            startActivity(intent);
+        });
 
         return binding.getRoot();
     }

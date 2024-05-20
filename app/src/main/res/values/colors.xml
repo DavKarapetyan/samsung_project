@@ -6,11 +6,13 @@
     <color name="primary__color">#2D61AD</color>
     <color name="primary__color_dark">#274F89</color>
     <color name="secondary__color">#ECF3FA</color>
-    <color name="ic_launcher_background">#007FFF</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="grey">@android:color/secondary_text_light</color>
+    <color name="grey_second">#1f2326</color>
+    <color name="grey_third">#2a2e31</color>
+    <color name="transparent">#002A2E31</color>
 </resources>
