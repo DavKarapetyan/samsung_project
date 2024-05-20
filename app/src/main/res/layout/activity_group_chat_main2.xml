@@ -100,9 +100,9 @@
         android:id="@+id/constraintLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/_10ssp"
         android:background="@drawable/bottom_bar_bg"
-        android:padding="15dp"
+        android:padding="@dimen/_12ssp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">

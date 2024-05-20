@@ -29,4 +29,8 @@
     <style name="Button.PrimarySecond" parent="ThemeOverlay.AppCompat">
         <item name="colorAccent">@color/grey_second</item>
     </style>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Define a custom style for the password toggle icon -->
+        <item name="passwordToggleDrawable">@drawable/custom_password_toggle</item>
+    </style>
 </resources>

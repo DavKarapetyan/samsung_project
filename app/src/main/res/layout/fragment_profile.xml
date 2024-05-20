@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:paddingHorizontal="15dp">
+                android:paddingHorizontal="@dimen/_12ssp">
 
                 <TextView
                     android:id="@+id/textNickName"
@@ -50,7 +50,7 @@
                 android:layout_marginHorizontal="@dimen/_12ssp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:background="@drawable/story_bg"
-                android:padding="15dp">
+                android:padding="@dimen/_12ssp">
 
                 <LinearLayout
                     android:id="@+id/linearLayout2"
@@ -82,7 +82,7 @@
                         <LinearLayout
                             android:layout_width="@dimen/_55ssp"
                             android:layout_height="@dimen/_55ssp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="@dimen/_5ssp"
                             android:background="@drawable/bottom_bar_bg"
                             android:gravity="center"
                             android:orientation="vertical">
@@ -108,7 +108,7 @@
                             android:id="@+id/followings"
                             android:layout_width="@dimen/_55ssp"
                             android:layout_height="@dimen/_55ssp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="@dimen/_5ssp"
                             android:background="@drawable/bottom_bar_bg"
                             android:gravity="center"
                             android:orientation="vertical">
@@ -134,7 +134,7 @@
                             android:id="@+id/followers"
                             android:layout_width="@dimen/_55ssp"
                             android:layout_height="@dimen/_55ssp"
-                            android:layout_marginLeft="10dp"
+                            android:layout_marginLeft="@dimen/_5ssp"
                             android:background="@drawable/bottom_bar_bg"
                             android:gravity="center"
                             android:orientation="vertical">
@@ -171,13 +171,14 @@
                 <Button
                     android:id="@+id/editProfile"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_35ssp"
                     android:text="Edit Profile"
+                    android:textSize="@dimen/_10ssp"
                     android:textAllCaps="false"
                     android:fontFamily="@font/nunito_regular"
                     android:background="@drawable/bottom_bar_bg"
                     android:textColor="@color/white"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/_5ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textName"

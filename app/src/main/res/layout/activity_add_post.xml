@@ -42,6 +42,7 @@
         android:layout_marginTop="5dp"
         android:fontFamily="@font/nunito_regular"
         android:textColor="@color/grey_font"
+        android:textSize="@dimen/_10ssp"
         android:text="Recomended to write content in english" />
 
     <EditText

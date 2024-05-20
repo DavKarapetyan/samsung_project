@@ -47,7 +47,7 @@
             android:layout_marginEnd="@dimen/_8sdp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textSize="16dp"
+            android:textSize="@dimen/_11ssp"
             android:text="Twaddle Assist"
             android:fontFamily="@font/nunito_bold"
             app:layout_constraintBottom_toTopOf="@id/viewSuporter"

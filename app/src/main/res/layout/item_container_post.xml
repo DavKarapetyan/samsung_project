@@ -7,8 +7,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="@dimen/_20sdp"
-        app:contentPadding="20dp"
-        android:layout_marginTop="20dp"
+        app:contentPadding="@dimen/_12ssp"
+        android:layout_marginTop="@dimen/_15ssp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -69,7 +69,7 @@
                 android:orientation="horizontal">
                 <com.like.LikeButton
                     app:icon_type="heart"
-                    app:icon_size="@dimen/_7sdp"
+                    app:icon_size="@dimen/_8ssp"
                     android:id="@+id/likeButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
@@ -78,6 +78,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0"
+                    android:textSize="@dimen/_11ssp"
                     android:textColor="@color/white"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="@font/nunito_regular"

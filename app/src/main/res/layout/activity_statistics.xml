@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="@dimen/_12ssp"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
@@ -25,8 +25,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20dp"
-            android:layout_marginTop="20dp"
+            android:padding="@dimen/_12ssp"
+            android:layout_marginTop="@dimen/_10ssp"
             android:background="@drawable/shape_bg">
 
             <com.makeramen.roundedimageview.RoundedImageView
@@ -64,7 +64,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Followers per month"
+            android:text="Moments count per month"
             android:textSize="@dimen/_13ssp"
             android:fontFamily="@font/nunito_regular"
             style="@style/text__color"
@@ -75,21 +75,5 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/_260sdp"
             android:layout_marginTop="10dp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Most used rooms"
-            android:textSize="@dimen/_13ssp"
-            android:fontFamily="@font/nunito_regular"
-            style="@style/text__color"
-            android:layout_marginTop="25dp"
-            />
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/chart"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_260sdp"
-            android:layout_marginTop="10dp"
-            />
-
     </LinearLayout>
 </ScrollView>

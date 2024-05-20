@@ -31,7 +31,7 @@
         android:ellipsize="end"
         android:fontFamily="@font/nunito_regular"
         style="@style/text__color"
-        android:textSize="@dimen/_13ssp"
+        android:textSize="@dimen/_12ssp"
         android:layout_marginLeft="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/viewSuporter"

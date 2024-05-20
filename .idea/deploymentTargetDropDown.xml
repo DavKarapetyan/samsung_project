@@ -2,7 +2,7 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="Twaddle">
+      <entry key="app">
         <State>
           <targetSelectedWithDropDown>
             <Target>
@@ -10,12 +10,24 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\davit\.android\avd\Pixel_Tablet_API_33.avd" />
+                  <value value="C:\Users\Unreal Lessons\.android\avd\Samsung_Tablet_API_34.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-05-19T13:20:46.403065200Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-05-20T15:47:45.465449800Z" />
+          <multipleDevicesSelectedInDropDown value="true" />
+          <targetsSelectedWithDialog>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\Unreal Lessons\.android\avd\Samsung_Tablet_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetsSelectedWithDialog>
         </State>
       </entry>
     </value>

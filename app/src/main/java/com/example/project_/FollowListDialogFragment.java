@@ -74,6 +74,12 @@ public class FollowListDialogFragment extends BottomSheetDialogFragment {
         return binding.getRoot();
 
     }
+    @Override
+    public void onStart() {
+        super.onStart();
+        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    }
+
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {

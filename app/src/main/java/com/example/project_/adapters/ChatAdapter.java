@@ -117,7 +117,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if (documentSnapshot.getBoolean("isLiked") != null && !documentSnapshot.getBoolean("isLiked")) {
                                 FirebaseFirestore.getInstance().collection("chat").document(chatMessage.id).update("isLiked", true);
-                                binding.likeImage.setVisibility(View.VISIBLE);
+                                binding.likeImage.setVisibility(View.GONE);
                             } else {
                                 FirebaseFirestore.getInstance().collection("chat").document(chatMessage.id).update("isLiked", false);
                                 binding.likeImage.setVisibility(View.GONE);
@@ -134,7 +134,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             if (chatMessage.image != null) {
                 Picasso.get().load(chatMessage.image).into(binding.sendImage);
-                binding.sendImage.setVisibility(View.VISIBLE);
+                binding.sendImage.setVisibility(View.GONE);
             } else {
                 // If no image, hide the ImageView
                 binding.sendImage.setVisibility(View.GONE);
@@ -168,7 +168,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             DocumentReference chatMessageRef = FirebaseFirestore.getInstance().collection("chat").document(chatMessage.id);
 
             if (chatMessage.isLiked == true) {
-                binding.likeImage.setVisibility(View.VISIBLE);
+                binding.likeImage.setVisibility(View.GONE);
             } else {
                 binding.likeImage.setVisibility(View.GONE);
             }
@@ -182,7 +182,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if (documentSnapshot.getBoolean("isLiked") != null && !documentSnapshot.getBoolean("isLiked")) {
                                 FirebaseFirestore.getInstance().collection("chat").document(chatMessage.id).update("isLiked", true);
-                                binding.likeImage.setVisibility(View.VISIBLE);
+                                binding.likeImage.setVisibility(View.GONE);
                             } else {
                                 FirebaseFirestore.getInstance().collection("chat").document(chatMessage.id).update("isLiked", false);
                                 binding.likeImage.setVisibility(View.GONE);

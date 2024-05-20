@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:layout_gravity="bottom"
-        android:layout_margin="10dp"
+        android:layout_margin="@dimen/_12ssp"
         android:background="@drawable/bottom_bar_bg"
         android:paddingHorizontal="5dp"
         android:paddingTop="15dp"
