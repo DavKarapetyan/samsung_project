@@ -61,7 +61,7 @@
             android:text="Welcome to Twaddle, your vibrant social haven for meaningful connections and engaging conversations! Dive into a world where tweets turn into meaningful dialogues, and connections flourish with every post. Twaddle is not just a platform; it's a community where your voice matters. Join us in shaping the social narrative, one tweet at a time.\n Let's twaddle together! "
             android:textAlignment="center"
             style="@style/text__color"
-            android:textSize="@dimen/_12ssp"
+            android:textSize="@dimen/_11ssp"
             android:textStyle="normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

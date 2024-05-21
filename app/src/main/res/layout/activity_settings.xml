@@ -53,7 +53,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/shape_bg"
-            android:padding="20dp">
+            android:padding="@dimen/_12ssp">
 
             <TextView
                 android:id="@+id/textView3"
@@ -91,7 +91,7 @@
             android:id="@+id/profileText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="10dp">
+            android:paddingVertical="@dimen/_6ssp">
 
             <ImageView
                 android:id="@+id/imageView"
@@ -107,7 +107,7 @@
                 style="@style/text__color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="@dimen/_8ssp"
                 android:fontFamily="@font/nunito_regular"
                 android:text="Profile"
                 android:textSize="@dimen/_12ssp"
@@ -116,8 +116,8 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_18ssp"
+                android:layout_height="@dimen/_18ssp"
                 android:src="@drawable/arrow_next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -129,7 +129,7 @@
             android:id="@+id/statisticsText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="10dp">
+            android:paddingVertical="@dimen/_6ssp">
 
             <ImageView
                 android:id="@+id/imageView1"
@@ -145,7 +145,7 @@
                 style="@style/text__color"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="12dp"
+                android:layout_marginLeft="@dimen/_8ssp"
                 android:fontFamily="@font/nunito_regular"
                 android:text="Statistics"
                 android:textSize="@dimen/_12ssp"
@@ -154,8 +154,8 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_18ssp"
+                android:layout_height="@dimen/_18ssp"
                 android:src="@drawable/arrow_next"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

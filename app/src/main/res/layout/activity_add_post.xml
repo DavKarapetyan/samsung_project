@@ -30,7 +30,7 @@
         android:hint="Content"
         android:inputType="textEmailAddress"
         android:paddingHorizontal="@dimen/_12ssp"
-        android:paddingVertical="12.5dp"
+        android:paddingVertical="@dimen/_10ssp"
         android:textColorHint="@color/white"
         android:textColor="@color/white"
         android:textSize="@dimen/_11ssp" />

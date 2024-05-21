@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.res.ResourcesCompat;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.example.project_.R;
 import com.example.project_.databinding.ActivityLoginBinding;
 import com.example.project_.utilities.Constants;
 import com.example.project_.utilities.PreferenceManager;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -36,12 +38,13 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         setListeners();
     }
+
     private void setListeners() {
         binding.signUp.setOnClickListener(v -> {
             startActivity(new Intent(getApplicationContext(), RegisterActivity.class));
         });
         binding.logIn.setOnClickListener(v -> {
-            if(isValidSignInDetails()) {
+            if (isValidSignInDetails()) {
                 signIn();
             }
         });
@@ -61,21 +64,21 @@ public class LoginActivity extends AppCompatActivity {
                 .whereEqualTo(Constants.KEY_PASSWORD, binding.password.getText().toString())
                 .get()
                 .addOnCompleteListener(task -> {
-                   if (task.isSuccessful() && task.getResult() != null
-                           && task.getResult().getDocuments().size() > 0) {
-                       DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
-                       preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
-                       preferenceManager.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
-                       preferenceManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME));
-                       preferenceManager.putString(Constants.KEY_NICKNAME, documentSnapshot.getString(Constants.KEY_NICKNAME));
-                       preferenceManager.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
-                       Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                       startActivity(intent);
-                   } else {
-                       loading(false);
-                       showToast("Unable to sign in");
-                   }
+                    if (task.isSuccessful() && task.getResult() != null
+                            && task.getResult().getDocuments().size() > 0) {
+                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(0);
+                        preferenceManager.putBoolean(Constants.KEY_IS_SIGNED_IN, true);
+                        preferenceManager.putString(Constants.KEY_USER_ID, documentSnapshot.getId());
+                        preferenceManager.putString(Constants.KEY_NAME, documentSnapshot.getString(Constants.KEY_NAME));
+                        preferenceManager.putString(Constants.KEY_NICKNAME, documentSnapshot.getString(Constants.KEY_NICKNAME));
+                        preferenceManager.putString(Constants.KEY_IMAGE, documentSnapshot.getString(Constants.KEY_IMAGE));
+                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    } else {
+                        loading(false);
+                        showToast("Unable to sign in");
+                    }
                 });
     }
 

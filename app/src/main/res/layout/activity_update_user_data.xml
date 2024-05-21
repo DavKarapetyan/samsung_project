@@ -44,7 +44,7 @@
         android:layout_marginHorizontal="@dimen/_12ssp"
         android:layout_marginTop="20dp"
         android:textColorHint="@color/white"
-        app:hintEnabled="true"
+        app:hintEnabled="false"
         app:passwordToggleTint="@color/primary__color">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -54,6 +54,7 @@
             style="@style/input__bg"
             android:fontFamily="@font/nunito_regular"
             android:hint="Name"
+            android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:inputType="textEmailAddress"
             android:paddingHorizontal="@dimen/_12ssp"
@@ -66,7 +67,7 @@
         android:layout_marginHorizontal="@dimen/_12ssp"
         android:layout_marginTop="20dp"
         android:textColorHint="@color/white"
-        app:hintEnabled="true"
+        app:hintEnabled="false"
         app:passwordToggleTint="@color/primary__color">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -76,6 +77,7 @@
             style="@style/input__bg"
             android:fontFamily="@font/nunito_regular"
             android:hint="Nick Name"
+            android:textColorHint="@color/white"
             android:textColor="@color/white"
             android:inputType="textEmailAddress"
             android:paddingHorizontal="@dimen/_12ssp"

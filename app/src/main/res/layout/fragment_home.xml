@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="@dimen/_12ssp"
-            android:layout_marginTop="10dp"
-            android:paddingVertical="5dp">
+            android:layout_marginTop="@dimen/_6ssp"
+            android:paddingVertical="@dimen/_3ssp">
 
             <TextView
                 style="@style/text__color"

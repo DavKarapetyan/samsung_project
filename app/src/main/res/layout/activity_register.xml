@@ -89,8 +89,9 @@
                 android:layout_marginHorizontal="@dimen/_18sdp"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
-                app:hintEnabled="true"
-                app:passwordToggleTint="@color/primary__color">
+                app:hintEnabled="false"
+                app:passwordToggleTint="@color/primary__color"
+                >
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/email"
@@ -99,6 +100,7 @@
                     style="@style/input__bg"
                     android:fontFamily="@font/nunito_regular"
                     android:hint="Email"
+                    android:textColorHint="@color/white"
                     android:textColor="@color/white"
                     android:inputType="textEmailAddress"
                     android:paddingHorizontal="@dimen/_12ssp"
@@ -111,7 +113,7 @@
                 android:layout_marginHorizontal="@dimen/_18sdp"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
-                app:hintEnabled="true"
+                app:hintEnabled="false"
                 app:passwordToggleTint="@color/primary__color">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -121,6 +123,7 @@
                     style="@style/input__bg"
                     android:fontFamily="@font/nunito_regular"
                     android:hint="Full Name"
+                    android:textColorHint="@color/white"
                     android:textColor="@color/white"
                     android:inputType="text"
                     android:paddingHorizontal="@dimen/_12ssp"
@@ -133,7 +136,7 @@
                 android:layout_marginHorizontal="@dimen/_18sdp"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
-                app:hintEnabled="true"
+                app:hintEnabled="false"
                 app:passwordToggleTint="@color/primary__color">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -144,18 +147,20 @@
                     android:fontFamily="@font/nunito_regular"
                     android:textColor="@color/white"
                     android:hint="Nick name"
+                    android:textColorHint="@color/white"
                     android:inputType="textEmailAddress"
                     android:paddingHorizontal="@dimen/_12ssp"
                     android:paddingVertical="12.5dp"
                     android:textSize="@dimen/_11ssp" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_18sdp"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
-                app:hintEnabled="true"
+                app:hintEnabled="false"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/active_bg">
 
@@ -166,19 +171,21 @@
                     style="@style/input__bg"
                     android:fontFamily="@font/nunito_regular"
                     android:hint="Password"
+                    android:textColorHint="@color/white"
                     android:textColor="@color/white"
                     android:inputType="textPassword"
                     android:paddingHorizontal="@dimen/_12ssp"
                     android:paddingVertical="12.5dp"
                     android:textSize="@dimen/_11ssp" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_18sdp"
                 android:layout_marginTop="20dp"
                 android:textColorHint="@color/white"
-                app:hintEnabled="true"
+                app:hintEnabled="false"
                 app:passwordToggleEnabled="true"
                 app:passwordToggleTint="@color/active_bg">
 
@@ -189,6 +196,7 @@
                     style="@style/input__bg"
                     android:fontFamily="@font/nunito_regular"
                     android:hint="Password Confirm"
+                    android:textColorHint="@color/white"
                     android:textColor="@color/white"
                     android:inputType="textPassword"
                     android:paddingHorizontal="@dimen/_12ssp"

@@ -115,6 +115,9 @@ public class GroupChatFragment extends Fragment {
                                 } else {
                                     binding.noMessages.setVisibility(View.GONE);
                                 }
+                            } else {
+                                binding.noMessages.setVisibility(View.VISIBLE);
+                                binding.progressBar.setVisibility(View.INVISIBLE);
                             }
                         }
                     }
