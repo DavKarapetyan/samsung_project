@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/page_bg"
+    android:paddingHorizontal="@dimen/_12ssp"
     tools:context=".activities.NotificationsActivity">
 
     <androidx.recyclerview.widget.RecyclerView

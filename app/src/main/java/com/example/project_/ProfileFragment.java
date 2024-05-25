@@ -126,7 +126,7 @@ public class ProfileFragment extends Fragment {
 //            signOut();
 //        });
         binding.menu.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), AugmentedFacesActivity.class));
+            startActivity(new Intent(getContext(), SettingsActivity.class));
         });
         binding.editProfile.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), UpdateUserDataActivity.class));

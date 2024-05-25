@@ -171,8 +171,9 @@
                 <Button
                     android:id="@+id/follow"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_35ssp"
                     android:text="Follow"
+                    android:textSize="@dimen/_10ssp"
                     android:textAllCaps="false"
                     android:fontFamily="@font/nunito_regular"
                     android:background="@drawable/bottom_bar_bg"
@@ -186,8 +187,9 @@
                 <Button
                     android:id="@+id/unFollow"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_35ssp"
                     android:text="Unfollow"
+                    android:textSize="@dimen/_10ssp"
                     android:textAllCaps="false"
                     android:fontFamily="@font/nunito_regular"
                     android:background="@drawable/bottom_bar_bg"
@@ -201,8 +203,9 @@
                 <Button
                     android:id="@+id/startMessaging"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="@dimen/_35ssp"
                     android:text="Start Messaging"
+                    android:textSize="@dimen/_10ssp"
                     android:textAllCaps="false"
                     android:fontFamily="@font/nunito_regular"
                     android:background="@drawable/bottom_bar_bg"
