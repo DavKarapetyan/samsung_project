@@ -5,6 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimary">@color/primary__color</item>
         <item name="android:statusBarColor">@color/primary__color</item>
+        <item name="popupMenuBackground">@drawable/menu_background</item>
     </style>
 
     <style name="Theme.Project_Ճ" parent="Base.Theme.Project_Ճ" />

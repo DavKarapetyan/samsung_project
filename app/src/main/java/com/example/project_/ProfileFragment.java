@@ -22,6 +22,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.project_.activities.AddPostActivity;
+import com.example.project_.activities.AugmentedFacesActivity;
 import com.example.project_.activities.MainActivity;
 import com.example.project_.activities.SettingsActivity;
 import com.example.project_.activities.UpdateUserDataActivity;
@@ -125,7 +126,7 @@ public class ProfileFragment extends Fragment {
 //            signOut();
 //        });
         binding.menu.setOnClickListener(v -> {
-            startActivity(new Intent(getContext(), SettingsActivity.class));
+            startActivity(new Intent(getContext(), AugmentedFacesActivity.class));
         });
         binding.editProfile.setOnClickListener(v -> {
             startActivity(new Intent(getContext(), UpdateUserDataActivity.class));

@@ -16,8 +16,11 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.PopupMenu;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +33,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.dsphotoeditor.sdk.activity.DsPhotoEditorActivity;
 import com.dsphotoeditor.sdk.utils.DsPhotoEditorConstants;
+import com.example.project_.activities.AugmentedFacesActivity;
 import com.example.project_.activities.NotificationsActivity;
 import com.example.project_.adapters.MomentsAdapter;
 import com.example.project_.adapters.PostAdapter;
@@ -95,7 +99,8 @@ public class HomeFragment extends Fragment {
         binding.postsRecyclerView.setVisibility(View.VISIBLE);
         binding.momentsRecyclerView.setVisibility(View.VISIBLE);
         binding.addMoment.setOnClickListener(v -> {
-            checkPermission();
+            //checkPermission();
+            showPopupMenu(v);
         });
         binding.notifications.setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), NotificationsActivity.class));
@@ -118,7 +123,35 @@ public class HomeFragment extends Fragment {
 //        });
 
         return binding.getRoot();
-}
+    }
+
+    public void showPopupMenu(View view) {
+        PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+        MenuInflater inflater = popupMenu.getMenuInflater();
+        inflater.inflate(R.menu.menu_popup, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+                return onPopupMenuClick(menuItem);
+            }
+        });
+
+        popupMenu.show();
+    }
+
+    private boolean onPopupMenuClick(MenuItem item) {
+        switch(item.getItemId()) {
+            case R.id.story:
+                checkPermission();
+                break;
+            case R.id.mask:
+                startActivity(new Intent(getActivity(), AugmentedFacesActivity.class));
+                break;
+        }
+
+        return true;
+    }
+
 
     private void checkPermission() {
         int permission = ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -180,35 +213,35 @@ public class HomeFragment extends Fragment {
                                     newCalendar.setTime(new Date());
 
                                     FirebaseFirestore.getInstance().collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID)).get()
-                                                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                                        @Override
-                                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                                            if (documentSnapshot.getString("momentExpirationDate") != null) {
-                                                                String timeHour = documentSnapshot.getString("momentExpirationDate");
-                                                                String cleanedString = timeHour.replace(" hour", "").trim();
-                                                                int time =  Integer.parseInt(cleanedString);
-                                                                newCalendar.add(Calendar.HOUR, time);
-                                                                moment.put("imageURL", uri1.toString());
-                                                                moment.put("publishDate", calendar.getTime());
-                                                                moment.put("expirationDate", newCalendar.getTime());
-                                                            } else {
-                                                                newCalendar.add(Calendar.HOUR, 6);
-                                                                moment.put("imageURL", uri1.toString());
-                                                                moment.put("publishDate", calendar.getTime());
-                                                                moment.put("expirationDate", newCalendar.getTime());
-                                                            }
-                                                            FirebaseFirestore.getInstance().collection("users")
-                                                                    .document(preferenceManager.getString(Constants.KEY_USER_ID))
-                                                                    .collection("moments")
-                                                                    .add(moment)
-                                                                    .addOnSuccessListener(documentReference -> {
-                                                                        Toast.makeText(getActivity(), "Moment is added", Toast.LENGTH_SHORT).show();
-                                                                    })
-                                                                    .addOnFailureListener(e -> {
-                                                                        Toast.makeText(getActivity(), "Error adding moment", Toast.LENGTH_SHORT).show();
-                                                                    });
-                                                        }
-                                                    });
+                                            .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                @Override
+                                                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                    if (documentSnapshot.getString("momentExpirationDate") != null) {
+                                                        String timeHour = documentSnapshot.getString("momentExpirationDate");
+                                                        String cleanedString = timeHour.replace(" hour", "").trim();
+                                                        int time = Integer.parseInt(cleanedString);
+                                                        newCalendar.add(Calendar.HOUR, time);
+                                                        moment.put("imageURL", uri1.toString());
+                                                        moment.put("publishDate", calendar.getTime());
+                                                        moment.put("expirationDate", newCalendar.getTime());
+                                                    } else {
+                                                        newCalendar.add(Calendar.HOUR, 6);
+                                                        moment.put("imageURL", uri1.toString());
+                                                        moment.put("publishDate", calendar.getTime());
+                                                        moment.put("expirationDate", newCalendar.getTime());
+                                                    }
+                                                    FirebaseFirestore.getInstance().collection("users")
+                                                            .document(preferenceManager.getString(Constants.KEY_USER_ID))
+                                                            .collection("moments")
+                                                            .add(moment)
+                                                            .addOnSuccessListener(documentReference -> {
+                                                                Toast.makeText(getActivity(), "Moment is added", Toast.LENGTH_SHORT).show();
+                                                            })
+                                                            .addOnFailureListener(e -> {
+                                                                Toast.makeText(getActivity(), "Error adding moment", Toast.LENGTH_SHORT).show();
+                                                            });
+                                                }
+                                            });
                                 });
                             })
                             .addOnFailureListener(e -> {
