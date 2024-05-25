@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,7 @@ import com.codebyashish.autoimageslider.Models.ImageSlidesModel;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.project_.CommentListDialogFragment;
+import com.example.project_.R;
 import com.example.project_.activities.PostDetailsActivity;
 import com.example.project_.activities.UserProfileActivity;
 import com.example.project_.databinding.ItemContainerPostBinding;
@@ -35,6 +37,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -52,6 +55,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder> {
     private final List<Post> posts;
@@ -109,6 +113,47 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
 
         void setPostData(Post post) throws ExceptionsClass {
             count = 0;
+            AtomicBoolean atomicBoolean = new AtomicBoolean();
+
+            DocumentReference userRef = FirebaseFirestore.getInstance().collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID));
+
+            userRef.get()
+                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            List<String> savedPostsIds = (List<String>) documentSnapshot.get("savedPosts");
+                            if (savedPostsIds != null && savedPostsIds.contains(post.id)) {
+                                binding.savePost.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.save));
+                                atomicBoolean.set(true);
+                            } else {
+                                binding.savePost.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.save_off));
+                                atomicBoolean.set(false);
+                            }
+                        }
+                    });
+
+            binding.savePost.setOnClickListener(v -> {
+                if (atomicBoolean.get()) {
+                    userRef.update("savedPosts", FieldValue.arrayRemove(post.id))
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    binding.savePost.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.save_off));
+                                    atomicBoolean.set(false);
+                                }
+                            });
+                } else {
+                    userRef.update("savedPosts", FieldValue.arrayUnion(post.id))
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void unused) {
+                                    binding.savePost.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.save));
+                                    atomicBoolean.set(true);
+                                }
+                            });
+                }
+            });
+
             FirebaseFirestore.getInstance().collection("posts").document(post.id)
                     .get()
                     .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -235,6 +280,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
                     }
                 });
     }
+
     public class HttpRequestTask extends AsyncTask<String, Void, String> {
         private final WeakReference<ItemContainerPostBinding> bindingRef;
 

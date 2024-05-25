@@ -301,4 +301,10 @@ public class CommentListDialogFragment extends BottomSheetDialogFragment {
             return comments.size();
         }
     }
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Force the bottom sheet dialog to resize when the keyboard is shown
+        getDialog().getWindow().setSoftInputMode(android.view.WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+    }
 }

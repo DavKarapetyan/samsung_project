@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.project_.AddMemberDialogFragment;
 import com.example.project_.R;
 import com.example.project_.adapters.UsersAdapter;
 import com.example.project_.databinding.ActivityGroupChatDetailsBinding;
@@ -41,6 +42,11 @@ public class GroupChatDetailsActivity extends BaseActivity {
         groupChatId = getIntent().getStringExtra("groupChatId");
         preferenceManager = new PreferenceManager(getApplicationContext());
         getGroupChatDetails();
+
+        binding.addMember.setOnClickListener(v -> {
+            AddMemberDialogFragment addMemberDialogFragment = AddMemberDialogFragment.newInstance(groupChatId);
+            addMemberDialogFragment.show(getSupportFragmentManager(), "TAG");
+        });
     }
 
     private void getGroupChatDetails() {

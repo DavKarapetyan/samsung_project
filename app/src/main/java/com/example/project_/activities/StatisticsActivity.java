@@ -32,6 +32,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class StatisticsActivity extends BaseActivity {
     ActivityStatisticsBinding binding;
@@ -73,10 +74,24 @@ public class StatisticsActivity extends BaseActivity {
 //        pieChart.invalidate();
         LineChart lineChart = binding.lineChart;
 
+        AtomicInteger atomicInteger = new AtomicInteger();
+        FirebaseFirestore.getInstance().collection("posts").whereEqualTo("userId", preferenceManager.getString(Constants.KEY_USER_ID)).get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
+                            List<String> list = (List<String>) queryDocumentSnapshot.get("likedUsers");
+                            atomicInteger.addAndGet((int) list.stream().count());
+                        }
+                        binding.likesCount.setText("Total Likes Count: " +  atomicInteger.toString());
+                    }
+                });
+
+
         // Generate sample data
         List<Entry> entries1 = new ArrayList<>();
 
-        FirebaseFirestore.getInstance().collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID)).collection("moments").whereGreaterThan("publishDate", new Date(1, new Date().getMonth(), new Date().getYear()))
+        FirebaseFirestore.getInstance().collection("users").document(preferenceManager.getString(Constants.KEY_USER_ID)).collection("moments")
                 .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override

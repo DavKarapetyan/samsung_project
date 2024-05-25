@@ -62,6 +62,16 @@
                 app:layout_constraintStart_toEndOf="@+id/imageProfile" />
         </androidx.constraintlayout.widget.ConstraintLayout>
         <TextView
+            android:id="@+id/likesCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Total Likes Count: "
+            android:textSize="@dimen/_13ssp"
+            android:fontFamily="@font/nunito_regular"
+            style="@style/text__color"
+            android:layout_marginTop="25dp"
+            />
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Moments count per month"

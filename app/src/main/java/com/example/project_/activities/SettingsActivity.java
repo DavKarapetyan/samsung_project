@@ -39,6 +39,9 @@ public class SettingsActivity extends BaseActivity {
         binding.statisticsText.setOnClickListener(v -> {
             startActivity(new Intent(SettingsActivity.this, StatisticsActivity.class));
         });
+        binding.savedPostsText.setOnClickListener(v -> {
+            startActivity(new Intent(SettingsActivity.this, SavedPostsActivity.class));
+        });
         binding.logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

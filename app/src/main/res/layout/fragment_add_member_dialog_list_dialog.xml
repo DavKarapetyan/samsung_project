@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    style="@style/content__bottom"
+    android:orientation="vertical"
+    tools:context=".AddMemberDialogFragment">
+    <View
+        android:id="@+id/view2"
+        android:layout_width="70dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/grey_font"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        >
+
+        <EditText
+            android:id="@+id/member"
+            style="@style/input__bg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_36sdp"
+            android:layout_marginHorizontal="@dimen/_12ssp"
+            android:layout_marginTop="@dimen/_3ssp"
+            android:clipToPadding="false"
+            android:fontFamily="@font/nunito_regular"
+            android:hint="Member Nickname"
+            android:inputType="text"
+            android:paddingHorizontal="@dimen/_12ssp"
+            android:paddingVertical="12.5dp"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:textSize="@dimen/_11ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="@dimen/_28sdp"
+            android:layout_height="@dimen/_28sdp"
+            android:layout_marginRight="@dimen/_2ssp"
+            android:backgroundTint="@color/primary__color"
+            android:clipToOutline="true"
+            android:contentDescription="a"
+            android:elevation="10dp"
+            android:src="@drawable/baseline_add_24"
+            app:fabCustomSize="@dimen/_28sdp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/member"
+            app:layout_constraintTop_toTopOf="@+id/member"
+            app:shapeAppearanceOverlay="@style/fab_3_rounded"
+            app:tint="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/members"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_18sdp">
+    </com.google.android.material.chip.ChipGroup>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginHorizontal="@dimen/_12ssp"
+        android:backgroundTint="@color/primary__color"
+        android:background="@drawable/bottom_bar_bg"
+        android:clipToOutline="true"
+        android:elevation="10dp"
+        android:fontFamily="@font/nunito_medium"
+        android:text="Save"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12ssp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
+        tools:layout_editor_absoluteX="16dp" />
+
+</LinearLayout>

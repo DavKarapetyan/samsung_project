@@ -201,6 +201,13 @@
 <!--            android:layout_marginTop="30dp"-->
 <!--            app:dividerColor="@color/primary__color" />-->
 
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            app:dividerColor="@color/primary__color"
+            android:layout_marginHorizontal="@dimen/_12ssp"
+            android:layout_marginTop="10dp"/>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/postsRecyclerView"
             android:layout_width="match_parent"
