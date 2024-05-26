@@ -13,9 +13,14 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -126,9 +131,16 @@ public class HomeFragment extends Fragment {
     }
 
     public void showPopupMenu(View view) {
-        PopupMenu popupMenu = new PopupMenu(getActivity(), view);
+        PopupMenu popupMenu = new PopupMenu(getActivity(), view, Gravity.START, 0, R.style.MyPopupMenuStyle);
         MenuInflater inflater = popupMenu.getMenuInflater();
         inflater.inflate(R.menu.menu_popup, popupMenu.getMenu());
+        Menu menu = popupMenu.getMenu();
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
+            SpannableString spannable = new SpannableString(menuItem.getTitle());
+            spannable.setSpan(new ForegroundColorSpan(Color.WHITE), 0, spannable.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+            menuItem.setTitle(spannable);
+        }
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {

@@ -5,9 +5,11 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
         <item name="colorPrimary">@color/primary__color</item>
         <item name="android:statusBarColor">@color/primary__color</item>
-        <item name="popupMenuBackground">@drawable/menu_background</item>
     </style>
-
+    <style name="MyPopupMenuStyle" parent="@style/Widget.AppCompat.PopupMenu">
+        <item name="android:popupBackground">@drawable/menu_background</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
     <style name="Theme.Project_Ճ" parent="Base.Theme.Project_Ճ" />
     <style name="fab_3_rounded">
         <item name="cornerFamily">rounded</item>

@@ -56,7 +56,9 @@
         android:layout_marginLeft="10dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textMessage"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:tint="@color/white"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout><!--<TextView xmlns:android="http://schemas.android.com/apk/res/android"-->
 <!--    xmlns:tools="http://schemas.android.com/tools"-->
