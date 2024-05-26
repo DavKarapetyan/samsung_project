@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import com.example.project_.R;
 import com.example.project_.adapters.PostAdapter;
@@ -40,6 +41,10 @@ public class SavedPostsActivity extends AppCompatActivity {
         binding.postsRecyclerView.setAdapter(postAdapter);
         binding.imageView6.setOnClickListener(v -> finish());
         getPosts();
+        if (posts.isEmpty()) {
+            binding.headerLottie.setVisibility(View.VISIBLE);
+            binding.postsRecyclerView.setVisibility(View.GONE);
+        }
     }
 
     private void getPosts()
@@ -60,25 +65,12 @@ public class SavedPostsActivity extends AppCompatActivity {
                                                 post.id = documentSnapshot1.getId();
                                                 post.userId = documentSnapshot1.getString("userId");
                                                 posts.add(post);
+                                                binding.postsRecyclerView.setVisibility(View.VISIBLE);
+                                                binding.headerLottie.setVisibility(View.GONE);
                                             }
                                         });
                                 postAdapter.notifyDataSetChanged();
                             }
-
-//                            firebaseFirestore.collection("posts").whereArrayContainsAny("id", postsIds).get()
-//                                    .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-//                                        @Override
-//                                        public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-//                                            posts.clear();
-//                                            for (QueryDocumentSnapshot queryDocumentSnapshot : queryDocumentSnapshots) {
-//                                                Post post = createPostFromDocument(queryDocumentSnapshot);
-//                                                post.id = documentSnapshot.getId();
-//                                                post.userId = documentSnapshot.getString("userId");
-//                                                posts.add(post);
-//                                            }
-//                                            postAdapter.notifyDataSetChanged();
-//                                        }
-//                                    });
                         }
                     }
                 });

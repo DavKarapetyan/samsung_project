@@ -134,7 +134,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
             if (chatMessage.image != null) {
                 Picasso.get().load(chatMessage.image).into(binding.sendImage);
-                binding.sendImage.setVisibility(View.GONE);
+                binding.sendImage.setVisibility(View.VISIBLE);
             } else {
                 // If no image, hide the ImageView
                 binding.sendImage.setVisibility(View.GONE);

@@ -76,7 +76,6 @@ public class AIChatActivity extends AppCompatActivity {
         binding.layoutSend.setOnClickListener(v -> {
             if (binding.inputMessage.getText().toString() != null && !binding.inputMessage.getText().toString().isEmpty()) {
                 sendMessage();
-                callGemini();
             } else {
                 showToast("Message is empty");
             }
@@ -175,6 +174,7 @@ public class AIChatActivity extends AppCompatActivity {
 
                             database.collection(Constants.KEY_COLLECTION_CHAT).add(message);
                         }
+                        callGemini();
                         imageUri = null;
                         binding.image.setVisibility(View.GONE);
                         binding.viewImage.setVisibility(View.GONE);
