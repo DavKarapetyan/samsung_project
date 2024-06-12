@@ -70,17 +70,10 @@
         android:layout_height="wrap_content"
         android:paddingTop="5dp"
         android:orientation="horizontal">
-        <com.like.LikeButton
-            app:icon_type="heart"
-            app:icon_size="@dimen/_15sdp"
-            android:id="@+id/likeButton"
-            android:layout_width="@dimen/_18sdp"
-            android:layout_height="@dimen/_18sdp" />
         <ImageView
             android:id="@+id/showComments"
             android:layout_width="@dimen/_18sdp"
             android:layout_height="@dimen/_18sdp"
-            android:layout_marginLeft="15dp"
             android:tint="@color/white"
             android:src="@drawable/messagechat"/>
     </LinearLayout>
